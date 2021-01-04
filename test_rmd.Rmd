@@ -1,9 +1,0 @@
----
-output: github_document
----
-
-
-```{r}
-library(ggplot2)
-ggplot(mpg, aes(x = hwy)) + geom_histogram() + labs(title = "abcd")
-```
