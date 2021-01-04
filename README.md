@@ -2,7 +2,9 @@
 
 test
 
-```
+
+
+``` r
 ap_sentiments <- tidy(AssociatedPress) %>%
   inner_join(get_sentiments("bing"), by = c(term = "word")) %>%
   count(document, sentiment, wt = count) %>%
