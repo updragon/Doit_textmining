@@ -1,3 +1,12 @@
+``` r
+library(ggplot2)
+ggplot(mpg, aes(x= hwy)) + geom_histogram() + ggtitle("abc")
+```
+
+    ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+
+![](test3_files/figure-markdown_github/unnamed-chunk-1-1.png)
+
 GitHub Documents
 ----------------
 

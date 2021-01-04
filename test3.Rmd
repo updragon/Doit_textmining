@@ -4,6 +4,12 @@ output:
     variant: markdown_github
 ---
 
+```{r}
+library(ggplot2)
+ggplot(mpg, aes(x= hwy)) + geom_histogram() + ggtitle("abc")
+```
+
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
