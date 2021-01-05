@@ -6,6 +6,11 @@ editor_options:
   chunk_output_type: console
 ---
 
+```{r include=F}
+knitr::opts_chunk$set(warning = F, message = F)
+library(here)
+```
+
 # Quiz Part 1
 
 #### `speech_park.txt`에는 박근혜 전 대통령의 대선 출마 선언문이 들어있습니다. `speech_park.txt`를 이용해 문제를 해결해 보세요.
@@ -18,13 +23,6 @@ editor_options:
 
 ---
         
-```{r include=F}
-knitr::opts_chunk$set(warning = F, message = F)
-library(here)
-
-
-```
-
 #### Q1. `speech_park.txt`를 불러와 분석에 적합하게 전처리한 다음 띄어쓰기 기준으로 토큰화하세요.<a name="Q1"></a>
 
 ##### 전처리

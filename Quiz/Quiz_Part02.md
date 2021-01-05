@@ -130,7 +130,7 @@ ggplot(top20, aes(x = reorder(word, n), y = n)) +
   labs(x = NULL)
 ```
 
-![](Quiz_Part2_files/figure-markdown_github/unnamed-chunk-7-1.png)
+![](Quiz_Part02_files/figure-markdown_github/unnamed-chunk-7-1.png)
 
 ------------------------------------------------------------------------
 

@@ -166,7 +166,7 @@ models <- FindTopicsNumber(dtm = dtm_comment,
 FindTopicsNumber_plot(models)
 ```
 
-![](Quiz_Part6_files/figure-markdown_github/unnamed-chunk-16-1.png)
+![](Quiz_Part06_files/figure-markdown_github/unnamed-chunk-16-1.png)
 
 ------------------------------------------------------------------------
 

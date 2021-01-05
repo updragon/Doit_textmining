@@ -135,4 +135,4 @@ ggplot(top20, aes(x = reorder(word, n), y = n)) +
   theme(text = element_text(family = "nanumgothic"))
 ```
 
-![](Quiz_Part1_files/figure-markdown_github/unnamed-chunk-8-1.png)
+![](Quiz_Part01_files/figure-markdown_github/unnamed-chunk-8-1.png)

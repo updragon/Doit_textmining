@@ -218,7 +218,7 @@ ggplot(top10, aes(x = reorder(word, log_odds_ratio),
   labs(x = NULL)
 ```
 
-![](Quiz_Part3_files/figure-markdown_github/unnamed-chunk-10-1.png)
+![](Quiz_Part03_files/figure-markdown_github/unnamed-chunk-10-1.png)
 
 ------------------------------------------------------------------------
 
@@ -238,7 +238,7 @@ raw_speeches <- read_csv("inaugural_address.csv")
 > 이명박, 박근혜, 노무현 전 대통령의 취임사 출처:
 > [bit.ly/easytext_35](htts://bit.ly/easytext_35)
 
-##### 기본적인 전처리
+##### 전처리
 
 ``` r
 library(dplyr)
@@ -390,4 +390,4 @@ ggplot(top10, aes(x = reorder_within(word, tf_idf, president),
   labs(x = NULL)
 ```
 
-![](Quiz_Part3_files/figure-markdown_github/unnamed-chunk-18-1.png)
+![](Quiz_Part03_files/figure-markdown_github/unnamed-chunk-18-1.png)

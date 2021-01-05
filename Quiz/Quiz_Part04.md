@@ -225,7 +225,7 @@ ggplot(frequency_score, aes(x = sentiment, y = n, fill = sentiment)) +
   geom_text(aes(label = n), vjust = -0.3)
 ```
 
-![](Quiz_Part4_files/figure-markdown_github/unnamed-chunk-12-1.png)
+![](Quiz_Part04_files/figure-markdown_github/unnamed-chunk-12-1.png)
 
 ------------------------------------------------------------------------
 
@@ -361,7 +361,7 @@ ggplot(top10, aes(x = reorder(word, log_odds_ratio),
   labs(x = NULL)
 ```
 
-![](Quiz_Part4_files/figure-markdown_github/unnamed-chunk-18-1.png)
+![](Quiz_Part04_files/figure-markdown_github/unnamed-chunk-18-1.png)
 
 ------------------------------------------------------------------------
 
