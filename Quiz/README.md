@@ -1,8 +1,6 @@
 
 # 분석 도전 정답
 
----
-
 - [Part1](https://github.com/youngwoos/Doit_textmining/blob/main/Quiz/Quiz_Part1.md)
 
 - [Part2](https://github.com/youngwoos/Doit_textmining/blob/main/Quiz/Quiz_Part2.md)
