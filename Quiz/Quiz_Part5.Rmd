@@ -126,8 +126,8 @@ comment %>%
 
 #### Q3. 다음 코드를 이용해 유의어를 통일한 다음 한 댓글이 하나의 행이 되도록 단어를 결합하세요.<a name="Q3"></a>
 
-##### 유의어 통일하기
-```{r echo=T}
+```{r}
+# 유의어 통일하기
 comment <- comment %>%
   mutate(word = case_when(str_detect(word, "축하") ~ "축하",
                           str_detect(word, "방탄") ~ "자랑",

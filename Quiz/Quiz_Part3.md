@@ -15,8 +15,8 @@ Quiz Part 3
 
 #### Q2. 역대 대통령의 취임사를 담은 `inaugural_address.csv`를 이용해 문제를 해결해 보세요.
 
--   [Q2.1 다음 코드를 실행해 `inaugural_address.csv`를 불러와 분석에
-    적합하게 전처리한 다음 연설문에서 명사를 추출하세요.](#Q2.1)
+-   [Q2.1 다음 코드를 실행해 `inaugural_address.csv`를 불러온 다음
+    분석에 적합하게 전처리하고 연설문에서 명사를 추출하세요.](#Q2.1)
 -   [Q2.2 TF-IDF를 이용해 각 연설문에서 상대적으로 중요한 단어를 10개씩
     추출하세요.](#Q2.2)
 -   [Q2.3 각 연설문에서 상대적으로 중요한 단어를 나타낸 막대 그래프를
@@ -226,11 +226,17 @@ ggplot(top10, aes(x = reorder(word, log_odds_ratio),
 
 <br>
 
-#### Q2.1 다음 코드를 실행해 `inaugural_address.csv`를 불러와 분석에 적합하게 전처리한 다음 연설문에서 명사를 추출하세요.<a name="Q2.1"></a>
+#### Q2.1 다음 코드를 실행해 `inaugural_address.csv`를 불러온 다음 분석에 적합하게 전처리하고 연설문에서 명사를 추출하세요.<a name="Q2.1"></a>
 
 ``` r
 raw_speeches <- read_csv("inaugural_address.csv")
 ```
+
+> 문재인 대통령의 취임사 출처:
+> [bit.ly/easytext_34](https://bit.ly/easytext_34)
+
+> 이명박, 박근혜, 노무현 전 대통령의 취임사 출처:
+> [bit.ly/easytext_35](htts://bit.ly/easytext_35)
 
 ##### 기본적인 전처리
 
