@@ -373,7 +373,3 @@ ggraph(graph_bigram, layout = "fr") +         # 레이아웃
 ```
 
 ![](img/Q5_6_2.png)
-
-![](img/Q5_6_2_2.png)
-
-![](img/Q5_6_2_3.png)
