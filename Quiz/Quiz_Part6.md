@@ -210,7 +210,7 @@ ggplot(top_term_topic,
   labs(x = NULL)
 ```
 
-![](Quiz_Part6_files/figure-markdown_github/unnamed-chunk-20-1.png)
+![](img/Q6_8.png)
 
 ------------------------------------------------------------------------
 

@@ -239,7 +239,7 @@ top_term_topic <- term_topic %>%
 
 ##### 막대 그래프 만들기
 
-```{r}
+```{r eval=F}
 library(ggplot2)
 ggplot(top_term_topic,
        aes(x = reorder_within(term, beta, topic),
@@ -251,6 +251,34 @@ ggplot(top_term_topic,
   scale_x_reordered() +
   labs(x = NULL)
 ```
+
+
+```{r echo=F}
+library(ggplot2)
+library(showtext)
+showtext_opts(dpi = 300)
+
+p <- ggplot(top_term_topic,
+       aes(x = reorder_within(term, beta, topic),
+           y = beta,
+           fill = factor(topic))) +
+  geom_col(show.legend = F) +
+  facet_wrap(~ topic, scales = "free", ncol = 3) +
+  coord_flip () +
+  scale_x_reordered() +
+  labs(x = NULL)
+
+p %>% 
+  ggsave(
+    path = "quiz/img",
+    file = "Q6_8.png",
+    
+    width = 8,
+    height = 8,
+    dpi = 300, type = "cairo-png", units = "in")
+```
+
+![](img/Q6_8.png)
 
 
 ---
