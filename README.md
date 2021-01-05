@@ -1,4 +1,5 @@
-# <Do it! 쉽게 배우는 R 텍스트 마이닝> 저장소
+<Do it! 쉽게 배우는 R 텍스트 마이닝> 저장소
+---
 
 ![](cover.png)
 
@@ -8,8 +9,10 @@
 :------------- |:-------------
 [Data](https://github.com/youngwoos/Doit_textmining/blob/main/Data) | 실습 데이터 파일
 [Script](https://github.com/youngwoos/Doit_textmining/blob/main/Script) | 본문 R 스크립트
-[Quiz](https://github.com/youngwoos/Doit_textmining/blob/main/Quiz) | 분석 도전 정답 스크립트
+[Quiz](https://github.com/youngwoos/Doit_textmining/blob/main/Quiz) | 분석 도전 정답
 [Lecture](https://github.com/youngwoos/Doit_textmining/blob/main/Lecture) | 강의용 프리젠테이션 자료
+
+- 저장소의 모든 자료를 한 번에 다운로드하려면 다음 [링크](https://github.com/youngwoos/Doit_textmining/archive/main.zip)를 클릭하세요.
 
 ---
 
