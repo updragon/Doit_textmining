@@ -342,11 +342,17 @@ ggraph(graph_bigram, layout = "fr") +
   theme_graph()
 ```
 
-![](Quiz_Part5_files/figure-markdown_github/unnamed-chunk-15-1.png)
+![](img/Q5_6_1.png)
 
 ##### 그래프 꾸미기
 
 ``` r
+showtext_opts(dpi = 96)
+
+# 폰트 설정
+library(showtext)
+font_add_google(name = "Nanum Gothic", family = "nanumgothic")
+
 set.seed(1234)
 ggraph(graph_bigram, layout = "fr") +         # 레이아웃
 
@@ -360,9 +366,10 @@ ggraph(graph_bigram, layout = "fr") +         # 레이아웃
 
   geom_node_text(aes(label = name),           # 텍스트 표시
                  repel = T,                   # 노드밖 표시
-                 size = 5) +                  # 텍스트 크기
+                 size = 5,                    # 텍스트 크기
+                 family = "nanumgothic") +    # 폰트
 
   theme_graph()                               # 배경 삭제
 ```
 
-![](Quiz_Part5_files/figure-markdown_github/unnamed-chunk-16-1.png)
+![](img/Q5_6_2.png)

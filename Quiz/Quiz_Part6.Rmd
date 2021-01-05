@@ -109,7 +109,7 @@ library(stringr)
 # saveRDS(nouns_speeches, here("files_etc/nouns_speeches_roh.rds"), compress = F)
 
 # set path
-source("quiz/path.r")
+source("path.r")
 
 nouns_speeches <- readRDS(paste0(path, "nouns_speeches_roh.rds"))
 ```
@@ -196,7 +196,7 @@ library(ldatuning)
 # saveRDS(models, here("files_etc/models_roh.rds"), compress = F)
 
 # set path
-source("quiz/path.r")
+source("path.r")
 
 models <- readRDS(paste0(path, "models_roh.rds"))
 ```
