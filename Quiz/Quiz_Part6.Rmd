@@ -278,7 +278,8 @@ p %>%
     dpi = 300, type = "cairo-png", units = "in")
 ```
 
-![](img/Q6_8.png)
+<img src="img/Q6_8.png" width="800">
+
 
 
 ---
