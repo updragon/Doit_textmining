@@ -109,7 +109,7 @@ library(stringr)
 # saveRDS(nouns_speeches, here("files_etc/nouns_speeches_roh.rds"), compress = F)
 
 # set path
-source("path.r")
+source(here("Quiz/path.r"))
 
 nouns_speeches <- readRDS(paste0(path, "nouns_speeches_roh.rds"))
 ```
@@ -252,10 +252,10 @@ ggplot(top_term_topic,
   labs(x = NULL)
 ```
 
-
 ```{r echo=F}
 library(ggplot2)
 library(showtext)
+font_add_google(name = "Nanum Gothic", family = "nanumgothic")
 showtext_opts(dpi = 300)
 
 p <- ggplot(top_term_topic,
@@ -266,7 +266,8 @@ p <- ggplot(top_term_topic,
   facet_wrap(~ topic, scales = "free", ncol = 3) +
   coord_flip () +
   scale_x_reordered() +
-  labs(x = NULL)
+  labs(x = NULL) +
+  theme(text = element_text(family = "nanumgothic"))
 
 p %>% 
   ggsave(
@@ -275,7 +276,7 @@ p %>%
     
     width = 8,
     height = 8,
-    dpi = 300, type = "cairo-png", units = "in")
+    dpi = 125, type = "cairo-png", units = "in")
 ```
 
 <img src="img/Q6_8.png" width="800">

@@ -267,7 +267,7 @@ p <- ggraph(graph_bigram, layout = "fr") +
 
   geom_node_text(aes(label = name),
                  repel = T,
-                 size = 13,
+                 size = 4,
                  family = "nanumgothic") +
 
   theme_graph() +
@@ -280,7 +280,7 @@ p %>%
     
     width = 7,
     height = 5,
-    dpi = 500, type = "cairo-png", units = "in")
+    dpi = 140, type = "cairo-png", units = "in")
 
 ```
 
@@ -329,7 +329,7 @@ p <- ggraph(graph_bigram, layout = "fr") +         # 레이아웃
 
   geom_node_text(aes(label = name),           # 텍스트 표시
                  repel = T,                   # 노드밖 표시
-                 size = 13,                   # 텍스트 크기
+                 size = 4,                   # 텍스트 크기
                  family = "nanumgothic") +    # 폰트
 
   theme_graph() +                               # 배경 삭제
@@ -342,7 +342,7 @@ p %>%
     
     width = 7,
     height = 5,
-    dpi = 500, type = "cairo-png", units = "in")
+    dpi = 140, type = "cairo-png", units = "in")
 ```
 
 ![](img/Q5_6_2.png)
