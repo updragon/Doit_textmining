@@ -256,7 +256,7 @@ ggplot(top_term_topic,
 library(ggplot2)
 library(showtext)
 font_add_google(name = "Nanum Gothic", family = "nanumgothic")
-showtext_opts(dpi = 300)
+showtext_opts(dpi = 100)
 
 p <- ggplot(top_term_topic,
        aes(x = reorder_within(term, beta, topic),
@@ -276,10 +276,10 @@ p %>%
     
     width = 8,
     height = 8,
-    dpi = 125, type = "cairo-png", units = "in")
+    dpi = 100, type = "cairo-png", units = "in")
 ```
 
-<img src="img/Q6_8.png" width="800">
+![](img/Q6_8.png)
 
 
 
