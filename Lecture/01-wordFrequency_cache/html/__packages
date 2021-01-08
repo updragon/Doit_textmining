@@ -1,0 +1,10 @@
+base
+knitr
+stringr
+dplyr
+tidytext
+ggplot2
+ggwordcloud
+sysfonts
+showtextdb
+showtext

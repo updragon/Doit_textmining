@@ -148,7 +148,7 @@ ggplot(top20, aes(x = reorder(word, n), y = n)) +
  coord_flip() +
  geom_text(aes(label = n), hjust = -0.3) +            # 막대 밖 빈도 표시
   
- labs(title = "문재인 대통령 출마 선언문 단어 빈도",  # 그래프 제목
+ labs(title = "문재인 대통령 출마 연설문 단어 빈도",  # 그래프 제목
       x = NULL, y = NULL) +                           # 축 이름 삭제
   
  theme(title = element_text(size = 12))               # 제목 크기
