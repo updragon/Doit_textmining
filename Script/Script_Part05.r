@@ -184,7 +184,9 @@ comment <- comment %>%
 
 # 단어 동시 출현 빈도 구하기
 pair <- comment %>%
-  pairwise_count(word, id, sort = T)
+  pairwise_count(item = word,
+                 feature = id,
+                 sort = T)
 
 # 네트워크 그래프 데이터 만들기
 graph_comment <- pair %>%
@@ -268,7 +270,9 @@ news_comment %>%
 word_cors <- comment %>%
   add_count(word) %>%
   filter(n >= 20) %>%
-  pairwise_cor(item = word, feature = id, sort = T)
+  pairwise_cor(item = word,
+               feature = id,
+               sort = T)
 
 word_cors
 

@@ -474,8 +474,8 @@ frequency_wide
 
 ```{r}
 frequency_wide <- frequency_wide %>%
-  mutate(ratio_moon  = ((moon + 1)/(sum(moon + 1))),  # moon에서 단어의 비중
-         ratio_park  = ((park + 1)/(sum(park + 1))))  # park에서 단어의 비중
+  mutate(ratio_moon = ((moon + 1)/(sum(moon + 1))),  # moon에서 단어의 비중
+         ratio_park = ((park + 1)/(sum(park + 1))))  # park에서 단어의 비중
 
 frequency_wide
 ```

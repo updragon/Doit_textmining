@@ -216,6 +216,9 @@ ggplot(word_space,
 
 
 # ------------------------------------------------------------------------
+font_add_google(name = "Gamja Flower", family = "gamjaflower")
+showtext_auto()
+
 ggplot(top20, aes(x = reorder(word, n), y = n)) +
   geom_col() +
   coord_flip() +
@@ -225,5 +228,5 @@ ggplot(top20, aes(x = reorder(word, n), y = n)) +
        x = NULL, y = NULL) +
   
   theme(title = element_text(size = 12),
-        text = element_text(family = "blackhansans"))  # 폰트 적용
+        text = element_text(family = "gamjaflower"))  # 폰트 적용
 

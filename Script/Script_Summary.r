@@ -218,7 +218,9 @@ pair <- comment %>%
 word_cors <- comment %>%
   add_count(word) %>%
   filter(n >= 20) %>%
-  pairwise_cor(item = word, feature = id, sort = T)
+  pairwise_cor(item = word,
+               feature = id,
+               sort = T)
 
 
 # -------------------------------------------------------------------------
