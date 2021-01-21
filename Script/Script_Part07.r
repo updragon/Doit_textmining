@@ -230,13 +230,13 @@ tada <- tada %>%
 # -------------------------------------------------------------------------
 # 공감 댓글 추출
 reply_like <- tada %>%
-  filter(sympathy  == "like") %>%      # like 추출
-  arrange(-diff)                       # 공감 높은순 정렬
+  filter(sympathy == "like") %>%     # like 추출
+  arrange(-diff)                     # 공감 높은순 정렬
 
 # 비공감 댓글 추출
 reply_dislike <- tada %>%
-  filter(sympathy  == "dislike") %>%   # dislike 추출
-  arrange(diff)                        # 비공감 높은순 정렬
+  filter(sympathy == "dislike") %>%  # dislike 추출
+  arrange(diff)                      # 비공감 높은순 정렬
 
 
 # -------------------------------------------------------------------------

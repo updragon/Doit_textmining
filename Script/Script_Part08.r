@@ -382,7 +382,7 @@ ggplot(frequency_sentiment, aes(x = sentiment, y = n, fill = sentiment)) +
   geom_text(aes(label = comma(n)), vjust = -0.5) +
   
   ylim(0, 3500) +
-  scale_fill_manual(values = col_sentiment) +   # 막대 색깔
+  scale_fill_manual(values = col_sentiment) +  # 막대 색깔
   
   labs(title = "차기 대선주자 트윗 감정 빈도",
        subtitle = "2020.8.13 ~ 2020.8.21",

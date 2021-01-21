@@ -72,7 +72,7 @@ library(tidytext)
 text %>%
   unnest_tokens(input = value,        # 토큰화할 텍스트
                 output = word,        # 출력 변수명
-                token = "sentences")  # 토큰화 기준: 문장
+                token = "sentences")  # 문장 기준
 
 
 # ------------------------------------------------------------------------

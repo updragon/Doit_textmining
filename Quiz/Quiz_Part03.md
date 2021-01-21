@@ -3,9 +3,8 @@ Quiz Part 3
 
 #### Q1. 역대 대통령의 대선 출마 선언문을 담은 `speeches_presidents.csv`를 이용해 문제를 해결해 보세요.
 
--   [Q1.1 다음 코드를 실행해 `speeches_presidents.csv`를 불러온 다음
-    이명박 전 대통령과 노무현 전 대통령의 연설문을 추출하고 분석에
-    적합하게 전처리하세요.](#Q1.1)
+-   [Q1.1 `speeches_presidents.csv`를 불러와 이명박 전 대통령과 노무현
+    전 대통령의 연설문을 추출하고 분석에 적합하게 전처리하세요.](#Q1.1)
 -   [Q1.2 연설문에서 명사를 추출한 다음 연설문별 단어 빈도를
     구하세요.](#Q1.2)
 -   [Q1.3 로그 오즈비를 이용해 두 연설문에서 상대적으로 중요한 단어를
@@ -28,16 +27,12 @@ Quiz Part 3
 
 <br>
 
-#### Q1.1 다음 코드를 실행해 `speeches_presidents.csv`를 불러온 다음 이명박 전 대통령과 노무현 전 대통령의 연설문을 추출하고 분석에 적합하게 전처리하세요.<a name="Q1.1"></a>
+#### Q1.1 `speeches_presidents.csv`를 불러와 이명박 전 대통령과 노무현 전 대통령의 연설문을 추출하고 분석에 적합하게 전처리하세요.<a name="Q1.1"></a>
 
 ``` r
-install.packages("readr")
 library(readr)
 raw_speeches <- read_csv("speeches_presidents.csv")
 ```
-
-> `read_csv()`는 데이터를 다루기 편한 tibble 구조로 만들어 주고 데이터를
-> 불러오는 속도도 `read.csv()`보다 빠릅니다.
 
 ``` r
 library(dplyr)

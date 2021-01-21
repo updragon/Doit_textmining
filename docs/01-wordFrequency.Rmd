@@ -249,7 +249,7 @@ library(tidytext)
 text %>%
   unnest_tokens(input = value,        # 토큰화할 텍스트
                 output = word,        # 토큰을 담을 변수명
-                token = "sentences")  # 토큰화 기준
+                token = "sentences")  # 문장 기준
 ```
 
 ```{r echo=F}
@@ -260,7 +260,7 @@ library(tidytext)
 text %>%
   unnest_tokens(input = value,        # 토큰화할 텍스트
                 output = word,        # 토큰을 담을 변수명
-                token = "sentences")  # 토큰화 기준
+                token = "sentences")  # 문장 기준
 ```
 
 - `token`
@@ -583,6 +583,9 @@ include_graphics("https://raw.githubusercontent.com/youngwoos/Doit_textmining/ma
 ##### 3. `ggplot2` 패키지로 만든 그래프의 폰트 바꾸기
 
 ```{r eval=F}
+font_add_google(name = "Gamja Flower", family = "gamjaflower")
+showtext_auto()
+
 ggplot(top20, aes(x = reorder(word, n), y = n)) +
   geom_col() +
   coord_flip() +
@@ -592,7 +595,7 @@ ggplot(top20, aes(x = reorder(word, n), y = n)) +
        x = NULL, y = NULL) +
 
   theme(title = element_text(size = 12),
-        text = element_text(family = "blackhansans"))  # 폰트 적용
+        text = element_text(family = "gamjaflower"))  # 폰트 적용
 ```
 
 ---

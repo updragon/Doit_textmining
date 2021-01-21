@@ -467,7 +467,7 @@ top10 %>%
 
 # 수정한 감정 사전 활용
 new_top10 %>%
-  select(-pos,-neg) %>%
+  select(-pos, -neg) %>%
   arrange(-log_odds_ratio) %>%
   print(n = Inf)
 
