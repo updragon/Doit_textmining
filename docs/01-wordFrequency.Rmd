@@ -24,16 +24,10 @@ options(htmltools.dir.version = FALSE,
         tibble.width = 70,
         servr.interval = 0.01) # Viewer 수정 반영 속도
 
-# knitr::opts_chunk$set(cache = T, warning = F, message = F, dpi = 300, out.height = 400)
-
 knitr::opts_chunk$set(cache = F, warning = F, message = F, 
                       dpi = 300, fig.height = 4, out.width = "100%")
 
-# overview 삽입
-# 키보드 o 
-# 크롬 시크릿 모드에서 열기
-# vimium 단축키와 겹침
-# xaringanExtra::use_tile_view()
+xaringanExtra::use_tile_view()
 
 library(knitr)
 ```
@@ -49,7 +43,6 @@ class: title0
 
 Do it! 쉽게 배우는 R 텍스트 마이닝
 
-
 ---
 
 class: title0
@@ -60,19 +53,27 @@ class: title0
 
 ---
 
+class: title0
+
+```{r, echo=FALSE, out.width="60%", out.height="60%"}
+include_graphics("https://raw.githubusercontent.com/youngwoos/Doit_textmining/main/Image/01/01_3_7.png")
+```
+
+---
+
 class: title1
 
 01-1 텍스트 전처리
 
 ---
 
-## 01-1 텍스트 전처리
+#### 텍스트 전처리
+- 텍스트에서 분석하는 데 불필요한 요소 제거
+- 다루기 쉬운 형태로 만드는 과정
 
-- **텍스트 전처리**
-  - 텍스트에서 분석하는 데 불필요한 요소를 제거하고 다루기 쉬운 형태로 만드는 과정
+--
 
-
-#### 연설문 불러오기
+##### 연설문 불러오기
 
 ```{r, eval=F}
 raw_moon <- readLines("speech_moon.txt", encoding = "UTF-8")
@@ -91,14 +92,12 @@ head(raw_moon)
 
 #### 불필요한 문자 제거하기 - `str_replace_all()`
 
-분석 대상이 아닌 문자 제거 - 특수문자, 한자, 공백 등
+- 분석 대상이 아닌 문자 제거
+  - ex) 특수문자, 한자, 공백
 
+--
 
 ##### 샘플 텍스트로 작동 원리 알아보기
-
-- `string` : 처리할 텍스트
-- `pattern` : 규칙
-- `replacement` : 바꿀 문자
 
 ```{r}
 txt <- "치킨은!! 맛있다. xyz 정말 맛있다!@#"
@@ -121,16 +120,26 @@ library(stringr)
 str_replace_all(string = txt, pattern = "[^가-힣]", replacement = " ")
 ```
 
----
+--
 
-#### 정규 표현식이란?
+- `string` : 처리할 텍스트
+- `pattern` : 규칙
+- `replacement` : 바꿀 문자
+
+
+---
+.box[
+
+.info[`r icon::fa("rocket", color = "#FF7333")` 정규 표현식이란?]
 
 - 특정한 규칙을 가진 문자열을 표현하는 언어
 - 특정 조건의 문자를 찾거나 수정할 때 활용
-- ex) `[^가-힣]` : 한글이 아닌 모든 문자
-    - `가-힣` : "가" 부터 "힣"까지의 모든 한글 문자
-    - `^` : 반대
-- [참고] 정규 표현식 패턴들(오픈튜토리얼스): [bit.ly/easytext_12](https://bit.ly/easytext_12)
+  - ex) `[^가-힣]` : 한글이 아닌 모든 문자
+      - `가-힣` : "가" 부터 "힣"까지의 모든 한글 문자
+      - `^` : 반대
+
+`r icon::fa("lightbulb")` 정규 표현식 패턴들(오픈튜토리얼스): [bit.ly/easytext_12](https://bit.ly/easytext_12)
+]
 
 ---
 
@@ -214,20 +223,16 @@ class: title1
 
 ---
 
-
-## 01-2 토큰화하기
-
+#### 토큰화(tokenization)
 - 토큰(token): 텍스트의 기본 단위(ex: 단락, 문장, 단어, 형태소)
+- 토큰화: 텍스트를 토큰으로 나누는 작업
 
-- 토큰화(tokenization): 텍스트를 토큰으로 나누는 작업
+--
 
----
-
-#### 토큰화하기 - `unnest_tokens()`
-
-- `tidytext` 패키지
+#### `tidytext` 패키지
   - 텍스트를 정돈된 데이터(Tidy Data) 형태를 유지하며 분석
   - `dplyr`, `ggplot2` 패키지와 함께 활용
+  - 토큰화하기: `unnest_tokens()`
 
 ---
 
@@ -280,7 +285,7 @@ text %>%
 
 ---
 
-.scroll-box-22[
+.scroll-box-24[
 ```{r}
 # 문자 기준 토큰화
 text %>%
@@ -290,8 +295,7 @@ text %>%
 ```
 ]
 
-> [주의] `unnest_tokens()`에는 tibble 또는 데이터 프레임 구조 입력
-- 데이터를 tibble 구조로 변환: `as_tibble()`
+`r icon::fa("exclamation-triangle", color = "#FF7333")` `unnest_tokens()`에는 tibble 또는 데이터 프레임 구조 입력
 
 ---
 
@@ -314,10 +318,8 @@ class: title1
 
 ---
 
+#### 단어 빈도 분석
 
-## 01-3 단어 빈도 분석하기
-
-##### 단어 빈도 분석
 - 텍스트에 단어가 몇 번 사용됐는지 알아보는 분석 방법
 - 글쓴이가 무엇을 강조했는지 알 수 있음
 
@@ -367,7 +369,7 @@ word_space <- word_space %>%
 ---
 
 
-#### 자주 사용된 단어 추출하기
+##### 자주 사용된 단어 추출하기
 
 .scroll-output[
 ```{r}
@@ -396,12 +398,16 @@ ggplot(top20, aes(x = reorder(word, n), y = n)) +  # 단어 빈도순 정렬
 
 ---
 
-#### [알아두면 좋아요] macOS에서 그래프에 한글 표현하기
-  - `ggplot2` 패키지의 기본 테마 폰트를 한글 지원 폰트로 변경
+.box[
+
+.info[`r icon::fa("rocket", color = "#FF7333")` macOS에서 그래프에 한글 표현하기]
+
+- `ggplot2` 패키지의 기본 테마 폰트를 한글 지원 폰트로 변경
 
 ```{r eval=F}
 theme_set(theme_gray(base_family = "AppleGothic"))
 ```
+]
 
 ---
 
@@ -465,7 +471,7 @@ library(ggwordcloud)
 include_graphics("https://raw.githubusercontent.com/youngwoos/Doit_textmining/main/Image/01/01_3_3.png")
 ```
 
-- [참고] Plots 창 크기에 따라 그래프 모양 달라짐
+`r icon::fa("lightbulb")` Plots 창 크기에 따라 그래프 모양 달라짐
 
 ---
 
@@ -495,7 +501,7 @@ include_graphics("https://raw.githubusercontent.com/youngwoos/Doit_textmining/ma
 include_graphics("https://raw.githubusercontent.com/youngwoos/Doit_textmining/main/Image/01/01_3_4.png")
 ```
 
-- [참고] 워드 클라우드 디자인 바꾸기: [lepennec.github.io/ggwordcloud](https://lepennec.github.io/ggwordcloud/)
+`r icon::fa("lightbulb")` 워드 클라우드 디자인 바꾸기: [lepennec.github.io/ggwordcloud](https://lepennec.github.io/ggwordcloud/)
 
 ---
 
@@ -526,7 +532,7 @@ showtext_auto()
 showtext_opts(dpi = 300) # opts_chunk$set(dpi=300)
 ```
 
-- [참고] [fonts.google.com](fonts.google.com)
+`r icon::fa("lightbulb")` [fonts.google.com](fonts.google.com)
 
 ---
 
@@ -612,19 +618,21 @@ ggplot(top20, aes(x = reorder(word, n), y = n)) +
   geom_col() +
   coord_flip() +
   geom_text(aes(label = n), hjust = -0.3) +
-  
+
   labs(title = "문재인 대통령 출마 연설문 단어 빈도",
        x = NULL, y = NULL) +
-  
+
   theme(title = element_text(size = 12),
         text = element_text(family = "gamjaflower"))  # 폰트 적용
 ```
 
-- [참고] RStudio를 실행할 때마다 `showtext` 패키지로 폰트를 설정해야 합니다.
+`r icon::fa("lightbulb")` RStudio를 실행할 때마다 `showtext` 패키지로 폰트를 설정해야 합니다.
 
 ---
 
-#### [알아두면 좋아요] `ggplot2` 기본 테마 폰트 변경하기
+.box[
+
+.info[`r icon::fa("rocket", color = "#FF7333")` `ggplot2` 기본 테마 폰트 변경하기]
 
 - 매번 `theme()`을 이용해 폰트를 지정하는게 번거롭다면 `ggplot2` 패키지 기본 테마 폰트 설정
 
@@ -632,6 +640,9 @@ ggplot(top20, aes(x = reorder(word, n), y = n)) +
 theme_set(theme_gray(base_family = "nanumgothic"))
 ```
 
-- 테마 바꾸는 함수 사용하면 폰트가 기본값으로 되돌아감. 이 경우 `theme()`을 이용해 폰트 직접 지정
-  - ex) `theme_minimal()`, `theme_bw()` 
+- 테마 바꾸는 함수 사용하면 폰트가 기본값으로 되돌아감
+  - ex) `theme_minimal()`
+- 이때는 `theme()`을 이용해 직접 폰트 지정
+
+]
 

@@ -1,23 +1,19 @@
+/*
 @import url('https://spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css');
 @import url('https://fonts.googleapis.com/earlyaccess/nanumbrushscript.css');
 @import url('https://fonts.googleapis.com/earlyaccess/nanumpenscript.css');
 @import url('https://fonts.googleapis.com/earlyaccess/nanumgothic.css');
-@import url('https://fonts.googleapis.com/css?family=Inconsolata');
-@import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
-
-/*색 배합 참고
-https://paletton.com/#uid=33z0u0kpAy7f-L2kUDavEutwGna
 */
 
-html, body, li{
-  font-family:'NanumGothic';
-}
 
-/*
+/*to do
+네트워크 분석 시각화 한글 확인
+그래프 이미지 고해상도로
+*/
+
 html, body, li, p {
   font-family:'NanumGothic';
 }
-*/
 
 /*글자 줄 간격*/
 /*
@@ -26,16 +22,21 @@ p {
 }
 */
 
-h1, h2, h3, h4, h5, h6 {
+h1, h4, h5, h6 {
   font-family:'NanumGothic';
-  color : #2C6EAB;
+  color : #2D6EA9;
 }
 
+
 h2 {
+  font-family:'NanumGothic';
+  color : #2D6EA9;
   font-size: 35px;
 }
 
 h3 {
+  font-family:'NanumGothic';
+  color : #2D6EA9;
   font-size: 30px;
 }
 
@@ -72,48 +73,16 @@ ul {
 
 /*주석*/
 .hljs-comment {
-  /*font-family:'Lucida Console';*/
-  font-family:'Inconsolata';
+  font-family:'Lucida Console';
 }
-
-
-/*링크*/
-a, a > code {
-  color: #4F81BD;
-  text-decoration: none;
-}
-
-
-/*---박스---*/
-
-/* USYD blockquote */
-box, .box {
-  display: block;
-  margin-top: 1em;
-  margin-bottom: 0.2em;
-  margin-left: 0px;
-  margin-right: 5px;
-  border-left: solid 10px #FF8C58;
-  border-top: solid 2px #FF8C58;
-  border-bottom: solid 2px #FF8C58;
-  border-right: solid 2px #FF8C58;
-  box-shadow: 0 0 6px rgba(0,0,0,0.5);
-  /* background-color: #e64626; */
-  /*color: #e64626;*/
-  padding: 0.5em;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-}
-
-/*---------*/
-
-
 
 /*코드 중 함수 - library에만 먹힘*/
 .hljs-github .hljs-keyword, .hljs-github .hljs-selector-tag, .hljs-github .hljs-subst {
-    /*color: #204A87;*/
+    color: #204A87;
     font-weight: bold;
 }
+
+
 
 
 /*코드내 문자 음영*/
@@ -129,13 +98,13 @@ box, .box {
 
 /*코드 폰트 - 코드 청크 내에만 적용*/
 .hljs-github .hljs{
-  font-family: 'Source Code Pro', 'Inconsolata', Monaco, monospace; 
+  font-family: 'Source Code Pro', 'Lucida Console', Monaco, monospace; 
 }
 
 
 /* 문장 내 코드*/
 .remark-inline-code {
-    font-family: 'Source Code Pro', 'Inconsolata', Monaco, monospace;
+    font-family: 'Source Code Pro', 'Lucida Console', Monaco, monospace;
     font-size: 100%;
     background-color: #F2F2F2;
     padding: 3px 3px;  /*음영 상하 좌우*/ 
@@ -156,10 +125,7 @@ box, .box {
     color: #333;
     background: #F2F2F2;
     line-height: 125%;
-    /*margin-top: 1.5em;*/
 }
-
-
 
 
 /*주석*/
@@ -268,15 +234,6 @@ slides > slide {
   height:20em;
   overflow-y: scroll;
 }
-.scroll-box-22 {
-  height:22em;
-  overflow-y: scroll;
-}
-.scroll-box-24 {
-  height:24em;
-  overflow-y: scroll;
-}
-
 .scroll-output {
   height: 90%;
   overflow-y: scroll;
@@ -309,31 +266,24 @@ slides > slide {
 /*title 페이지*/
 
 .title0 {
-  background-color: #FF7232;
+  background-color: #E64626;
   color: white;
-  font-family:'Jua';
-  font-size: 60px;
-  vertical-align: middle;
-  text-align: center;
-}
-
-.title1 {
-  background-color: #FFCE32;
-  color: white;
-  font-family:'Jua';
+  font-family:'NanumGothic';
   font-size: 55px;
   vertical-align: middle;
   text-align: center;
+  font-weight: bold;
 }
 
-
-/*알아두면 좋아요 폰트*/
-.info {
-  font-size: 30px;
-  color : #FF7333;
-  font-family:'Jua';
+.title1 {
+  background-color: #FFB800;
+  color: white;
+  font-family:'NanumGothic';
+  font-size: 55px;
+  vertical-align: middle;
+  text-align: center;
+  font-weight: bold;
 }
-
 
 
 /*리스트 상하 간격*/

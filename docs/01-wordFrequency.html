@@ -6,6 +6,9 @@
     <meta name="author" content="김영우" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/tile-view/tile-view.css" rel="stylesheet" />
+    <script src="libs/tile-view/tile-view.js"></script>
+    <link href="libs/font-awesome/css/fontawesome-all.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="css/custom.css" type="text/css" />
   </head>
   <body>
@@ -23,7 +26,6 @@ class: title0
 
 Do it! 쉽게 배우는 R 텍스트 마이닝
 
-
 ---
 
 class: title0
@@ -34,19 +36,25 @@ class: title0
 
 ---
 
+class: title0
+
+&lt;img src="https://raw.githubusercontent.com/youngwoos/Doit_textmining/main/Image/01/01_3_7.png" width="60%" height="60%" /&gt;
+
+---
+
 class: title1
 
 01-1 텍스트 전처리
 
 ---
 
-## 01-1 텍스트 전처리
+#### 텍스트 전처리
+- 텍스트에서 분석하는 데 불필요한 요소 제거
+- 다루기 쉬운 형태로 만드는 과정
 
-- **텍스트 전처리**
-  - 텍스트에서 분석하는 데 불필요한 요소를 제거하고 다루기 쉬운 형태로 만드는 과정
+--
 
-
-#### 연설문 불러오기
+##### 연설문 불러오기
 
 
 ```r
@@ -71,14 +79,12 @@ head(raw_moon)
 
 #### 불필요한 문자 제거하기 - `str_replace_all()`
 
-분석 대상이 아닌 문자 제거 - 특수문자, 한자, 공백 등
+- 분석 대상이 아닌 문자 제거
+  - ex) 특수문자, 한자, 공백
 
+--
 
 ##### 샘플 텍스트로 작동 원리 알아보기
-
-- `string` : 처리할 텍스트
-- `pattern` : 규칙
-- `replacement` : 바꿀 문자
 
 
 ```r
@@ -105,16 +111,26 @@ str_replace_all(string = txt, pattern = "[^가-힣]", replacement = " ")
 ## [1] "치킨은   맛있다      정말 맛있다   "
 ```
 
----
+--
 
-#### 정규 표현식이란?
+- `string` : 처리할 텍스트
+- `pattern` : 규칙
+- `replacement` : 바꿀 문자
+
+
+---
+.box[
+
+.info[<i class="fas  fa-rocket " style="color:#FF7333;"></i> 정규 표현식이란?]
 
 - 특정한 규칙을 가진 문자열을 표현하는 언어
 - 특정 조건의 문자를 찾거나 수정할 때 활용
-- ex) `[^가-힣]` : 한글이 아닌 모든 문자
-    - `가-힣` : "가" 부터 "힣"까지의 모든 한글 문자
-    - `^` : 반대
-- [참고] 정규 표현식 패턴들(오픈튜토리얼스): [bit.ly/easytext_12](https://bit.ly/easytext_12)
+  - ex) `[^가-힣]` : 한글이 아닌 모든 문자
+      - `가-힣` : "가" 부터 "힣"까지의 모든 한글 문자
+      - `^` : 반대
+
+<i class="fas  fa-lightbulb "></i> 정규 표현식 패턴들(오픈튜토리얼스): [bit.ly/easytext_12](https://bit.ly/easytext_12)
+]
 
 ---
 
@@ -247,20 +263,16 @@ class: title1
 
 ---
 
-
-## 01-2 토큰화하기
-
+#### 토큰화(tokenization)
 - 토큰(token): 텍스트의 기본 단위(ex: 단락, 문장, 단어, 형태소)
+- 토큰화: 텍스트를 토큰으로 나누는 작업
 
-- 토큰화(tokenization): 텍스트를 토큰으로 나누는 작업
+--
 
----
-
-#### 토큰화하기 - `unnest_tokens()`
-
-- `tidytext` 패키지
+#### `tidytext` 패키지
   - 텍스트를 정돈된 데이터(Tidy Data) 형태를 유지하며 분석
   - `dplyr`, `ggplot2` 패키지와 함께 활용
+  - 토큰화하기: `unnest_tokens()`
 
 ---
 
@@ -291,7 +303,7 @@ library(tidytext)
 text %&gt;%
   unnest_tokens(input = value,        # 토큰화할 텍스트
                 output = word,        # 토큰을 담을 변수명
-                token = "sentences")  # 토큰화 기준
+                token = "sentences")  # 문장 기준
 ```
 
 
@@ -337,7 +349,7 @@ text %&gt;%
 
 ---
 
-.scroll-box-22[
+.scroll-box-24[
 
 ```r
 # 문자 기준 토큰화
@@ -394,8 +406,7 @@ text %&gt;%
 ```
 ]
 
-&gt; [주의] `unnest_tokens()`에는 tibble 또는 데이터 프레임 구조 입력
-- 데이터를 tibble 구조로 변환: `as_tibble()`
+<i class="fas  fa-exclamation-triangle " style="color:#FF7333;"></i> `unnest_tokens()`에는 tibble 또는 데이터 프레임 구조 입력
 
 ---
 
@@ -436,10 +447,8 @@ class: title1
 
 ---
 
+#### 단어 빈도 분석
 
-## 01-3 단어 빈도 분석하기
-
-##### 단어 빈도 분석
 - 텍스트에 단어가 몇 번 사용됐는지 알아보는 분석 방법
 - 글쓴이가 무엇을 강조했는지 알 수 있음
 
@@ -538,7 +547,7 @@ word_space &lt;- word_space %&gt;%
 ---
 
 
-#### 자주 사용된 단어 추출하기
+##### 자주 사용된 단어 추출하기
 
 .scroll-output[
 
@@ -591,19 +600,23 @@ ggplot(top20, aes(x = reorder(word, n), y = n)) +  # 단어 빈도순 정렬
  coord_flip()                                      # 회전
 ```
 
-&lt;img src="01-wordFrequency_files/figure-html/unnamed-chunk-24-1.png" width="60%" height="80%" /&gt;
+&lt;img src="01-wordFrequency_files/figure-html/unnamed-chunk-25-1.png" width="60%" height="80%" /&gt;
 
 
 
 ---
 
-#### [알아두면 좋아요] macOS에서 그래프에 한글 표현하기
-  - `ggplot2` 패키지의 기본 테마 폰트를 한글 지원 폰트로 변경
+.box[
+
+.info[<i class="fas  fa-rocket " style="color:#FF7333;"></i> macOS에서 그래프에 한글 표현하기]
+
+- `ggplot2` 패키지의 기본 테마 폰트를 한글 지원 폰트로 변경
 
 
 ```r
 theme_set(theme_gray(base_family = "AppleGothic"))
 ```
+]
 
 ---
 
@@ -624,7 +637,7 @@ ggplot(top20, aes(x = reorder(word, n), y = n)) +
 
 ---
 
-&lt;img src="01-wordFrequency_files/figure-html/unnamed-chunk-27-1.png" width="80%" /&gt;
+&lt;img src="01-wordFrequency_files/figure-html/unnamed-chunk-28-1.png" width="80%" /&gt;
 
 
 
@@ -656,7 +669,7 @@ ggplot(word_space, aes(label = word, size = n)) +
 
 &lt;img src="https://raw.githubusercontent.com/youngwoos/Doit_textmining/main/Image/01/01_3_3.png" width="40%" height="40%" /&gt;
 
-- [참고] Plots 창 크기에 따라 그래프 모양 달라짐
+<i class="fas  fa-lightbulb "></i> Plots 창 크기에 따라 그래프 모양 달라짐
 
 ---
 
@@ -683,7 +696,7 @@ ggplot(word_space,
 
 &lt;img src="https://raw.githubusercontent.com/youngwoos/Doit_textmining/main/Image/01/01_3_4.png" width="80%" height="80%" /&gt;
 
-- [참고] 워드 클라우드 디자인 바꾸기: [lepennec.github.io/ggwordcloud](https://lepennec.github.io/ggwordcloud/)
+<i class="fas  fa-lightbulb "></i> 워드 클라우드 디자인 바꾸기: [lepennec.github.io/ggwordcloud](https://lepennec.github.io/ggwordcloud/)
 
 ---
 
@@ -709,7 +722,7 @@ showtext_auto()
 
 
 
-- [참고] [fonts.google.com](fonts.google.com)
+<i class="fas  fa-lightbulb "></i> [fonts.google.com](fonts.google.com)
 
 ---
 
@@ -765,6 +778,9 @@ ggplot(word_space,
 
 
 ```r
+font_add_google(name = "Gamja Flower", family = "gamjaflower")
+showtext_auto()
+
 ggplot(top20, aes(x = reorder(word, n), y = n)) +
   geom_col() +
   coord_flip() +
@@ -774,7 +790,7 @@ ggplot(top20, aes(x = reorder(word, n), y = n)) +
        x = NULL, y = NULL) +
 
   theme(title = element_text(size = 12),
-        text = element_text(family = "blackhansans"))  # 폰트 적용
+        text = element_text(family = "gamjaflower"))  # 폰트 적용
 ```
 
 ---
@@ -782,13 +798,15 @@ ggplot(top20, aes(x = reorder(word, n), y = n)) +
 
 
 
-&lt;img src="01-wordFrequency_files/figure-html/unnamed-chunk-41-1.png" width="80%" /&gt;
+&lt;img src="01-wordFrequency_files/figure-html/unnamed-chunk-42-1.png" width="80%" /&gt;
 
-- [참고] RStudio를 실행할 때마다 `showtext` 패키지로 폰트를 설정해야 합니다.
+<i class="fas  fa-lightbulb "></i> RStudio를 실행할 때마다 `showtext` 패키지로 폰트를 설정해야 합니다.
 
 ---
 
-#### [알아두면 좋아요] `ggplot2` 기본 테마 폰트 변경하기
+.box[
+
+.info[<i class="fas  fa-rocket " style="color:#FF7333;"></i> `ggplot2` 기본 테마 폰트 변경하기]
 
 - 매번 `theme()`을 이용해 폰트를 지정하는게 번거롭다면 `ggplot2` 패키지 기본 테마 폰트 설정
 
@@ -797,8 +815,11 @@ ggplot(top20, aes(x = reorder(word, n), y = n)) +
 theme_set(theme_gray(base_family = "nanumgothic"))
 ```
 
-- 테마 바꾸는 함수 사용하면 폰트가 기본값으로 되돌아감. 이 경우 `theme()`을 이용해 폰트 직접 지정
-  - ex) `theme_minimal()`, `theme_bw()` 
+- 테마 바꾸는 함수 사용하면 폰트가 기본값으로 되돌아감
+  - ex) `theme_minimal()`
+- 이때는 `theme()`을 이용해 직접 폰트 지정
+
+]
 
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
