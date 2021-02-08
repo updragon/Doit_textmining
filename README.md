@@ -3,7 +3,7 @@
 
 ![](cover.png)
 
-- 예스24 [[바로가기]](http://www.yes24.com/)
+- 예스24 [[바로가기]]()
 - 알라딘 [[바로가기]](https://www.aladin.co.kr/)
 - 교보문고 [[바로가기]](http://www.kyobobook.co.kr/)
 
