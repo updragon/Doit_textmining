@@ -53,7 +53,7 @@ Do it! 쉽게 배우는 R 텍스트 마이닝
 .pull-left[
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 ```{r, echo=FALSE, out.width="70%", out.height="70%"}
-include_graphics("../cover.png")
+include_graphics("https://raw.githubusercontent.com/youngwoos/Doit_textmining/main/cover.png")
 ```
 ]
 
