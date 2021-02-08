@@ -3,9 +3,9 @@
 
 ![](cover.png)
 
-- 예스24 [[바로가기]](https://github.com/youngwoos/Doit_textmining/blob/main/Data)
-- 알라딘 [[바로가기]](https://www.aladin.co.kr/)
-- 교보문고 [[바로가기]](http://www.kyobobook.co.kr/)
+- 예스24 [[바로가기]](http://bit.ly/3oUuJOB)
+- 알라딘 [[바로가기]](http://bit.ly/3oXOSDn)
+- 교보문고 [[바로가기]](https://bit.ly/2LtNOcB)
 
 ---
 
