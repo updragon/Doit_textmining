@@ -1,5 +1,5 @@
 ---
-title: "Do it! 쉽게 배우는 R 텍스트 마이닝"
+title: "Do it! 쉽게 배우는 R 텍스트 마이닝 - 01 단어 빈도 분석"
 author: "김영우"
 output:
   xaringan::moon_reader:
@@ -30,6 +30,8 @@ knitr::opts_chunk$set(cache = F, warning = F, message = F,
 xaringanExtra::use_tile_view()
 
 library(knitr)
+library(icon)
+library(here)
 ```
 
 
@@ -43,6 +45,34 @@ class: title0
 
 Do it! 쉽게 배우는 R 텍스트 마이닝
 
+
+---
+
+<br>
+
+.pull-left[
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+```{r, echo=FALSE, out.width="70%", out.height="70%"}
+include_graphics("../cover.png")
+```
+]
+
+.pull-right[
+
+<br>
+<br>
+<br>
+
+`r fontawesome("github")` [github.com/youngwoos/Doit_textmining](https://github.com/youngwoos/Doit_textmining)
+
+`r fontawesome("facebook-square")` [facebook.com/groups/datacommunity](https://facebook.com/groups/datacommunity)
+
+- [네이버책](https://book.naver.com/bookdb/book_detail.nhn?bid=17891971)
+  - [yes24](http://bit.ly/3oUuJOB)
+  - [알라딘](http://bit.ly/3oXOSDn)
+  - [교보문고](https://bit.ly/2LtNOcB)
+]
+
 ---
 
 class: title0
@@ -53,7 +83,9 @@ class: title0
 
 ---
 
-class: title0
+class: title0-2
+
+We'll make
 
 ```{r, echo=FALSE, out.width="60%", out.height="60%"}
 include_graphics("https://raw.githubusercontent.com/youngwoos/Doit_textmining/main/Image/01/01_3_7.png")
@@ -61,6 +93,42 @@ include_graphics("https://raw.githubusercontent.com/youngwoos/Doit_textmining/ma
 
 ---
 
+class: title0-2
+
+and
+
+```{r, echo=F, out.width="70%", out.height="70%"}
+include_graphics("https://raw.githubusercontent.com/youngwoos/Doit_textmining/main/Image/01/01_3_6.png")
+```
+
+---
+
+<!-- <br> -->
+
+<!-- ## .font-jua[목차] -->
+
+<!-- .large[.font-jua[[01-1 텍스트 전처리](#01-1)]] -->
+
+<!-- .large[.font-jua[[01-2 토큰화하기](#01-2)]] -->
+
+<!-- .large[.font-jua[[01-3 단어 빈도 분석하기](#01-3)]] -->
+
+<br>
+
+.large2[.font-jua[목차]]
+
+.large[.font-jua[01-1 텍스트 전처리]]([link](#01-1))
+
+.large[.font-jua[01-2 토큰화하기]]([link](#01-2))
+
+.large[.font-jua[01-3 단어 빈도 분석하기]]([link](#01-3))
+
+
+
+---
+
+
+name: 01-1
 class: title1
 
 01-1 텍스트 전처리
@@ -130,7 +198,7 @@ str_replace_all(string = txt, pattern = "[^가-힣]", replacement = " ")
 ---
 .box[
 
-.info[`r icon::fa("rocket", color = "#FF7333")` 정규 표현식이란?]
+.info[`r icon_style(fontawesome("rocket"), fill = "#FF7333")` 정규 표현식이란?]
 
 - 특정한 규칙을 가진 문자열을 표현하는 언어
 - 특정 조건의 문자를 찾거나 수정할 때 활용
@@ -138,7 +206,7 @@ str_replace_all(string = txt, pattern = "[^가-힣]", replacement = " ")
       - `가-힣` : "가" 부터 "힣"까지의 모든 한글 문자
       - `^` : 반대
 
-`r icon::fa("lightbulb")` 정규 표현식 패턴들(오픈튜토리얼스): [bit.ly/easytext_12](https://bit.ly/easytext_12)
+`r fontawesome("lightbulb")` 정규 표현식 패턴들(오픈튜토리얼스): [bit.ly/easytext_12](https://bit.ly/easytext_12)
 ]
 
 ---
@@ -217,6 +285,7 @@ moon <- raw_moon %>%
 
 ---
 
+name: 01-2
 class: title1
 
 01-2 토큰화하기
@@ -295,7 +364,7 @@ text %>%
 ```
 ]
 
-`r icon::fa("exclamation-triangle", color = "#FF7333")` `unnest_tokens()`에는 tibble 또는 데이터 프레임 구조 입력
+`r icon_style(fontawesome("exclamation-triangle"), fill = "#FF7333")` `unnest_tokens()`에는 tibble 또는 데이터 프레임 구조 입력
 
 ---
 
@@ -312,7 +381,9 @@ word_space
 
 ---
 
+name: 01-3
 class: title1
+
 
 01-3 단어 빈도 분석하기
 
@@ -400,7 +471,7 @@ ggplot(top20, aes(x = reorder(word, n), y = n)) +  # 단어 빈도순 정렬
 
 .box[
 
-.info[`r icon::fa("rocket", color = "#FF7333")` macOS에서 그래프에 한글 표현하기]
+.info[`r icon_style(fontawesome("rocket"), fill = "#FF7333")` macOS에서 그래프에 한글 표현하기]
 
 - `ggplot2` 패키지의 기본 테마 폰트를 한글 지원 폰트로 변경
 
@@ -419,7 +490,7 @@ ggplot(top20, aes(x = reorder(word, n), y = n)) +
  coord_flip() +
  geom_text(aes(label = n), hjust = -0.3) +            # 막대 밖 빈도 표시
 
- labs(title = "문재인 대통령 출마 연설문 단어 빈도",       # 그래프 제목
+ labs(title = "문재인 대통령 출마 연설문 단어 빈도",  # 그래프 제목
       x = NULL, y = NULL) +                           # 축 이름 삭제
 
  theme(title = element_text(size = 12))               # 제목 크기
@@ -433,7 +504,7 @@ ggplot(top20, aes(x = reorder(word, n), y = n)) +
  coord_flip() +
  geom_text(aes(label = n), hjust = -0.3) +            # 막대 밖 빈도 표시
 
- labs(title = "문재인 대통령 출마 연설문 단어 빈도",       # 그래프 제목
+ labs(title = "문재인 대통령 출마 연설문 단어 빈도",  # 그래프 제목
       x = NULL, y = NULL) +                           # 축 이름 삭제
 
  theme(title = element_text(size = 12))               # 제목 크기
@@ -471,7 +542,7 @@ library(ggwordcloud)
 include_graphics("https://raw.githubusercontent.com/youngwoos/Doit_textmining/main/Image/01/01_3_3.png")
 ```
 
-`r icon::fa("lightbulb")` Plots 창 크기에 따라 그래프 모양 달라짐
+`r fontawesome("lightbulb")` Plots 창 크기에 따라 그래프 모양 달라짐
 
 ---
 
@@ -501,7 +572,7 @@ include_graphics("https://raw.githubusercontent.com/youngwoos/Doit_textmining/ma
 include_graphics("https://raw.githubusercontent.com/youngwoos/Doit_textmining/main/Image/01/01_3_4.png")
 ```
 
-`r icon::fa("lightbulb")` 워드 클라우드 디자인 바꾸기: [lepennec.github.io/ggwordcloud](https://lepennec.github.io/ggwordcloud/)
+`r fontawesome("lightbulb")` 워드 클라우드 디자인 바꾸기: [lepennec.github.io/ggwordcloud](https://lepennec.github.io/ggwordcloud/)
 
 ---
 
@@ -532,7 +603,7 @@ showtext_auto()
 showtext_opts(dpi = 300) # opts_chunk$set(dpi=300)
 ```
 
-`r icon::fa("lightbulb")` [fonts.google.com](fonts.google.com)
+`r fontawesome("lightbulb")` [fonts.google.com](fonts.google.com)
 
 ---
 
@@ -600,8 +671,7 @@ ggplot(top20, aes(x = reorder(word, n), y = n)) +
   labs(title = "문재인 대통령 출마 연설문 단어 빈도",
        x = NULL, y = NULL) +
 
-  theme(title = element_text(size = 12),
-        text = element_text(family = "gamjaflower"))  # 폰트 적용
+  theme(title = element_text(size = 12),text = element_text(family = "gamjaflower"))  # 폰트 적용
 ```
 
 ---
@@ -626,13 +696,13 @@ ggplot(top20, aes(x = reorder(word, n), y = n)) +
         text = element_text(family = "gamjaflower"))  # 폰트 적용
 ```
 
-`r icon::fa("lightbulb")` RStudio를 실행할 때마다 `showtext` 패키지로 폰트를 설정해야 합니다.
+`r fontawesome("lightbulb")` RStudio를 실행할 때마다 `showtext` 패키지로 폰트를 설정해야 합니다.
 
 ---
 
 .box[
 
-.info[`r icon::fa("rocket", color = "#FF7333")` `ggplot2` 기본 테마 폰트 변경하기]
+.info[`r icon_style(fontawesome("rocket"), fill = "#FF7333")` `ggplot2` 기본 테마 폰트 변경하기]
 
 - 매번 `theme()`을 이용해 폰트를 지정하는게 번거롭다면 `ggplot2` 패키지 기본 테마 폰트 설정
 
@@ -646,3 +716,180 @@ theme_set(theme_gray(base_family = "nanumgothic"))
 
 ]
 
+---
+
+class: title1
+
+정리하기
+
+---
+
+```{r eval=F}
+# 전처리
+moon <- raw_moon %>%
+  str_replace_all("[^가-힣]", " ") %>%
+  str_squish() %>% 
+  as_tibble() 
+
+# 토큰화
+word_space <- moon %>% 
+  unnest_tokens(input = value, 
+                output = word, 
+                token = "words") 
+
+# 단어 빈도 구하기
+word_space <- word_space %>% 
+  count(word, sort = T) %>% 
+  filter(str_count(word) > 1) 
+
+# 자주 사용된 단어 추출
+top20 <- word_space %>% 
+  head(20)
+```
+
+---
+
+class: title1
+
+분석 도전
+
+---
+
+### 분석 도전
+
+`speech_park.txt`에는 박근혜 전 대통령의 대선 출마 선언문이 들어있습니다.
+
+Q1. `speech_park.txt`를 불러와 분석에 적합하게 전처리한 다음 띄어쓰기 기준으로 토큰화하세요.
+
+Q2. 가장 자주 사용된 단어 20개를 추출하세요.
+
+Q3. 가장 자주 사용된 단어 20개의 빈도를 나타낸 막대 그래프를 만드세요. <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•그래프의 폰트는 나눔고딕으로 설정하세요.
+
+
+---
+
+Q1. `speech_park.txt`를 불러와 분석에 적합하게 전처리한 다음 띄어쓰기 기준으로 토큰화하세요.
+
+```{r eval=F}
+raw_park <- readLines("speech_park.txt", encoding = "UTF-8")
+```
+
+```{r echo=F}
+raw_park <- readLines(here("Data/speech_park.txt"), encoding = "UTF-8")
+```
+
+```{r eval=F}
+# 전처리
+library(dplyr)
+library(stringr)
+park <- raw_park %>%
+  str_replace_all("[^가-힣]", " ") %>%  # 한글만 남기기
+  str_squish() %>%                      # 연속된 공백 제거
+  as_tibble()                           # tibble로 변환
+
+park
+```
+
+---
+
+Q1. `speech_park.txt`를 불러와 분석에 적합하게 전처리한 다음 띄어쓰기 기준으로 토큰화하세요.
+
+```{r echo=F}
+# 전처리
+library(dplyr)
+library(stringr)
+park <- raw_park %>%
+  str_replace_all("[^가-힣]", " ") %>%  # 한글만 남기기
+  str_squish() %>%                      # 연속된 공백 제거
+  as_tibble()                           # tibble로 변환
+
+park
+```
+
+---
+
+Q1. `speech_park.txt`를 불러와 분석에 적합하게 전처리한 다음 띄어쓰기 기준으로 토큰화하세요.
+
+```{r}
+# 토큰화
+library(tidytext)
+word_space <- park %>%
+  unnest_tokens(input = value,
+                output = word,
+                token = "words")  # 띄어쓰기 기준
+
+word_space
+```
+
+
+---
+
+Q2. 가장 자주 사용된 단어 20개를 추출하세요.
+```{r eval=F}
+top20 <- word_space %>%
+  count(word, sort = T) %>%
+  filter(str_count(word) > 1) %>%
+  head(20)
+
+top20
+```
+
+.scroll-box-16[
+```{r echo=F}
+top20 <- word_space %>%
+  count(word, sort = T) %>%
+  filter(str_count(word) > 1) %>%
+  head(20)
+
+top20
+```
+]
+
+
+---
+
+Q3. 가장 자주 사용된 단어 20개의 빈도를 나타낸 막대 그래프를 만드세요. <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•그래프의 폰트는 나눔고딕으로 설정하세요.
+
+
+```{r}
+# 폰트 설정
+library(showtext)
+font_add_google(name = "Nanum Gothic", family = "nanumgothic")
+showtext_auto()
+```
+
+
+```{r eval=F}
+# 막대 그래프 만들기
+library(ggplot2)
+ggplot(top20, aes(x = reorder(word, n), y = n)) +
+  geom_col() +
+  coord_flip () +
+  geom_text(aes(label = n), hjust = -0.3) +
+  labs(x = NULL) +
+  theme(text = element_text(family = "nanumgothic"))
+```
+
+---
+
+Q3. 가장 자주 사용된 단어 20개의 빈도를 나타낸 막대 그래프를 만드세요. <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•그래프의 폰트는 나눔고딕으로 설정하세요.
+
+
+```{r echo=F, fig.height = 5, out.width = "80%"}
+showtext_opts(dpi = 300) # opts_chunk$set(dpi=300)
+
+# 막대 그래프 만들기
+library(ggplot2)
+ggplot(top20, aes(x = reorder(word, n), y = n)) +
+  geom_col() +
+  coord_flip () +
+  geom_text(aes(label = n), hjust = -0.3) +
+  labs(x = NULL) +
+  theme(text = element_text(family = "nanumgothic"))
+```
+
+---
+
+class: title0
+
+끝

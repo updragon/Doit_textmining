@@ -4,6 +4,7 @@
 @import url('https://fonts.googleapis.com/earlyaccess/nanumgothic.css');
 @import url('https://fonts.googleapis.com/css?family=Inconsolata');
 @import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
+@import url("//cdn.jsdelivr.net/gh/wan2land/d2coding/d2coding-full.css");
 
 /*색 배합 참고
 https://paletton.com/#uid=33z0u0kpAy7f-L2kUDavEutwGna
@@ -61,7 +62,7 @@ p {
     margin-block-end: 1em;
     margin-inline-start: 0px;
     margin-inline-end: 0px;
-    line-height: 140%;
+    /*line-height: 140%;*/
 }
 
 /*불릿 시작 위치 간격*/
@@ -79,7 +80,7 @@ ul {
 
 /*링크*/
 a, a > code {
-  color: #4F81BD;
+  color: #4A86BC;
   text-decoration: none;
 }
 
@@ -123,7 +124,7 @@ box, .box {
 
 /*코드 폰트*/
 .remark-code { 
-  font-family: 'd2coding'; 
+  font-family: 'D2Coding'; 
   font-size: 100%;
 }
 
@@ -141,9 +142,10 @@ box, .box {
     padding: 3px 3px;  /*음영 상하 좌우*/ 
 }
 
-/*여백 상우하좌, 코드 결과물 상하간격*/
+/*여백 상하우좌*/
 .remark-slide-content {
-    padding: 0em 2em 0.5em 2em;
+    /*padding: 0em 2em 0.5em 2em;*/
+    padding: 0.5em 2em 0.5em 2em;
     line-height: 110%;
     font-size: 22px;
 }
@@ -160,6 +162,9 @@ box, .box {
 }
 
 
+.font-jua {
+  font-family:'Jua';
+}
 
 
 /*주석*/
@@ -173,29 +178,28 @@ box, .box {
     color: #0000CF;
 }
 
-.pen-b { 
-  font-family: 'Nanum Brush Script', cursive;
-  font-size: 130%;
-}
 
-.pen-p { 
-  font-family: 'Nanum Pen Script', cursive;
-  font-size: 130%;
-}
+/*폰트 컬러*/
 
-.blue {
-  color: #3b5998;
+
+.orange {
+  color: #FF7333;
 }
 
 .yellow {
-  color: #FFCB01;
+  color: #FFCE32;
 }
 
-.gray {
-  color: #7f7f7f;
+.blue {
+  color: #2C6EAB;
 }
 
+
+
+
+/*폰트 크기*/
 .large { font-size: 130% }
+.large2 { font-size: 180% }
 .small { font-size: 70%  }
 .tiny  { font-size: 40%  }
 
@@ -315,6 +319,15 @@ slides > slide {
   font-size: 60px;
   vertical-align: middle;
   text-align: center;
+}
+
+.title0-2 {
+  color: #FF7232;
+  font-family:'Jua';
+  font-size: 60px;
+  vertical-align: middle;
+  text-align: center;
+  line-height: 50%;
 }
 
 .title1 {
