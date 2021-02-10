@@ -3,7 +3,7 @@
 파일           | 내용
 :------------- |:-------------
 [01-wordFrequency.html](https://youngwoos.github.io/Doit_textmining/01-wordFrequency.html) | 01 단어 빈도 분석
-[02]()| 02 형태소 분석기를 이용한 단어 빈도 분석
+[02-morphologicalAnalysis](https://youngwoos.github.io/Doit_textmining/02-morphologicalAnalysis.html)| 02 형태소 분석기를 이용한 단어 빈도 분석
 [03]()| 03 비교 분석
 [04]()| 04 감정 분석
 [05]()| 05 의미망 분석
