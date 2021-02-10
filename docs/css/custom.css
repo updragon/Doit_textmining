@@ -23,7 +23,7 @@ html, body, li, p {
 /*글자 줄 간격*/
 /*
 p {
-  line-height: 140%
+  line-height: 10px;
 }
 */
 
@@ -62,7 +62,7 @@ p {
     margin-block-end: 1em;
     margin-inline-start: 0px;
     margin-inline-end: 0px;
-    /*line-height: 140%;*/
+    line-height: 120%;
 }
 
 /*불릿 시작 위치 간격*/
@@ -279,6 +279,12 @@ slides > slide {
 .scroll-box-24 {
   height:24em;
   overflow-y: scroll;
+  /*margin-top: -1em*/
+}
+.scroll-box-26 {
+  height:26em;
+  overflow-y: scroll;
+  margin-top: -1em
 }
 
 .scroll-output {
@@ -381,4 +387,41 @@ th, td {
 /*코드가 청크 밖으로 넘어가지 않음*/
 pre {
   white-space: pre-wrap;
+}
+
+
+/*상하 간격 조정*/
+
+/*간격 띄우기*/
+br10 {
+   display: block;
+   margin: 10px 0;
+}
+
+/*간격 줄이기*/
+br-back-5 {
+   display: block;
+   margin: -5px 0;
+}
+
+br-back-10 {
+   display: block;
+   margin: -10px 0;
+}
+
+br-back-20 {
+   display: block;
+   margin: -20px 0;
+}
+br-back-30 {
+   display: block;
+   margin: -30px 0;
+}
+br-back-40 {
+   display: block;
+   margin: -40px 0;
+}
+br-back-50 {
+   display: block;
+   margin: -50px 0;
 }
