@@ -98,7 +98,7 @@ We'll make
 <br-back-10>
 
 ```{r, echo=FALSE, out.width="60%", out.height="60%"}
-include_graphics("https://raw.githubusercontent.com/youngwoos/Doit_textmining/main/Image/02/01_2_1.png")
+include_graphics("Image/02/01_2_1.png")
 ```
 
 ---
@@ -110,8 +110,7 @@ and
 <br-back-40>
 
 ```{r, echo=F, out.width="60%", out.height="60%"}
-# include_graphics("https://raw.githubusercontent.com/youngwoos/Doit_textmining/main/Image/02/01_2_2.png")
-include_graphics("../Image/02/01_2_2.png")
+include_graphics("Image/02/01_2_2.png")
 ```
 
 ---
@@ -1133,7 +1132,7 @@ class: title1
 <br>
 
 ```{r, echo=F, out.width="50%", out.height="50%"}
-include_graphics("../Image/etc/03_3_table1.png")
+include_graphics("Image/etc/03_3_table1.png")
 ```
 
 ---
@@ -1167,7 +1166,7 @@ $$\text{log odds ratio} = \log{\left(\frac{\left(\frac{n+1}{\text{total}+1}\righ
   - 단어가 어느 텍스트에서 중요한지에 따라 반대되는 축 방향
 
 ```{r, echo=F, out.width="60%", out.height="60%"}
-include_graphics("../Image/03/03_3_1.png")
+include_graphics("Image/03/03_3_1.png")
 ```
 ---
 
@@ -1905,7 +1904,7 @@ include_graphics("../Image/03/03_3_1.png")
 <!-- ##### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;띄어쓰기 기준 추출 -->
 
 <!-- ```{r, echo=FALSE} -->
-<!-- include_graphics("https://raw.githubusercontent.com/youngwoos/Doit_textmining/main/Image/01/01_3_1.png") -->
+<!-- include_graphics("Image/01/01_3_1.png") -->
 <!-- ``` -->
 <!-- ] -->
 
@@ -1913,7 +1912,7 @@ include_graphics("../Image/03/03_3_1.png")
 
 <!-- ##### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;명사 추출 -->
 <!-- ```{r, echo=FALSE} -->
-<!-- include_graphics("https://raw.githubusercontent.com/youngwoos/Doit_textmining/main/Image/02/01_2_1.png") -->
+<!-- include_graphics("Image/02/01_2_1.png") -->
 <!-- ``` -->
 <!-- ] -->
 
@@ -1940,7 +1939,7 @@ include_graphics("../Image/03/03_3_1.png")
 <!-- <br-back-50> -->
 
 <!-- ```{r echo=F} -->
-<!-- include_graphics("https://raw.githubusercontent.com/youngwoos/Doit_textmining/main/Image/02/01_2_2.png") -->
+<!-- include_graphics("Image/02/01_2_2.png") -->
 <!-- ``` -->
 
 <!-- --- -->
@@ -1954,7 +1953,7 @@ include_graphics("../Image/03/03_3_1.png")
 <!-- <br-back-10> -->
 
 <!-- ```{r, echo=FALSE, out.width="90%", out.height="90%"} -->
-<!-- include_graphics("https://raw.githubusercontent.com/youngwoos/Doit_textmining/main/Image/01/01_3_6.png") -->
+<!-- include_graphics("Image/01/01_3_6.png") -->
 <!-- ``` -->
 <!-- ] -->
 
@@ -1965,7 +1964,7 @@ include_graphics("../Image/03/03_3_1.png")
 <!-- <br-back-20> -->
 
 <!-- ```{r, echo=FALSE} -->
-<!-- include_graphics("https://raw.githubusercontent.com/youngwoos/Doit_textmining/main/Image/02/01_2_2.png") -->
+<!-- include_graphics("Image/02/01_2_2.png") -->
 <!-- ``` -->
 <!-- ] -->
 
