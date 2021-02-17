@@ -36,6 +36,8 @@ library(here)
 
 
 ```{r echo=FALSE}
+rm(list = ls())
+
 library(showtext)
 font_add_google(name = "Nanum Gothic", family = "nanumgothic")
 showtext_auto()
@@ -47,7 +49,7 @@ knitr::knit_hooks$set(source = function(x, options) {
   hook_source(x, options)
 })
 
-rm(list = ls())
+
 ```
 
 class: title0

@@ -385,6 +385,7 @@ th, td {
 
 
 /*코드가 청크 밖으로 넘어가지 않음*/
+
 pre {
   white-space: pre-wrap;
 }
@@ -392,7 +393,7 @@ pre {
 
 /*상하 간격 조정*/
 
-/*간격 띄우기*/
+/*간격 조금만 띄우기*/
 br10 {
    display: block;
    margin: 10px 0;

@@ -37,14 +37,14 @@ library(here)
 
 
 ```{r echo=FALSE}
+rm(list = ls())
+
 # code highlighting
 hook_source <- knitr::knit_hooks$get('source')
 knitr::knit_hooks$set(source = function(x, options) {
   x <- stringr::str_replace(x, "^[[:blank:]]?([^*].+?)[[:blank:]]*#<<[[:blank:]]*$", "*\\1")
   hook_source(x, options)
 })
-
-rm(list = ls())
 ```
 
 

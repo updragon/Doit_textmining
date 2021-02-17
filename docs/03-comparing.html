@@ -1,0 +1,2896 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Do it! 쉽게 배우는 R 텍스트 마이닝 - 03 비교 분석: 무엇이 다를까?</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="김영우" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/tile-view/tile-view.css" rel="stylesheet" />
+    <script src="libs/tile-view/tile-view.js"></script>
+    <link rel="stylesheet" href="css/custom.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+
+
+
+class: title0
+
+Do it! 쉽게 배우는 R 텍스트 마이닝
+
+---
+
+&lt;br&gt;
+
+.pull-left[
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;
+&lt;img src="https://raw.githubusercontent.com/youngwoos/Doit_textmining/main/cover.png" width="70%" height="70%" /&gt;
+]
+
+.pull-right[
+
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+
+&lt;svg viewBox="0 0 496 512" xmlns="http://www.w3.org/2000/svg" style="height:1em;fill:currentColor;position:relative;display:inline-block;top:.1em;"&gt;  [ comment ]  &lt;path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"&gt;&lt;/path&gt;&lt;/svg&gt; [github.com/youngwoos/Doit_textmining](https://github.com/youngwoos/Doit_textmining)
+
+&lt;svg viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg" style="height:1em;fill:currentColor;position:relative;display:inline-block;top:.1em;"&gt;  [ comment ]  &lt;path d="M400 32H48A48 48 0 0 0 0 80v352a48 48 0 0 0 48 48h137.25V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.27c-30.81 0-40.42 19.12-40.42 38.73V256h68.78l-11 71.69h-57.78V480H400a48 48 0 0 0 48-48V80a48 48 0 0 0-48-48z"&gt;&lt;/path&gt;&lt;/svg&gt; [facebook.com/groups/datacommunity](https://facebook.com/groups/datacommunity)
+
+- [네이버책](https://book.naver.com/bookdb/book_detail.nhn?bid=17891971)
+  - [yes24](http://bit.ly/3oUuJOB)
+  - [알라딘](http://bit.ly/3oXOSDn)
+  - [교보문고](https://bit.ly/2LtNOcB)
+]
+
+---
+
+class: title0
+
+03 비교 분석: 무엇이 다를까?
+
+---
+
+class: title0-2
+
+We'll make
+
+&lt;br-back-10&gt;
+
+&lt;img src="https://raw.githubusercontent.com/youngwoos/Doit_textmining/main/Image/02/01_2_1.png" width="60%" height="60%" /&gt;
+
+---
+
+class: title0-2
+
+and
+
+&lt;br-back-40&gt;
+
+&lt;img src="../Image/02/01_2_2.png" width="60%" height="60%" /&gt;
+
+---
+
+&lt;br&gt;
+
+.large2[.font-jua[목차]]
+
+.large[.font-jua[03-1 단어 빈도 비교하기]]([link](#03-1))
+
+.large[.font-jua[03-2 오즈비 - 상대적으로 중요한 단어 비교하기]]([link](#03-2))
+
+.large[.font-jua[03-3 로그 오즈비로 단어 비교하기]]([link](#03-3))
+
+.large[.font-jua[03-4 TF-IDF - 여러 텍스트의 단어 비교하기]]([link](#03-4))
+
+---
+
+
+name: 03-1
+class: title1
+
+03-1 단어 빈도 비교하기
+
+---
+
+### 비교 분석
+- 여러 텍스트를 비교해 차이를 알아보는 분석 방법
+- 단어 빈도 분석을 응용해 자주 사용된 단어의 차이를 살펴봄
+
+---
+
+### 텍스트 합치기
+
+- 텍스트를 비교하기 위해 여러 개의 텍스트를 하나의 데이터셋으로 합치는 작업
+
+--
+
+##### 데이터 불러오기
+
+- 문재인 대통령과 박근혜 전 대통령의 대선 출마 선언문 불러오기
+- tibble 구조로 변환하고 연설문 구분 위해 대통령 이름 부여
+
+
+```r
+library(dplyr)
+
+# 문재인 대통령 연설문 불러오기
+raw_moon &lt;- readLines("speech_moon.txt", encoding = "UTF-8")
+moon &lt;- raw_moon %&gt;%
+  as_tibble() %&gt;%
+  mutate(president = "moon")
+
+# 박근혜 대통령 연설문 불러오기
+raw_park &lt;- readLines("speech_park.txt", encoding = "UTF-8")
+park &lt;- raw_park %&gt;%
+  as_tibble() %&gt;%
+  mutate(president = "park")
+```
+
+
+
+---
+
+##### 데이터 합치기
+
+- 두 데이터를 행(세로) 방향으로 결합
+- 출력 결과 보기 편하게 `select()`로 변수 순서 바꾸기
+
+
+
+```r
+bind_speeches &lt;- bind_rows(moon, park) %&gt;%
+  select(president, value)
+```
+
+---
+
+- `bind_speeches` 윗부분은 문재인 대통령, 아랫부분은 박근혜 전 대통령 연설문
+
+.pull-left[
+
+
+```r
+head(bind_speeches)
+```
+
+```
+## # A tibble: 6 x 2
+##   president value                                                     
+##   &lt;chr&gt;     &lt;chr&gt;                                                     
+## 1 moon      "정권교체 하겠습니다!"                                    
+## 2 moon      "  정치교체 하겠습니다!"                                  
+## 3 moon      "  시대교체 하겠습니다!"                                  
+## 4 moon      "  "                                                      
+## 5 moon      "  ‘불비불명(不飛不鳴)’이라는 고사가 있습니다. 남쪽 언덕 나뭇가지에 앉아, 3년 동안 날지도 울지~
+## 6 moon      ""
+```
+]
+
+.pull-right[
+
+
+```r
+tail(bind_speeches)
+```
+
+```
+## # A tibble: 6 x 2
+##   president value                                                     
+##   &lt;chr&gt;     &lt;chr&gt;                                                     
+## 1 park      "국민들이 꿈으로만 가졌던 행복한 삶을 실제로 이룰 수 있도록 도와드리는 대통령이 되고 싶습니다. 국민~
+## 2 park      ""                                                        
+## 3 park      "감사합니다."                                             
+## 4 park      ""                                                        
+## 5 park      "2012년 7월 10일"                                         
+## 6 park      "새누리당 예비후보 박근혜"
+```
+]
+
+&lt;svg viewBox="0 0 352 512" xmlns="http://www.w3.org/2000/svg" style="height:1em;fill:currentColor;position:relative;display:inline-block;top:.1em;"&gt;  [ comment ]  &lt;path d="M176 80c-52.94 0-96 43.06-96 96 0 8.84 7.16 16 16 16s16-7.16 16-16c0-35.3 28.72-64 64-64 8.84 0 16-7.16 16-16s-7.16-16-16-16zM96.06 459.17c0 3.15.93 6.22 2.68 8.84l24.51 36.84c2.97 4.46 7.97 7.14 13.32 7.14h78.85c5.36 0 10.36-2.68 13.32-7.14l24.51-36.84c1.74-2.62 2.67-5.7 2.68-8.84l.05-43.18H96.02l.04 43.18zM176 0C73.72 0 0 82.97 0 176c0 44.37 16.45 84.85 43.56 115.78 16.64 18.99 42.74 58.8 52.42 92.16v.06h48v-.12c-.01-4.77-.72-9.51-2.15-14.07-5.59-17.81-22.82-64.77-62.17-109.67-20.54-23.43-31.52-53.15-31.61-84.14-.2-73.64 59.67-128 127.95-128 70.58 0 128 57.42 128 128 0 30.97-11.24 60.85-31.65 84.14-39.11 44.61-56.42 91.47-62.1 109.46a47.507 47.507 0 0 0-2.22 14.3v.1h48v-.05c9.68-33.37 35.78-73.18 52.42-92.16C335.55 260.85 352 220.37 352 176 352 78.8 273.2 0 176 0z"&gt;&lt;/path&gt;&lt;/svg&gt; 박근혜 전 대통령의 대선 출마 선언문 출처: [bit.ly/easytext_31](https://bit.ly/easytext_31)
+ 
+ 
+---
+
+
+#### 집단별 단어 빈도 구하기
+
+##### 1. 기본적인 전처리 및 토큰화
+
+- 한글 이외의 문자, 연속된 공백 제거
+
+
+```r
+# 기본적인 전처리
+library(stringr)
+speeches &lt;- bind_speeches %&gt;%
+  mutate(value = str_replace_all(value, "[^가-힣]", " "),
+         value = str_squish(value))
+```
+
+&lt;svg viewBox="0 0 576 512" xmlns="http://www.w3.org/2000/svg" style="height:1em;position:relative;display:inline-block;top:.1em;fill:#FF7333;"&gt;  [ comment ]  &lt;path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"&gt;&lt;/path&gt;&lt;/svg&gt; `bind_speeches`는 tibble 구조이므로 `mutate()` 활용
+
+
+---
+
+
+```r
+speeches
+```
+
+```
+## # A tibble: 213 x 2
+##    president value                                                    
+##    &lt;chr&gt;     &lt;chr&gt;                                                    
+##  1 moon      "정권교체 하겠습니다"                                    
+##  2 moon      "정치교체 하겠습니다"                                    
+##  3 moon      "시대교체 하겠습니다"                                    
+##  4 moon      ""                                                       
+##  5 moon      "불비불명 이라는 고사가 있습니다 남쪽 언덕 나뭇가지에 앉아 년 동안 날지도 울지도 않는 새 그러나 ~
+##  6 moon      ""                                                       
+##  7 moon      "그 동안 정치와 거리를 둬 왔습니다 그러나 암울한 시대가 저를 정치로 불러냈습니다 더 이상 남쪽 나~
+##  8 moon      ""                                                       
+##  9 moon      ""                                                       
+## 10 moon      "우리나라 대통령 이 되겠습니다"                          
+## # ... with 203 more rows
+```
+
+---
+
+- 형태소 분석기를 이용해 명사 기준 토큰화
+
+.scroll-box-26[
+
+
+```r
+# 토큰화
+library(tidytext)
+library(KoNLP)
+
+speeches &lt;- speeches %&gt;%
+  unnest_tokens(input = value,
+                output = word,
+                token = extractNoun)
+
+speeches
+```
+
+```
+## # A tibble: 2,997 x 2
+##    president word      
+##    &lt;chr&gt;     &lt;chr&gt;     
+##  1 moon      "정권교체"
+##  2 moon      "하겠습니"
+##  3 moon      "정치"    
+##  4 moon      "교체"    
+##  5 moon      "하겠습니"
+##  6 moon      "시대"    
+##  7 moon      "교체"    
+##  8 moon      "하겠습니"
+##  9 moon      ""        
+## 10 moon      "불비불명"
+## # ... with 2,987 more rows
+```
+
+]
+
+---
+
+
+
+#### 하위 집단별 단어 빈도 구하기 - `count()`
+
+- `"moon"`과 `"park"`의 단어 빈도 각각 구하기
+
+--
+
+##### 샘플 텍스트로 작동 원리 알아보기
+
+- `count()`에 집단을 구성하는 두 변수를 순서대로 입력
+
+
+```r
+df &lt;- tibble(class = c("a", "a", "a", "b", "b", "b"),
+             sex = c("female", "male", "female", "male", "male", "female"))
+```
+
+.pull-left[
+
+
+```r
+df
+```
+
+```
+## # A tibble: 6 x 2
+##   class sex   
+##   &lt;chr&gt; &lt;chr&gt; 
+## 1 a     female
+## 2 a     male  
+## 3 a     female
+## 4 b     male  
+## 5 b     male  
+## 6 b     female
+```
+]
+
+
+.pull-right[
+
+
+```r
+df %&gt;% count(class, sex)
+```
+
+```
+## # A tibble: 4 x 3
+##   class sex        n
+##   &lt;chr&gt; &lt;chr&gt;  &lt;int&gt;
+## 1 a     female     2
+## 2 a     male       1
+## 3 b     female     1
+## 4 b     male       2
+```
+]
+
+---
+   
+
+##### 두 연설문의 단어 빈도 구하기
+
+
+```r
+frequency &lt;- speeches %&gt;%
+  count(president, word) %&gt;%   # 연설문 및 단어별 빈도
+  filter(str_count(word) &gt; 1)  # 두 글자 이상 추출
+
+head(frequency)
+```
+
+```
+## # A tibble: 6 x 3
+##   president word         n
+##   &lt;chr&gt;     &lt;chr&gt;    &lt;int&gt;
+## 1 moon      가동         1
+## 2 moon      가사         1
+## 3 moon      가슴         2
+## 4 moon      가족         1
+## 5 moon      가족구조     1
+## 6 moon      가지         4
+```
+
+&lt;svg viewBox="0 0 352 512" xmlns="http://www.w3.org/2000/svg" style="height:1em;fill:currentColor;position:relative;display:inline-block;top:.1em;"&gt;  [ comment ]  &lt;path d="M176 80c-52.94 0-96 43.06-96 96 0 8.84 7.16 16 16 16s16-7.16 16-16c0-35.3 28.72-64 64-64 8.84 0 16-7.16 16-16s-7.16-16-16-16zM96.06 459.17c0 3.15.93 6.22 2.68 8.84l24.51 36.84c2.97 4.46 7.97 7.14 13.32 7.14h78.85c5.36 0 10.36-2.68 13.32-7.14l24.51-36.84c1.74-2.62 2.67-5.7 2.68-8.84l.05-43.18H96.02l.04 43.18zM176 0C73.72 0 0 82.97 0 176c0 44.37 16.45 84.85 43.56 115.78 16.64 18.99 42.74 58.8 52.42 92.16v.06h48v-.12c-.01-4.77-.72-9.51-2.15-14.07-5.59-17.81-22.82-64.77-62.17-109.67-20.54-23.43-31.52-53.15-31.61-84.14-.2-73.64 59.67-128 127.95-128 70.58 0 128 57.42 128 128 0 30.97-11.24 60.85-31.65 84.14-39.11 44.61-56.42 91.47-62.1 109.46a47.507 47.507 0 0 0-2.22 14.3v.1h48v-.05c9.68-33.37 35.78-73.18 52.42-92.16C335.55 260.85 352 220.37 352 176 352 78.8 273.2 0 176 0z"&gt;&lt;/path&gt;&lt;/svg&gt;  `count()`는 입력한 변수의 알파벳, 가나다순으로 행을 정렬함
+
+---
+
+
+#### 자주 사용된 단어 추출하기
+
+- `dplyr::slice_max()`: 값이 큰 상위 n개의 행을 추출해 내림차순 정렬
+
+--
+
+##### 샘플 데이터로 작동 원리 알아보기
+
+
+
+```r
+df &lt;- tibble(x = c(1:100))
+```
+
+&lt;br-back-20&gt;
+
+.pull-left[
+
+
+```r
+df
+```
+
+```
+## # A tibble: 100 x 1
+##        x
+##    &lt;int&gt;
+##  1     1
+##  2     2
+##  3     3
+##  4     4
+##  5     5
+##  6     6
+##  7     7
+##  8     8
+##  9     9
+## 10    10
+## # ... with 90 more rows
+```
+]
+
+.pull-right[
+
+```r
+df %&gt;% slice_max(x, n = 3)
+```
+
+```
+## # A tibble: 3 x 1
+##       x
+##   &lt;int&gt;
+## 1   100
+## 2    99
+## 3    98
+```
+
+
+
+]
+
+---
+
+.pull-left[
+
+&lt;svg viewBox="0 0 352 512" xmlns="http://www.w3.org/2000/svg" style="height:1em;fill:currentColor;position:relative;display:inline-block;top:.1em;"&gt;  [ comment ]  &lt;path d="M176 80c-52.94 0-96 43.06-96 96 0 8.84 7.16 16 16 16s16-7.16 16-16c0-35.3 28.72-64 64-64 8.84 0 16-7.16 16-16s-7.16-16-16-16zM96.06 459.17c0 3.15.93 6.22 2.68 8.84l24.51 36.84c2.97 4.46 7.97 7.14 13.32 7.14h78.85c5.36 0 10.36-2.68 13.32-7.14l24.51-36.84c1.74-2.62 2.67-5.7 2.68-8.84l.05-43.18H96.02l.04 43.18zM176 0C73.72 0 0 82.97 0 176c0 44.37 16.45 84.85 43.56 115.78 16.64 18.99 42.74 58.8 52.42 92.16v.06h48v-.12c-.01-4.77-.72-9.51-2.15-14.07-5.59-17.81-22.82-64.77-62.17-109.67-20.54-23.43-31.52-53.15-31.61-84.14-.2-73.64 59.67-128 127.95-128 70.58 0 128 57.42 128 128 0 30.97-11.24 60.85-31.65 84.14-39.11 44.61-56.42 91.47-62.1 109.46a47.507 47.507 0 0 0-2.22 14.3v.1h48v-.05c9.68-33.37 35.78-73.18 52.42-92.16C335.55 260.85 352 220.37 352 176 352 78.8 273.2 0 176 0z"&gt;&lt;/path&gt;&lt;/svg&gt;  `slice_min()`: 값이 작은 하위 n개 추출
+
+```r
+df %&gt;% slice_min(x, n = 3)
+```
+
+```
+## # A tibble: 3 x 1
+##       x
+##   &lt;int&gt;
+## 1     1
+## 2     2
+## 3     3
+```
+]
+
+
+---
+
+#### 연설문에 가장 많이 사용된 단어 추출하기
+
+- `president`별 고빈도 단어 상위 10개 추출
+
+&lt;br-back-20&gt;
+
+.scroll-box-24[
+
+
+```r
+top10 &lt;- frequency %&gt;%
+  group_by(president) %&gt;%  # president별로 분리
+  slice_max(n, n = 10)     # 상위 10개 추출
+
+top10
+```
+
+```
+## # A tibble: 22 x 3
+## # Groups:   president [2]
+##    president word       n
+##    &lt;chr&gt;     &lt;chr&gt;  &lt;int&gt;
+##  1 moon      국민      21
+##  2 moon      일자리    21
+##  3 moon      나라      19
+##  4 moon      우리      17
+##  5 moon      경제      15
+##  6 moon      사회      14
+##  7 moon      성장      13
+##  8 moon      대통령    12
+##  9 moon      정치      12
+## 10 moon      하게      12
+## 11 park      국민      72
+## 12 park      행복      23
+## 13 park      여러분    20
+## 14 park      정부      17
+## 15 park      경제      15
+## 16 park      신뢰      11
+## 17 park      국가      10
+## 18 park      우리      10
+## 19 park      교육       9
+## 20 park      사람       9
+## 21 park      사회       9
+## 22 park      일자리     9
+```
+
+]
+---
+
+#### 단어 빈도 동점 처리
+
+- `# A tibble: 22 x 3`: 두 연설문에서 단어 10개씩 추출했는데 20행이 아니라 22행
+- 단어 빈도 동점인 행이 전부 추출되었기 때문
+  
+---
+  
+- 박근혜 전 대통령의 연설문 단어 12개
+  - `"교육"`, `"사람"`, `"사회"`, `"일자리"` 빈도 동점, 모두 추출되면서 행 늘어남
+
+.pull-left[
+
+```r
+top10 %&gt;%
+  filter(president == "park")
+```
+
+```
+## # A tibble: 12 x 3
+## # Groups:   president [1]
+##    president word       n
+##    &lt;chr&gt;     &lt;chr&gt;  &lt;int&gt;
+##  1 park      국민      72
+##  2 park      행복      23
+##  3 park      여러분    20
+##  4 park      정부      17
+##  5 park      경제      15
+##  6 park      신뢰      11
+##  7 park      국가      10
+##  8 park      우리      10
+*##  9 park      교육       9
+*## 10 park      사람       9
+*## 11 park      사회       9
+*## 12 park      일자리     9
+```
+]
+
+---
+
+
+#### 빈도 동점 단어 제외하고 추출하기 
+- `slice_max(with_ties = F)`: 원본 데이터의 정렬 순서에 따라 행 추출
+
+##### 샘플 데이터로 작동 원리 알아보기
+
+
+```r
+df &lt;- tibble(x = c("A", "B", "C", "D"), y = c(4, 3, 2, 2))
+```
+
+&lt;br-back-20&gt;
+
+.pull-left[
+
+
+```r
+df %&gt;%
+  slice_max(y, n = 3)
+```
+
+```
+## # A tibble: 4 x 2
+##   x         y
+##   &lt;chr&gt; &lt;dbl&gt;
+## 1 A         4
+## 2 B         3
+## 3 C         2
+## 4 D         2
+```
+]
+
+.pull-right[
+
+```r
+df %&gt;%
+  slice_max(y, n = 3, with_ties = F)
+```
+
+```
+## # A tibble: 3 x 2
+##   x         y
+##   &lt;chr&gt; &lt;dbl&gt;
+## 1 A         4
+## 2 B         3
+## 3 C         2
+```
+]
+---
+
+#### 연설문에 적용하기
+
+
+.scroll-box-26[
+
+
+```r
+top10 &lt;- frequency %&gt;%
+  group_by(president) %&gt;%
+  slice_max(n, n = 10, with_ties = F)
+
+top10
+```
+
+```
+*## # A tibble: 20 x 3
+## # Groups:   president [2]
+##    president word       n
+##    &lt;chr&gt;     &lt;chr&gt;  &lt;int&gt;
+##  1 moon      국민      21
+##  2 moon      일자리    21
+##  3 moon      나라      19
+##  4 moon      우리      17
+##  5 moon      경제      15
+##  6 moon      사회      14
+##  7 moon      성장      13
+##  8 moon      대통령    12
+##  9 moon      정치      12
+## 10 moon      하게      12
+## 11 park      국민      72
+## 12 park      행복      23
+## 13 park      여러분    20
+## 14 park      정부      17
+## 15 park      경제      15
+## 16 park      신뢰      11
+## 17 park      국가      10
+## 18 park      우리      10
+## 19 park      교육       9
+## 20 park      사람       9
+```
+]
+
+---
+
+#### 막대 그래프 만들기
+
+##### 1. 변수의 항목별로 그래프만들기 - `facet_wrap()`
+- `~` 뒤에 그래프를 나누는 기준 변수 입력
+
+
+```r
+library(ggplot2)
+ggplot(top10, aes(x = reorder(word, n),
+                  y = n,
+                  fill = president)) +
+  geom_col() +
+  coord_flip() +
+  facet_wrap(~ president)
+```
+
+---
+
+&lt;img src="03-comparing_files/figure-html/unnamed-chunk-28-1.png" width="100%" /&gt;
+
+
+---
+
+
+- 축을 구성하는 단어가 한 범주에만 있으면 축은 있지만 막대는 없는 항목 생김
+  - ex) `"행복"`: `park`, `"나라"`: `moon`
+      
+---
+  
+
+##### 2. 그래프별 y축 설정하기
+
+- `scales`: 그래프의 축 통일 또는 각각 생성 결정
+  - `"fixed"`: 축 통일(기본값)
+  - `"free_y"`: 범주별로 y축 만듦
+
+
+```r
+ggplot(top10, aes(x = reorder(word, n),
+                  y = n,
+                  fill = president)) +
+  geom_col() +
+  coord_flip() +
+  facet_wrap(~ president,         # president별 그래프 생성
+              scales = "free_y")  # y축 통일하지 않음
+```
+
+---
+
+&lt;img src="03-comparing_files/figure-html/unnamed-chunk-30-1.png" width="100%" /&gt;
+
+
+---
+
+
+#### 3. 특정 단어 제외하고 막대 그래프 만들기
+
+- 박근혜 전 대통령 `"국민"` 빈도 너무 높아 다른 단어들 차이 드러나지 않음
+- 전반적인 단어 빈도가 잘 드러나도록 제거
+
+.scroll-box-20[
+
+
+```r
+top10 &lt;- frequency %&gt;%
+  filter(word != "국민") %&gt;%
+  group_by(president) %&gt;%
+  slice_max(n, n = 10, with_ties = F)
+
+top10
+```
+
+```
+## # A tibble: 20 x 3
+## # Groups:   president [2]
+##    president word         n
+##    &lt;chr&gt;     &lt;chr&gt;    &lt;int&gt;
+##  1 moon      일자리      21
+##  2 moon      나라        19
+##  3 moon      우리        17
+##  4 moon      경제        15
+##  5 moon      사회        14
+##  6 moon      성장        13
+##  7 moon      대통령      12
+##  8 moon      정치        12
+##  9 moon      하게        12
+## 10 moon      대한민국    11
+## 11 park      행복        23
+## 12 park      여러분      20
+## 13 park      정부        17
+## 14 park      경제        15
+## 15 park      신뢰        11
+## 16 park      국가        10
+## 17 park      우리        10
+## 18 park      교육         9
+## 19 park      사람         9
+## 20 park      사회         9
+```
+]
+
+---
+
+
+```r
+ggplot(top10, aes(x = reorder(word, n),
+                  y = n,
+                  fill = president)) +
+  geom_col() +
+  coord_flip() +
+  facet_wrap(~ president, scales = "free_y")
+```
+
+---
+
+&lt;img src="03-comparing_files/figure-html/unnamed-chunk-33-1.png" width="100%" /&gt;
+
+
+---
+
+
+#### 4. 축 정렬하기
+
+- x축을 지정할 때 `reorder()`를 사용했는데도 막대가 빈도 기준으로 완벽하게 정렬되지 않음
+- 전체 빈도 기준으로 각 범주의 x축 순서를 정했기 때문
+
+--
+
+##### 그래프별로 축 정렬하기
+
+- `tidytext::reorder_within()`: 변수의 항목별로 축 순서 따로 구하기
+  - `x` : 축
+  - `by` :정렬 기준
+  - `within` : 그래프를 나누는 기준
+  
+
+```r
+ggplot(top10, aes(x = reorder_within(word, n, president),
+                  y = n,
+                  fill = president)) +
+  geom_col() +
+  coord_flip() +
+  facet_wrap(~ president, scales = "free_y")
+```
+
+---
+  
+&lt;img src="03-comparing_files/figure-html/unnamed-chunk-35-1.png" width="100%" /&gt;
+
+---
+
+#### 5. 변수 항목 제거하기
+
+- `tidytext::scale_x_reordered()`: 각 단어 뒤의 범주 항목 제거
+
+
+```r
+ggplot(top10, aes(x = reorder_within(word, n, president),
+                  y = n,
+                  fill = president)) +
+  geom_col() +
+  coord_flip() +
+  facet_wrap(~ president, scales = "free_y") +
+  scale_x_reordered() +
+  labs(x = NULL) +                                    # x축 삭제
+  theme(text = element_text(family = "nanumgothic"))  # 폰트
+```
+
+---
+
+&lt;img src="03-comparing_files/figure-html/unnamed-chunk-37-1.png" width="100%" /&gt;
+
+---
+name: 03-2
+class: title1
+
+03-2 오즈비 - 
+&lt;br&gt;
+상대적으로  중요한 단어 비교하기
+
+---
+
+##### 빈도 높은 단어를 비교하면
+- 어떤 텍스트든 일반적인 단어 빈도 높아 텍스트 차이 잘 드러나지 않음
+  - ex) 연설문: `"우리"`, `"사회"`, `"경제"`, `"일자리"`
+--
+
+- 특정 텍스트에는 많이 사용되었지만 다른 텍스트에는 적게 사용된 단어를 살펴봐야함
+
+---
+
+
+#### Long form을 Wide form으로 변환하기
+
+- 여러 텍스트 비교하기 편하게 데이터 구조 바꾸기
+
+- `frequency`: `president`가 `"moon"`인 행과 `"park"`인 행이 세로로 길게 나열된 **long form**
+
+--
+
+##### Long form 데이터 살펴보기
+
+
+```r
+df_long &lt;- frequency %&gt;%
+  group_by(president) %&gt;%
+  slice_max(n, n = 10) %&gt;%
+  filter(word %in% c("국민", "우리", "정치", "행복"))
+```
+
+---
+
+.pull-left[
+
+
+```r
+df_long
+```
+
+```
+## # A tibble: 6 x 3
+## # Groups:   president [2]
+##   president word      n
+##   &lt;chr&gt;     &lt;chr&gt; &lt;int&gt;
+## 1 moon      국민     21
+## 2 moon      우리     17
+## 3 moon      정치     12
+## 4 park      국민     72
+## 5 park      행복     23
+## 6 park      우리     10
+```
+
+]
+
+&lt;br&gt;
+
+.pull-right[
+
+- 같은 단어가 범주별로 다른 행을 구성
+  - 범주별 빈도 비교 어려움
+  - 빈도를 활용해 연산하기 불편함
+]
+---
+
+
+#### Long form을 Wide form으로 변형하기
+
+- **wide form**: 가로로 넓은 형태의 데이터
+  - 범주별로 단어 빈도 비교하기 편함
+  - 변수간 연산하기 편함
+
+
+--
+
+
+- `tidyr::pivot_wider()`: long form을 wide form으로 변환
+  - `names_from`: 변수명으로 만들 값이 들어 있는 변수
+  - `values_from`: 변수에 채워넣을 값이 들어 있는 변수
+  
+
+```r
+install.packages("tidyr")
+library(tidyr)
+
+df_wide &lt;- df_long %&gt;%
+  pivot_wider(names_from = president,
+              values_from = n)
+
+df_wide
+```
+
+
+
+---
+
+
+```r
+df_wide
+```
+
+```
+## # A tibble: 4 x 3
+##   word   moon  park
+##   &lt;chr&gt; &lt;int&gt; &lt;int&gt;
+## 1 국민     21    72
+## 2 우리     17    10
+## 3 정치     12    NA
+## 4 행복     NA    23
+```
+
+- 한 단어가 한 행으로 구성됨
+- 범주별 단어 빈도 비교하기 쉬움  
+
+
+---
+
+
+##### `NA`를 `0`으로 바꾸기
+
+- 어떤 단어가 둘 중 한 범주에만 있으면 `NA`
+- 오즈비 계산하기 위해 `0`으로 변환해야 함
+
+
+```r
+df_wide &lt;- df_long %&gt;%
+  pivot_wider(names_from = president,
+              values_from = n,
+*             values_fill = list(n = 0))
+
+df_wide
+```
+
+```
+## # A tibble: 4 x 3
+##   word   moon  park
+##   &lt;chr&gt; &lt;int&gt; &lt;int&gt;
+## 1 국민     21    72
+## 2 우리     17    10
+## 3 정치     12     0
+## 4 행복      0    23
+```
+
+
+---
+
+##### long form, wide form 비교하기
+
+
+.pull-left[
+
+
+```r
+df_long
+```
+
+```
+## # A tibble: 6 x 3
+## # Groups:   president [2]
+##   president word      n
+##   &lt;chr&gt;     &lt;chr&gt; &lt;int&gt;
+## 1 moon      국민     21
+## 2 moon      우리     17
+## 3 moon      정치     12
+## 4 park      국민     72
+## 5 park      행복     23
+## 6 park      우리     10
+```
+]
+
+.pull-right[
+
+
+```r
+df_wide
+```
+
+```
+## # A tibble: 4 x 3
+##   word   moon  park
+##   &lt;chr&gt; &lt;int&gt; &lt;int&gt;
+## 1 국민     21    72
+## 2 우리     17    10
+## 3 정치     12     0
+## 4 행복      0    23
+```
+]
+
+---
+
+##### 연설문 단어 빈도를 Wide form으로 변환하기
+
+
+
+```r
+frequency_wide &lt;- frequency %&gt;%
+  pivot_wider(names_from = president,
+              values_from = n,
+              values_fill = list(n = 0))
+
+frequency_wide
+```
+
+```
+## # A tibble: 955 x 3
+##    word      moon  park
+##    &lt;chr&gt;    &lt;int&gt; &lt;int&gt;
+##  1 가동         1     0
+##  2 가사         1     0
+##  3 가슴         2     0
+##  4 가족         1     1
+##  5 가족구조     1     0
+##  6 가지         4     0
+##  7 가치         3     1
+##  8 각종         1     0
+##  9 감당         1     0
+## 10 강력         3     0
+## # ... with 945 more rows
+```
+
+
+---
+
+
+#### 오즈비 구하기
+
+- **오즈비(odds ratio)**
+  - 어떤 사건이 A 조건에서 발생할 확률이 B 조건에서 발생할 확률에 비해 얼마나 더 큰지를 나타낸 값
+  - 단어가 두 텍스트 중 어디에 등장할 확률이 높은지, 상대적인 중요도를 알 수 있음
+
+---
+
+
+##### 1. 단어의 비중을 나타낸 변수 추가하기
+
+- 각 단어가 두 연설문에서 차지하는 비중을 나타낸 변수 추가
+- 연설문별로 '각 단어의 빈도'를 '모든 단어 빈도의 합'으로 나눔
+
+
+```r
+frequency_wide &lt;- frequency_wide %&gt;% 
+  mutate(ratio_moon = ((moon)/(sum(moon))),  # moon 에서 단어의 비중
+         ratio_park = ((park)/(sum(park))))  # park 에서 단어의 비중
+
+frequency_wide
+```
+
+```
+## # A tibble: 955 x 5
+##    word      moon  park ratio_moon ratio_park
+##    &lt;chr&gt;    &lt;int&gt; &lt;int&gt;      &lt;dbl&gt;      &lt;dbl&gt;
+##  1 가동         1     0   0.000749    0      
+##  2 가사         1     0   0.000749    0      
+##  3 가슴         2     0   0.00150     0      
+##  4 가족         1     1   0.000749    0.00117
+##  5 가족구조     1     0   0.000749    0      
+##  6 가지         4     0   0.00299     0      
+##  7 가치         3     1   0.00225     0.00117
+##  8 각종         1     0   0.000749    0      
+##  9 감당         1     0   0.000749    0      
+## 10 강력         3     0   0.00225     0      
+## # ... with 945 more rows
+```
+
+---
+
+##### 어떤 단어가 한 연설문에 전혀 사용되지 않으면
+- 빈도 0, 오즈비 0. 단어 비중 비교할 수 없음
+- 빈도가 0보다 큰 값이 되도록 모든 값에 `+1`
+
+
+```r
+frequency_wide &lt;- frequency_wide %&gt;%
+  mutate(ratio_moon  = ((moon + 1)/(sum(moon + 1))),  # moon에서 단어의 비중
+         ratio_park  = ((park + 1)/(sum(park + 1))))  # park에서 단어의 비중
+
+frequency_wide
+```
+
+```
+## # A tibble: 955 x 5
+##    word      moon  park ratio_moon ratio_park
+##    &lt;chr&gt;    &lt;int&gt; &lt;int&gt;      &lt;dbl&gt;      &lt;dbl&gt;
+##  1 가동         1     0   0.000873   0.000552
+##  2 가사         1     0   0.000873   0.000552
+##  3 가슴         2     0   0.00131    0.000552
+##  4 가족         1     1   0.000873   0.00110 
+##  5 가족구조     1     0   0.000873   0.000552
+##  6 가지         4     0   0.00218    0.000552
+##  7 가치         3     1   0.00175    0.00110 
+##  8 각종         1     0   0.000873   0.000552
+##  9 감당         1     0   0.000873   0.000552
+## 10 강력         3     0   0.00175    0.000552
+## # ... with 945 more rows
+```
+
+---
+
+#### 2. 오즈비 변수 추가하기
+
+- 한 텍스트의 단어 비중을 다른 텍스트의 단어 비중으로 나눔
+
+
+```r
+frequency_wide &lt;- frequency_wide %&gt;%
+  mutate(odds_ratio = ratio_moon/ratio_park)
+```
+
+---
+
+- 단어가 어떤 텍스트에서 상대적으로 더 많이 사용됐는지 알 수 있음
+  - **`"moon"`에서 상대적인 비중 클수록 1보다 큰 값**
+  - `"park"`에서 상대적인 비중 클수록 1보다 작은 값
+  - 두 연설문에서 단어 비중 같으면 1
+
+
+```r
+frequency_wide %&gt;%
+  arrange(-odds_ratio)
+```
+
+```
+## # A tibble: 955 x 6
+##    word      moon  park ratio_moon ratio_park odds_ratio
+##    &lt;chr&gt;    &lt;int&gt; &lt;int&gt;      &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;
+##  1 복지국가     8     0    0.00393   0.000552       7.12
+##  2 세상         6     0    0.00306   0.000552       5.54
+##  3 여성         6     0    0.00306   0.000552       5.54
+##  4 정의         6     0    0.00306   0.000552       5.54
+##  5 강자         5     0    0.00262   0.000552       4.75
+##  6 공평         5     0    0.00262   0.000552       4.75
+##  7 대통령의     5     0    0.00262   0.000552       4.75
+##  8 보통         5     0    0.00262   0.000552       4.75
+##  9 상생         5     0    0.00262   0.000552       4.75
+## 10 지방         5     0    0.00262   0.000552       4.75
+## # ... with 945 more rows
+```
+
+---
+
+- 단어가 어떤 텍스트에서 상대적으로 더 많이 사용됐는지 알 수 있음
+  - `"moon"`에서 상대적인 비중 클수록 1보다 큰 값
+  - **`"park"`에서 상대적인 비중 클수록 1보다 작은 값**
+  - 두 연설문에서 단어 비중 같으면 1
+
+
+```r
+frequency_wide %&gt;%
+* arrange(odds_ratio)
+```
+
+```
+## # A tibble: 955 x 6
+##    word      moon  park ratio_moon ratio_park odds_ratio
+##    &lt;chr&gt;    &lt;int&gt; &lt;int&gt;      &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;
+##  1 박근혜       0     8   0.000436    0.00496     0.0879
+##  2 여러분       2    20   0.00131     0.0116      0.113 
+##  3 행복         3    23   0.00175     0.0132      0.132 
+##  4 실천         0     5   0.000436    0.00331     0.132 
+##  5 정보         0     5   0.000436    0.00331     0.132 
+##  6 투명         0     5   0.000436    0.00331     0.132 
+##  7 과제         0     4   0.000436    0.00276     0.158 
+##  8 국정운영     0     4   0.000436    0.00276     0.158 
+##  9 시작         0     4   0.000436    0.00276     0.158 
+## 10 지식         0     4   0.000436    0.00276     0.158 
+## # ... with 945 more rows
+```
+
+---
+
+##### 수식으로 표현하면
+
+&lt;br&gt;
+
+.pull-left[
+
+`$$\text{odds ratio} = \frac{\left(\frac{n+1}{\text{total}+1}\right)_\text{Text A}}
+                           {\left(\frac{n+1}{\text{total}+1}\right)_\text{Text B}}$$`
+
+&lt;br&gt;
+
+- `\(n\)`: 각 단어의 빈도
+- `\(\text{total}\)`: 전체 단어 빈도
+
+]
+
+---
+
+#### 3. 오즈비 간단히 구하기
+
+
+```r
+frequency_wide &lt;- frequency_wide %&gt;%
+  mutate(odds_ratio = ((moon + 1)/(sum(moon + 1)))/
+                      ((park + 1)/(sum(park + 1))))
+```
+
+
+
+```r
+frequency_wide %&gt;%
+  arrange(odds_ratio)
+```
+
+```
+## # A tibble: 955 x 6
+##    word      moon  park ratio_moon ratio_park odds_ratio
+##    &lt;chr&gt;    &lt;int&gt; &lt;int&gt;      &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;
+##  1 박근혜       0     8   0.000436    0.00496     0.0879
+##  2 여러분       2    20   0.00131     0.0116      0.113 
+##  3 행복         3    23   0.00175     0.0132      0.132 
+##  4 실천         0     5   0.000436    0.00331     0.132 
+##  5 정보         0     5   0.000436    0.00331     0.132 
+##  6 투명         0     5   0.000436    0.00331     0.132 
+##  7 과제         0     4   0.000436    0.00276     0.158 
+##  8 국정운영     0     4   0.000436    0.00276     0.158 
+##  9 시작         0     4   0.000436    0.00276     0.158 
+## 10 지식         0     4   0.000436    0.00276     0.158 
+## # ... with 945 more rows
+```
+
+
+
+---
+
+#### 상대적으로 중요한 단어 추출하기
+
+##### 오즈비가 가장 높거나 가장 낮은 단어 추출하기
+
+
+```r
+top10 &lt;- frequency_wide %&gt;%
+  filter(rank(odds_ratio) &lt;= 10 | rank(-odds_ratio) &lt;= 10)
+```
+
+
+```r
+top10 %&gt;%
+  arrange(-odds_ratio)
+```
+
+---
+
+
+```
+## # A tibble: 20 x 6
+##    word      moon  park ratio_moon ratio_park odds_ratio
+##    &lt;chr&gt;    &lt;int&gt; &lt;int&gt;      &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;
+##  1 복지국가     8     0   0.00393    0.000552     7.12  
+##  2 세상         6     0   0.00306    0.000552     5.54  
+##  3 여성         6     0   0.00306    0.000552     5.54  
+##  4 정의         6     0   0.00306    0.000552     5.54  
+##  5 강자         5     0   0.00262    0.000552     4.75  
+##  6 공평         5     0   0.00262    0.000552     4.75  
+##  7 대통령의     5     0   0.00262    0.000552     4.75  
+##  8 보통         5     0   0.00262    0.000552     4.75  
+##  9 상생         5     0   0.00262    0.000552     4.75  
+## 10 지방         5     0   0.00262    0.000552     4.75  
+## 11 과제         0     4   0.000436   0.00276      0.158 
+## 12 국정운영     0     4   0.000436   0.00276      0.158 
+## 13 시작         0     4   0.000436   0.00276      0.158 
+## 14 지식         0     4   0.000436   0.00276      0.158 
+## 15 행복         3    23   0.00175    0.0132       0.132 
+## 16 실천         0     5   0.000436   0.00331      0.132 
+## 17 정보         0     5   0.000436   0.00331      0.132 
+## 18 투명         0     5   0.000436   0.00331      0.132 
+## 19 여러분       2    20   0.00131    0.0116       0.113 
+## 20 박근혜       0     8   0.000436   0.00496      0.0879
+```
+
+---
+
+- 상위 10개: `"moon"`에서 더 자주 사용되어 `odds_ratio`가 높은 단어
+
+
+```
+## # A tibble: 20 x 6
+##    word      moon  park ratio_moon ratio_park odds_ratio
+##    &lt;chr&gt;    &lt;int&gt; &lt;int&gt;      &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;
+*##  1 복지국가     8     0   0.00393    0.000552     7.12  
+*##  2 세상         6     0   0.00306    0.000552     5.54  
+*##  3 여성         6     0   0.00306    0.000552     5.54  
+*##  4 정의         6     0   0.00306    0.000552     5.54  
+*##  5 강자         5     0   0.00262    0.000552     4.75  
+*##  6 공평         5     0   0.00262    0.000552     4.75  
+*##  7 대통령의     5     0   0.00262    0.000552     4.75  
+*##  8 보통         5     0   0.00262    0.000552     4.75  
+*##  9 상생         5     0   0.00262    0.000552     4.75  
+*## 10 지방         5     0   0.00262    0.000552     4.75  
+## 11 과제         0     4   0.000436   0.00276      0.158 
+## 12 국정운영     0     4   0.000436   0.00276      0.158 
+## 13 시작         0     4   0.000436   0.00276      0.158 
+## 14 지식         0     4   0.000436   0.00276      0.158 
+## 15 행복         3    23   0.00175    0.0132       0.132 
+## 16 실천         0     5   0.000436   0.00331      0.132 
+## 17 정보         0     5   0.000436   0.00331      0.132 
+## 18 투명         0     5   0.000436   0.00331      0.132 
+## 19 여러분       2    20   0.00131    0.0116       0.113 
+## 20 박근혜       0     8   0.000436   0.00496      0.0879
+```
+
+---
+
+- 하위 10개: `"park"`에서 더 자주 사용되어 `odds_ratio`가 낮은 단어
+
+
+```
+## # A tibble: 20 x 6
+##    word      moon  park ratio_moon ratio_park odds_ratio
+##    &lt;chr&gt;    &lt;int&gt; &lt;int&gt;      &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;
+##  1 복지국가     8     0   0.00393    0.000552     7.12  
+##  2 세상         6     0   0.00306    0.000552     5.54  
+##  3 여성         6     0   0.00306    0.000552     5.54  
+##  4 정의         6     0   0.00306    0.000552     5.54  
+##  5 강자         5     0   0.00262    0.000552     4.75  
+##  6 공평         5     0   0.00262    0.000552     4.75  
+##  7 대통령의     5     0   0.00262    0.000552     4.75  
+##  8 보통         5     0   0.00262    0.000552     4.75  
+##  9 상생         5     0   0.00262    0.000552     4.75  
+## 10 지방         5     0   0.00262    0.000552     4.75  
+*## 11 과제         0     4   0.000436   0.00276      0.158 
+*## 12 국정운영     0     4   0.000436   0.00276      0.158 
+*## 13 시작         0     4   0.000436   0.00276      0.158 
+*## 14 지식         0     4   0.000436   0.00276      0.158 
+*## 15 행복         3    23   0.00175    0.0132       0.132 
+*## 16 실천         0     5   0.000436   0.00331      0.132 
+*## 17 정보         0     5   0.000436   0.00331      0.132 
+*## 18 투명         0     5   0.000436   0.00331      0.132 
+*## 19 여러분       2    20   0.00131    0.0116       0.113 
+*## 20 박근혜       0     8   0.000436   0.00496      0.0879
+```
+
+---
+
+#### 막대 그래프 만들기
+
+##### 1. 비중이 큰 연설문을 나타낸 변수 추가하기
+
+
+```r
+top10 &lt;- top10 %&gt;%
+  mutate(president = ifelse(odds_ratio &gt; 1, "moon", "park"),
+         n = ifelse(odds_ratio &gt; 1, moon, park))
+
+top10
+```
+
+
+
+---
+
+
+```r
+top10
+```
+
+
+```
+## # A tibble: 20 x 8
+##    word      moon  park ratio_moon ratio_park odds_ratio president     n
+##    &lt;chr&gt;    &lt;int&gt; &lt;int&gt;      &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt; &lt;chr&gt;     &lt;int&gt;
+##  1 강자         5     0   0.00262    0.000552     4.75   moon          5
+##  2 공평         5     0   0.00262    0.000552     4.75   moon          5
+##  3 대통령의     5     0   0.00262    0.000552     4.75   moon          5
+##  4 보통         5     0   0.00262    0.000552     4.75   moon          5
+##  5 복지국가     8     0   0.00393    0.000552     7.12   moon          8
+##  6 상생         5     0   0.00262    0.000552     4.75   moon          5
+##  7 세상         6     0   0.00306    0.000552     5.54   moon          6
+##  8 여러분       2    20   0.00131    0.0116       0.113  park         20
+##  9 여성         6     0   0.00306    0.000552     5.54   moon          6
+## 10 정의         6     0   0.00306    0.000552     5.54   moon          6
+## 11 지방         5     0   0.00262    0.000552     4.75   moon          5
+## 12 행복         3    23   0.00175    0.0132       0.132  park         23
+## 13 과제         0     4   0.000436   0.00276      0.158  park          4
+## 14 국정운영     0     4   0.000436   0.00276      0.158  park          4
+## 15 박근혜       0     8   0.000436   0.00496      0.0879 park          8
+## 16 시작         0     4   0.000436   0.00276      0.158  park          4
+## 17 실천         0     5   0.000436   0.00331      0.132  park          5
+## 18 정보         0     5   0.000436   0.00331      0.132  park          5
+## 19 지식         0     4   0.000436   0.00276      0.158  park          4
+## 20 투명         0     5   0.000436   0.00331      0.132  park          5
+```
+---
+
+
+##### 2. 막대 그래프 만들기
+
+
+```r
+ggplot(top10, aes(x = reorder_within(word, n, president),
+                  y = n,
+                  fill = president)) +
+  geom_col() +
+  coord_flip() +
+  facet_wrap(~ president, scales = "free_y") +
+  scale_x_reordered()
+```
+
+&lt;img src="03-comparing_files/figure-html/unnamed-chunk-63-1.png" width="60%" /&gt;
+
+
+
+```r
+options(pillar.min_chars = 0)   # 문자 길이 되돌리기
+```
+
+---
+
+**전반적으로 "park"의 단어 빈도가 높아보임**
+- `"park"`의 `"행복"` 빈도 기준으로 두 그래프의 x축 크기를 똑같이 고정했기 때문
+
+
+&lt;img src="03-comparing_files/figure-html/unnamed-chunk-65-1.png" width="80%" /&gt;
+
+---
+
+##### 3. 그래프별로 축 설정하기
+
+- 범주별로 단어 비중 알 수 있도록 x축 크기 각각 정하기
+
+
+```r
+ggplot(top10, aes(x = reorder_within(word, n, president),
+                  y = n,
+                  fill = president)) +
+  geom_col() +
+  coord_flip() +
+* facet_wrap(~ president, scales = "free") +
+  scale_x_reordered() +
+  labs(x = NULL) +                                    # x축 삭제
+  theme(text = element_text(family = "nanumgothic"))  # 폰트
+```
+
+&lt;img src="03-comparing_files/figure-html/unnamed-chunk-66-1.png" width="40%" /&gt;
+
+---
+&lt;svg viewBox="0 0 576 512" xmlns="http://www.w3.org/2000/svg" style="height:1em;position:relative;display:inline-block;top:.1em;fill:#FF7333;"&gt;  [ comment ]  &lt;path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"&gt;&lt;/path&gt;&lt;/svg&gt;  **x축 크기가 그래프마다 다르므로 해석 조심**
+- 막대 길이 같아도 단어 빈도 다름
+- 두 텍스트 단어 빈도 비교 X
+- 각 텍스트에서 상대적으로 중요한 단어가 무엇인지 중심으로 해석
+
+&lt;img src="03-comparing_files/figure-html/unnamed-chunk-67-1.png" width="80%" /&gt;
+
+---
+
+#### 주요 단어가 사용된 문장 살펴보기
+
+##### 1. 원문을 문장 기준으로 토큰화하기
+
+
+```r
+speeches_sentence &lt;- bind_speeches %&gt;%
+  as_tibble() %&gt;%
+  unnest_tokens(input = value,
+                output = sentence,
+                token = "sentences")
+```
+
+
+
+```r
+head(speeches_sentence)
+tail(speeches_sentence)
+```
+
+---
+
+
+```r
+head(speeches_sentence)
+```
+
+```
+## # A tibble: 6 x 2
+##   president sentence                                                  
+##   &lt;chr&gt;     &lt;chr&gt;                                                     
+## 1 moon      "정권교체 하겠습니다!"                                    
+## 2 moon      "정치교체 하겠습니다!"                                    
+## 3 moon      "시대교체 하겠습니다!"                                    
+## 4 moon      ""                                                        
+## 5 moon      "‘불비불명(不飛不鳴)’이라는 고사가 있습니다."             
+## 6 moon      "남쪽 언덕 나뭇가지에 앉아, 3년 동안 날지도 울지도 않는 새."~
+```
+
+
+
+```r
+tail(speeches_sentence)
+```
+
+```
+## # A tibble: 6 x 2
+##   president sentence                                                  
+##   &lt;chr&gt;     &lt;chr&gt;                                                     
+## 1 park      국민 여러분의 행복이 곧 저의 행복입니다.                  
+## 2 park      사랑하는 조국 대한민국과 국민 여러분을 위해, 앞으로 머나 먼 길, 끝까지 최선을 다해 뛰겠습니다.~
+## 3 park      그 길을 함께 해주시길 부탁드립니다.                       
+## 4 park      감사합니다.                                               
+## 5 park      2012년 7월 10일                                           
+## 6 park      새누리당 예비후보 박근혜
+```
+
+---
+
+
+#### 2. 주요 단어가 사용된 문장 추출하기 - `str_detect()`
+
+
+
+
+```r
+speeches_sentence %&gt;%
+  filter(president == "moon" &amp; str_detect(sentence, "복지국가"))
+```
+
+```
+## # A tibble: 8 x 2
+##   president sentence                              
+##   &lt;chr&gt;     &lt;chr&gt;                                 
+## 1 moon      ‘강한 복지국가’를 향해 담대하게 나아가겠습니다.~
+## 2 moon      2백 년 전 이와 같은 소득재분배, 복지국가의 사상을 가진 위정자가~
+## 3 moon      이제 우리는 복지국가를 향해 담대하게 나아갈 때입니다.~
+## 4 moon      부자감세, 4대강 사업 같은 시대착오적 과오를 청산하고, 하루빨리 ~
+## 5 moon      우리는 지금 복지국가로 가느냐, 양극화의 분열된 국가로 가느냐 하는~
+## 6 moon      강한 복지국가일수록 국가 경쟁력도 더 높습니다.~
+## 7 moon      결국 복지국가로 가는 길은 사람에 대한 투자, 일자리 창출, 자영업~
+## 8 moon      우리는 과감히 강한 보편적 복지국가로 가야 합니다.~
+```
+
+---
+
+
+```r
+speeches_sentence %&gt;%
+  filter(president == "park" &amp; str_detect(sentence, "행복"))
+```
+
+```
+## # A tibble: 19 x 2
+##    president sentence                             
+##    &lt;chr&gt;     &lt;chr&gt;                                
+##  1 park      저는 오늘, 국민 한 분 한 분의 꿈이 이루어지는 행복한 대한민국~
+##  2 park      국가는 발전했고, 경제는 성장했다는데, 나의 삶은 나아지지 않았고~
+##  3 park      과거에는 국가의 발전이 국민의 행복으로 이어졌습니다.~
+##  4 park      개인의 창의력이 중요한 지식기반사회에서는 국민 한 사람, 한 사람~
+##  5 park      이제 국정운영의 패러다임을 국가에서 국민으로, 개인의 삶과 행복 ~
+##  6 park      국민 개개인의 꿈을 향한 노력이 국가를 발전시키고 국가 발전이 국~
+##  7 park      저는 ‘경제민주화 실현’, ‘일자리 창출’, 그리고 ‘한국형 복지~
+##  8 park      국민행복의 길을 열어갈 첫 번째 과제로, 저는 경제민주화를 통해 ~
+##  9 park      국민행복의 길을 열어갈 두 번째 과제로, 저는 좋은 일자리 창출을~
+## 10 park      국민행복의 길을 열어갈 세 번째 과제로, 우리의 실정에 맞으면서 ~
+## 11 park      저는 국민행복을 위해 ‘경제민주화-일자리-복지’를 아우르는 (가칭~
+## 12 park      모든 계층의 국민이 함께 참여해 만들고, 정부와 기업, 지역사회가~
+## 13 park      50년 전 경제개발 5개년 계획이 산업화의 기적을 이뤄냈듯,‘오천~
+## 14 park      저는 지속가능한 국민 행복을 만들 수 있도록,사람에 대한 투자를 ~
+## 15 park      저 박근혜, 경쟁과 입시에 매몰된 교육을‘함께하는 행복교육’으로 ~
+## 16 park      존경하는 국민여러분, 국민행복을 위한 노력이 안정적으로 이루어지기~
+## 17 park      국민 여러분, 국민행복의 꿈을 이뤄내기 위해서는, 먼저 정부부터 ~
+## 18 park      국민들이 꿈으로만 가졌던 행복한 삶을 실제로 이룰 수 있도록 도와~
+## 19 park      국민 여러분의 행복이 곧 저의 행복입니다.~
+```
+
+---
+
+#### 중요도가 비슷한 단어 살펴보기
+
+- `odds_ratio`가 1에 가까운 단어 추출
+- 대부분 보편적인 의미를 지니는 단어
+
+
+```r
+frequency_wide %&gt;%
+  arrange(abs(1 - odds_ratio)) %&gt;%
+  head(10)
+```
+
+```
+## # A tibble: 10 x 6
+##    word    moon  park ratio_moon ratio_park odds_ratio
+##    &lt;chr&gt;  &lt;int&gt; &lt;int&gt;      &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;
+##  1 때문       4     3    0.00218    0.00221      0.989
+##  2 강화       3     2    0.00175    0.00165      1.06 
+##  3 부담       3     2    0.00175    0.00165      1.06 
+##  4 세계       3     2    0.00175    0.00165      1.06 
+##  5 책임       3     2    0.00175    0.00165      1.06 
+##  6 협력       3     2    0.00175    0.00165      1.06 
+##  7 거대       2     1    0.00131    0.00110      1.19 
+##  8 교체       2     1    0.00131    0.00110      1.19 
+##  9 근본적     2     1    0.00131    0.00110      1.19 
+## 10 기반       2     1    0.00131    0.00110      1.19
+```
+
+---
+
+##### 중요도가 비슷하면서 빈도가 높은 단어 추출하기
+
+- 두 텍스트에서 모두 강조한 단어
+
+
+```r
+frequency_wide %&gt;%
+  filter(moon &gt;= 5 &amp; park &gt;= 5) %&gt;%
+  arrange(abs(1 - odds_ratio)) %&gt;%
+  head(10)
+```
+
+```
+## # A tibble: 10 x 6
+##    word      moon  park ratio_moon ratio_park odds_ratio
+##    &lt;chr&gt;    &lt;int&gt; &lt;int&gt;      &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;
+##  1 사회        14     9    0.00655    0.00552      1.19 
+##  2 사람         9     9    0.00436    0.00552      0.791
+##  3 경제        15    15    0.00698    0.00883      0.791
+##  4 지원         5     5    0.00262    0.00331      0.791
+##  5 우리        17    10    0.00786    0.00607      1.29 
+##  6 불안         7     8    0.00349    0.00496      0.703
+##  7 산업         9     5    0.00436    0.00331      1.32 
+##  8 대한민국    11     6    0.00524    0.00386      1.36 
+##  9 국가         7    10    0.00349    0.00607      0.576
+## 10 교육         6     9    0.00306    0.00552      0.554
+```
+
+---
+
+name: 03-3
+class: title1
+
+03-3 로그 오즈비로 단어 비교하기
+---
+##### 로그 오즈비(log odds ratio)
+- 오즈비에 로그를 취한 값
+- 단어의 오즈비가 1보다 크면 `+`, 1보다 작으면 `-`가 됨
+- 단어가 두 텍스트 중 어디에서 비중이 큰지에 따라 서로 다른 부호
+  - `"moon"`에서 비중이 커서 `odds_ratio`가 1보다 큰 단어 `+`
+  - `"park"`에서 비중이 커서 `odds_ratio`가 1보다 작은 단어 `-`
+
+&lt;br&gt;
+
+&lt;img src="../Image/etc/03_3_table1.png" width="50%" height="50%" /&gt;
+
+---
+
+##### 수식으로 표현하면
+
+
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+
+
+`$$\text{odds ratio} = \frac{\left(\frac{n+1}{\text{total}+1}\right)_\text{Text A}}
+                           {\left(\frac{n+1}{\text{total}+1}\right)_\text{Text B}}$$`
+                           
+
+---
+
+##### 수식으로 표현하면
+
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+
+`$$\text{log odds ratio} = \log{\left(\frac{\left(\frac{n+1}{\text{total}+1}\right)_\text{Text A}}
+                              {\left(\frac{n+1}{\text{total}+1}\right)_\text{Text B}}\right)}$$`
+
+---
+
+- 텍스트 차이 분명하게 드러나게 시각화하는데 활용
+  - 단어가 어느 텍스트에서 중요한지에 따라 반대되는 축 방향
+
+&lt;img src="../Image/03/03_3_1.png" width="60%" height="60%" /&gt;
+---
+
+
+---
+
+&lt;!-- 이번에는 오즈비에 로그를 취한 **로그 오즈비(Log odds ratio)**를 활용하는 방법을 알아보겠습니다. 어떤 값에 로그를 취하면 1보다 큰 값은 양수, 1보다 작은 값은 음수가 됩니다. 따라서 앞에서 구한 오즈비 `odds_ratio`에 로그를 취하면, `moon`에서 비중이 커서 `odds_ratio`가 1보다 큰 단어는 양수가 됩니다. 반대로 `park`에서 비중이 커서 `odds_ratio`가 1보다 작은 단어는 음수가 됩니다. --&gt;
+
+&lt;!-- 로그 오즈비는 단어가 어떤 텍스트에서 비중이 큰지에 따라 서로 다른 부호를 갖습니다. 따라서 로그 오즈비를 이용해 막대 그래프를 만들면 반대되는 축 방향으로 단어의 중요도를 표현해 텍스트의 차이를 분명하게 드러낼 수 있습니다. 단어 빈도 로그 오즈비를 수식으로 나타내면 다음과 같습니다. --&gt;
+
+&lt;!-- $$\text{log odds ratio} = \log{\left(\frac{\left(\frac{n+1}{\text{total}+1}\right)_\text{Text A}} --&gt;
+&lt;!--                               {\left(\frac{n+1}{\text{total}+1}\right)_\text{Text B}}\right)}$$ --&gt;
+
+
+&lt;!-- &lt;!-- # 중괄호 --&gt; --&gt;
+&lt;!-- &lt;!-- $$\text{log odds ratio} = \log{\left\{\frac{\left(\frac{n+1}{\text{total}+1}\right)_\text{Text A}} --&gt; --&gt;
+&lt;!-- &lt;!--                               {\left(\frac{n+1}{\text{total}+1}\right)_\text{Text B}}\right\}}$$ --&gt; --&gt;
+
+&lt;!-- &lt;!-- # 괄호 생략                               --&gt; --&gt;
+&lt;!-- &lt;!-- $$\text{log odds ratio} = log\frac{\left(\frac{n+1}{\text{total}+1}\right)_\text{Text A}} --&gt; --&gt;
+&lt;!-- &lt;!--                               {\left(\frac{n+1}{\text{total}+1}\right)_\text{Text B}}$$ --&gt; --&gt;
+
+
+
+
+
+
+&lt;!-- ### 3.3.1 로그 오즈비 구하기 --&gt;
+
+&lt;!-- 앞에서 구한 `odds_ratio`를 `log()`에 적용하면 로그 오즈비를 구할 수 있습니다. --&gt;
+&lt;!-- ```{r} --&gt;
+&lt;!-- frequency_wide &lt;- frequency_wide %&gt;% --&gt;
+&lt;!--   mutate(log_odds_ratio = log(odds_ratio)) --&gt;
+&lt;!-- ``` --&gt;
+
+&lt;!-- `log_odds_ratio`의 부호와 크기를 보면 각 단어가 어떤 연설문에서 더 중요하게 사용됐는지 알 수 있습니다. 단어의 `log_odds_ratio`가 0보다 큰 양수일수록 `"moon"`에서 비중이 크고, 반대로 0보다 작은 음수일수록 `"park"`에서 비중이 크다는 것을 의미합니다. 또한 0에 가까울수록 두 연설문의 비중이 비슷함을 의미합니다. --&gt;
+
+&lt;!-- ```{r} --&gt;
+&lt;!-- # moon에서 비중이 큰 단어 --&gt;
+&lt;!-- frequency_wide %&gt;% --&gt;
+&lt;!--   arrange(-log_odds_ratio) --&gt;
+&lt;!-- ``` --&gt;
+
+&lt;!-- ```{r} --&gt;
+&lt;!-- # park에서 비중이 큰 단어 --&gt;
+&lt;!-- frequency_wide %&gt;% --&gt;
+&lt;!--   arrange(log_odds_ratio) --&gt;
+&lt;!-- ``` --&gt;
+
+&lt;!-- ```{r} --&gt;
+&lt;!-- # 비중이 비슷한 단어 --&gt;
+&lt;!-- frequency_wide %&gt;% --&gt;
+&lt;!--   arrange(abs(log_odds_ratio)) --&gt;
+&lt;!-- ``` --&gt;
+
+
+&lt;!-- #### 로그 오즈비 간단히 구하기 --&gt;
+
+&lt;!-- 로그 오즈비 변수만 필요하다면 다음과 같이 간단히 만들 수 있습니다. --&gt;
+
+&lt;!-- ```{r, eval = F} --&gt;
+&lt;!-- frequency_wide &lt;- frequency_wide %&gt;% --&gt;
+&lt;!--   mutate(log_odds_ratio = log(((moon + 1) / (sum(moon + 1))) / --&gt;
+&lt;!--                               ((park + 1) / (sum(park + 1))))) --&gt;
+&lt;!-- ``` --&gt;
+
+
+&lt;!-- ### 3.3.2 상대적으로 중요한 단어 비교하기 --&gt;
+
+&lt;!-- 이제 로그 오즈비 변수를 이용해 각 연설문에서 상대적으로 중요한 단어를 10개씩 추출하겠습니다. 우선 `group_by()`와 `ifelse()`를 이용해 `log_odds_ratio`가 0보다 크면 `"moon"`, 그렇지 않으면 `"park"`을 부여한 `president` 변수를 만들어 항목 별로 분리하겠습니다. 그런 다음, `slice_max()`와 `abs()`를 이용해 `log_odds_ratio`의 절대값 기준으로 상위 10개 단어를 추출하겠습니다. 이렇게 하면 `"moon"`에서 `log_odds_ratio`가 가장 큰 단어 10개, `"park"`에서 `log_odds_ratio`가 가장 작은 단어 10개를 추출합니다. 출력 결과를 보면 **3.2.3**에서 오즈비 `odds_ratio`를 이용해 상하위 10개 단어를 추출했을 때와 같다는 것을 알 수 있습니다. --&gt;
+
+&lt;!-- ```{r} --&gt;
+&lt;!-- top10 &lt;- frequency_wide %&gt;% --&gt;
+&lt;!--   group_by(president = ifelse(log_odds_ratio &gt; 0, "moon", "park")) %&gt;% --&gt;
+&lt;!--   slice_max(abs(log_odds_ratio), n = 10, with_ties = F) --&gt;
+&lt;!-- ``` --&gt;
+
+
+&lt;!-- &lt;!-- ```{r eval=F} --&gt; --&gt;
+&lt;!-- &lt;!-- top10 %&gt;%  --&gt; --&gt;
+&lt;!-- &lt;!--   arrange(-log_odds_ratio) --&gt; --&gt;
+&lt;!-- &lt;!-- ``` --&gt; --&gt;
+
+&lt;!-- &lt;!-- ```{r echo=F} --&gt; --&gt;
+&lt;!-- &lt;!-- top10 %&gt;%  --&gt; --&gt;
+&lt;!-- &lt;!--   arrange(-log_odds_ratio) %&gt;%  --&gt; --&gt;
+&lt;!-- &lt;!--   print(n = 10) --&gt; --&gt;
+&lt;!-- &lt;!-- ``` --&gt; --&gt;
+
+
+&lt;!-- ```{r} --&gt;
+&lt;!-- top10 %&gt;%  --&gt;
+&lt;!--   arrange(-log_odds_ratio) %&gt;%  --&gt;
+&lt;!--   select(word, log_odds_ratio, president) %&gt;%  --&gt;
+&lt;!--   print(n = Inf) --&gt;
+&lt;!-- ``` --&gt;
+
+&lt;!-- &lt;br&gt; --&gt;
+
+&lt;!-- &gt; [편집] 줄맞춤 --&gt;
+
+&lt;!-- &lt;!-- 이제 로그 오즈비 변수를 이용해 각 연설문에서 상대적으로 중요한 단어를 10개씩 추출하겠습니다. 우선 `filter()`와 `rank()`를 이용해 `log_odds_ratio`의 순위가 상하위 10위에 드는 단어를 추출하겠습니다. 그런 다음, 각 단어가 어떤 연설문에서 더 중요한지 알 수 있도록 `log_odds_ratio`가 0보다 크면 `"moon"`, 그렇지 않으면 `"park"`을 부여한 `president` 변수를 추가하겠습니다. 다음 코드로 추출한 단어를 보면 앞에서 오즈비 `odds_ratio`를 이용해 상하위 10개 단어를 추출했을 때와 같다는 것을 알 수 있습니다. --&gt; --&gt;
+
+&lt;!-- &lt;!-- ```{r} --&gt; --&gt;
+&lt;!-- &lt;!-- top10 &lt;- frequency_wide %&gt;% --&gt; --&gt;
+&lt;!-- &lt;!--   filter(rank(log_odds_ratio) &lt;= 10 | rank(-log_odds_ratio) &lt;= 10) %&gt;% --&gt; --&gt;
+&lt;!-- &lt;!--   mutate(president = ifelse(log_odds_ratio &gt; 0, "moon", "park")) --&gt; --&gt;
+&lt;!-- &lt;!-- ``` --&gt; --&gt;
+
+
+&lt;!-- &lt;!-- ```{r eval=F} --&gt; --&gt;
+&lt;!-- &lt;!-- top10 %&gt;% --&gt; --&gt;
+&lt;!-- &lt;!--   arrange(-log_odds_ratio) --&gt; --&gt;
+&lt;!-- &lt;!-- ``` --&gt; --&gt;
+
+
+&lt;!-- &lt;!-- ```{r echo=F} --&gt; --&gt;
+&lt;!-- &lt;!-- top10 %&gt;% --&gt; --&gt;
+&lt;!-- &lt;!--   arrange(-log_odds_ratio) %&gt;% print(n = 10) --&gt; --&gt;
+&lt;!-- &lt;!-- ``` --&gt; --&gt;
+
+
+&lt;!-- ### 3.3.3 막대 그래프 만들기 --&gt;
+
+&lt;!-- 이제 앞에서 만든 데이터를 이용해 막대 그래프를 만들겠습니다. 그래프를 보면 각 단어가 어떤 연설문에서 중요한지에 따라 서로 다른 축 방향으로 표현됩니다. 이처럼 로그 오즈비로 막대 그래프를 만들면 텍스트의 차이를 잘 드러낼 수 있습니다. --&gt;
+
+&lt;!-- ```{r} --&gt;
+&lt;!-- ggplot(top10, aes(x = reorder(word, log_odds_ratio), --&gt;
+&lt;!--                   y = log_odds_ratio, --&gt;
+&lt;!--                   fill = president)) + --&gt;
+&lt;!--   geom_col() + --&gt;
+&lt;!--   coord_flip() + --&gt;
+&lt;!--   labs(x = NULL) + --&gt;
+&lt;!--   theme(text = element_text(family = "nanumgothic")) --&gt;
+&lt;!-- ``` --&gt;
+
+
+&lt;!-- ## 3.4 TF-IDF - 여러 텍스트의 단어 비교하기 --&gt;
+
+&lt;!-- 오즈비는 어떤 사건이 두 조건하에서 발생할 확률을 이용해 계산하기 때문에 3개 이상의 텍스트를 비교할 때는 적절하지 않습니다. 텍스트를 둘씩 짝지어 따로따로 비교하는 방법도 있지만 텍스트의 수가 많으면 계산 절차가 길고 결과를 해석하기 어렵기 때문에 효율적이지 않습니다. --&gt;
+
+
+&lt;!-- #### 중요한 단어란 무엇일까? --&gt;
+
+&lt;!-- 셋 이상의 텍스트를 비교하는 가장 쉬운 방법은 각 텍스트에서 많이 사용된 단어를 알아보는 것입니다. 하지만 앞에서 살펴보았듯이 이런 단어는 누구나 많이 사용하는 흔한 단어이기 때문에 중요하다고 보기 어렵습니다. 예를 들어 대부분의 자기소개서에 "저는"이라는 단어가 많이 나오겠지만 이 단어를 중요하다고 할 수는 없습니다. --&gt;
+
+&lt;!-- 중요한 단어는 '흔하지 않으면서도 특정 텍스트에서는 자주 사용되는 단어'라고 할 수 있습니다. 이런 단어는 특정 텍스트가 다른 텍스트와 구별되는 특징, 개성을 드러냅니다. 예를 들어 어떤 자기소개서에 "스카이다이빙"이라는 흔하지 않은 단어가 여러 번 사용됐다면, 이 단어는 글쓴이의 개성을 잘 드러낸다고 볼 수 있습니다. --&gt;
+
+
+&lt;!-- #### TF-IDF --&gt;
+
+&lt;!-- **TF-IDF(Term Frequency - Inverse Document Frequency)**는 어떤 단어가 '흔하지 않으면서도 특정 텍스트에서는 자주 사용된 정도'를 나타낸 지표입니다. TF-IDF를 구하면 텍스트의 개성을 드러내는 주요 단어를 찾을 수 있습니다. 계산 과정을 살펴보면서 TF-IDF의 의미를 알아보겠습니다. --&gt;
+
+&lt;!-- &gt; [참고] TF-IDF는 우리말로 '단어 빈도-역문서 빈도'라고 합니다. --&gt;
+
+&lt;!-- #### TF --&gt;
+
+&lt;!-- TF-IDF에서 TF는 텍스트에 단어가 사용된 횟수, **단어 빈도(Term Frequency)**를 의미합니다. 다음 표의 숫자는 자기소개서별로 각 단어가 사용된 횟수, TF를 의미합니다. --&gt;
+
+&lt;!--   ---------------------------------------------------------- --&gt;
+&lt;!--    단어          자기소개서 A   자기소개서 B    자기소개서 C --&gt;
+&lt;!--   ------------- ------------- -------------  --------------- --&gt;
+&lt;!--   저는           15            10             10 --&gt;
+
+&lt;!--   스카이다이빙   3             0              0 --&gt;
+
+&lt;!--   자기주도적     3             5              3 --&gt;
+
+&lt;!--   데이터         0             5              1 --&gt;
+
+&lt;!--   배낭여행       2             3              5 --&gt;
+&lt;!--   ---------------------------------------------------------- --&gt;
+
+
+&lt;!-- #### DF와 IDF --&gt;
+
+&lt;!-- **DF(Document Frequency)**는 단어가 몇 개의 텍스트에 사용됐는지 나타낸 **문서 빈도**입니다. 단어의 DF가 클수록 여러 문서에 흔하게 사용된 일반적인 단어라고 할 수 있습니다. --&gt;
+
+&lt;!-- DF를 이용해 IDF를 구할 수 있습니다. **IDF(Inverse Document Frequency)**는 전체 문서 수(N)에서 DF가 차지하는 비중을 구한 다음, 역수를 취해 로그를 취한 값입니다. 우리 말로는 **역 문서 빈도**라고 합니다. --&gt;
+
+&lt;!-- &lt;!-- `$$\text{IDF} = \log{(\frac{{\text{N}}}{{\text{DF}}})}$$` --&gt; --&gt;
+
+&lt;!-- &lt;!-- `$$\text{IDF} = \log{\Big(\frac{{\text{N}}}{{\text{DF}}}\Big)}$$` --&gt; --&gt;
+&lt;!-- &lt;!-- `$$\text{IDF} = \log{\Bigg(\frac{{\text{N}}}{{\text{DF}}}\Bigg)}$$` --&gt; --&gt;
+
+&lt;!-- `$$\text{IDF} = \log{\frac{{\text{N}}}{{\text{DF}}}}$$` --&gt;
+
+
+
+&lt;!-- IDF는 DF의 역수이므로 DF가 클수록 작아지고 반대로 DF가 작을수록 커집니다. 따라서 IDF가 클수록 드물게 사용되는 특이한 단어, IDF가 작을수록 흔하게 사용되는 일반적인 단어라고 할 수 있습니다. --&gt;
+
+&lt;!-- 다음 표를 보면 "스카이다이빙"을 사용한 자기소개서는 1개 밖에 없기 때문에 IDF가 1.1로 높습니다. 따라서 "스카이다이빙"은 흔하지 않은 단어라고 볼 수 있습니다. 반면 "저는", "자기주도적", "배낭여행"은 모든 자기소개서에 사용되어 IDF가 0이므로 흔한 단어라고 볼 수 있습니다. --&gt;
+
+
+&lt;!--   ----------------------------------------- --&gt;
+&lt;!--    단어           DF             IDF                     --&gt;
+&lt;!--   ------------- ------------- ------------- --&gt;
+&lt;!--   저는           3             `$$log\frac{3}{3} = 0$$`  --&gt;
+
+&lt;!--   스카이다이빙   1             `$$log\frac{3}{1} = 1.1$$`  --&gt;
+
+&lt;!--   자기주도적     3             `$$log\frac{3}{3} = 0$$`  --&gt;
+
+&lt;!--   데이터         2             `$$log\frac{3}{2} = 0.4$$`  --&gt;
+
+&lt;!--   배낭여행       3             `$$log\frac{3}{3} = 0$$`  --&gt;
+&lt;!--   ----------------------------------------- --&gt;
+
+&lt;!-- &gt; [참고] 소수점 둘째 자리에서 반올림하여 표기하였습니다. --&gt;
+
+&lt;!-- &lt;br&gt; --&gt;
+
+&lt;!-- &gt; [편집] 수식 줄 맞춤 --&gt;
+
+&lt;!-- &lt;!--   ----------------------------------------- --&gt; --&gt;
+&lt;!-- &lt;!--    단어           DF             IDF                     --&gt; --&gt;
+&lt;!-- &lt;!--   ------------- ------------- ------------- --&gt; --&gt;
+&lt;!-- &lt;!--   저는           3             `$$log(\frac{3}{3}) = 0$$`  --&gt; --&gt;
+
+&lt;!-- &lt;!--   스카이다이빙   1             `$$log(\frac{3}{1}) = 1.1$$`  --&gt; --&gt;
+
+&lt;!-- &lt;!--   자기주도적     3             `$$log(\frac{3}{3}) = 0$$`  --&gt; --&gt;
+
+&lt;!-- &lt;!--   데이터         2             `$$log(\frac{3}{2}) = 0.4$$`  --&gt; --&gt;
+
+&lt;!-- &lt;!--   배낭여행       3             `$$log(\frac{3}{3}) = 0$$`  --&gt; --&gt;
+&lt;!-- &lt;!--   ----------------------------------------- --&gt; --&gt;
+
+
+&lt;!-- #### TF-IDF --&gt;
+
+&lt;!-- TF-IDF는 TF(단어 빈도)와 IDF(역문서 빈도)를 곱한 값입니다. TF-IDF는 어떤 단어가 분석 대상이 되는 텍스트 내에서 많이 사용될 수록 커지고(TF), 동시에 해당 단어가 사용된 텍스트가 드물수록 커지는(IDF) 특성을 지닙니다. 즉, '흔하지 않은 단어인데 특정 텍스트에서 자주 사용될수록' 큰 값을 지닙니다. 그러므로 각 텍스트에서 TF-IDF가 큰 단어를 살펴 보면 다른 텍스트와 구별되는 특징을 알 수 있습니다. --&gt;
+
+&lt;!-- &lt;!-- `$$\text{TF-IDF} = TF{\times}\log{(\frac{{\text{N}}}{{\text{DF}}})}$$` --&gt; --&gt;
+
+&lt;!-- &lt;!-- `$$\text{TF-IDF} = TF{\times}\log{\Big(\frac{{\text{N}}}{{\text{DF}}}\Big)}$$` --&gt; --&gt;
+
+&lt;!-- `$$\text{TF-IDF} = TF{\times}\log\frac{{\text{N}}}{{\text{DF}}}$$` --&gt;
+
+
+&lt;!-- 단어 빈도만 보면 어떤 자기소개서든 가장 많이 사용된 단어는 "저는"입니다. 하지만 다음 표를 보면 자기소개서 A에서 TF-IDF가 가장 높은 단어는 "스카이다이빙"입니다. 따라서 "저는"이 아니라 "스카이다이빙"이 자기소개서 A의 특징을 가장 잘 드러내는 단어라고 할 수 있습니다. --&gt;
+
+&lt;!-- 자기소개서 B와 C는 둘 다 "데이터"의 TF-IDF가 가장 높아 텍스트의 특징을 가장 잘 드러낸다고 할 수 있습니다. 그런데 자기소개서 B는 "데이터"를 5번 사용해 TF-IDF가 2로 높지만, 자기소개서 C는 1번 사용해 TF-IDF가 0.4로 낮습니다. 따라서 "데이터"는 자기소개서 B의 특징을 더 잘 드러내는 단어라고 할 수 있습니다. --&gt;
+
+&lt;!--   &lt;!-- ---------------------------------------------------------------------------------------------------------------------- --&gt; --&gt;
+&lt;!--   &lt;!--  단어          자기소개서 A                        자기소개서 B                        자기소개서 C --&gt; --&gt;
+&lt;!--   &lt;!-- ------------- ----------                         -------------                      -------------- --&gt; --&gt;
+&lt;!--   &lt;!-- 저는           `$$15{\times}\log(\frac{3}{3})=0$$`   `$$10{\times}\log(\frac{3}{3})=0$$`   `$$10{\times}\log(\frac{3}{3})=0$$` --&gt; --&gt;
+
+&lt;!--   &lt;!-- 스카이다이빙   `$$3{\times}\log(\frac{3}{1})=3.3$$`  `$$0{\times}\log(\frac{3}{1})=0$$`    `$$0{\times}\log(\frac{3}{1})=0$$` --&gt; --&gt;
+
+&lt;!--   &lt;!-- 자기주도적     `$$3{\times}\log(\frac{3}{3})=0$$`    `$$5{\times}\log(\frac{3}{3})=0$$`    `$$3{\times}\log(\frac{3}{3})=0$$` --&gt; --&gt;
+
+&lt;!--   &lt;!-- 데이터         `$$0{\times}\log(\frac{3}{2})=0$$`    `$$5{\times}\log(\frac{3}{2})=2$$`    `$$1{\times}\log(\frac{3}{2})=0.4$$` --&gt; --&gt;
+
+&lt;!--   &lt;!-- 배낭여행       `$$2{\times}\log(\frac{3}{3})=0$$`    `$$3{\times}\log(\frac{3}{3})=0$$`    `$$5{\times}\log(\frac{3}{3})=0$$` --&gt; --&gt;
+&lt;!--   &lt;!-- ---------------------------------------------------------------------------------------------------------------------- --&gt; --&gt;
+
+
+
+
+&lt;!--   ---------------------------------------------------------------------------------------------------------------------- --&gt;
+&lt;!--    단어          자기소개서 A                        자기소개서 B                        자기소개서 C --&gt;
+&lt;!--   ------------- ----------                        -------------                    -------------- --&gt;
+&lt;!--   저는           `$$15{\times}\log\frac{3}{3}=0$$`   `$$10{\times}\log\frac{3}{3}=0$$`   `$$10{\times}\log\frac{3}{3}=0$$` --&gt;
+
+&lt;!--   스카이다이빙   `$$3{\times}\log\frac{3}{1}=3.3$$`  `$$0{\times}\log\frac{3}{1}=0$$`    `$$0{\times}\log\frac{3}{1}=0$$` --&gt;
+
+&lt;!--   자기주도적     `$$3{\times}\log\frac{3}{3}=0$$`    `$$5{\times}\log\frac{3}{3}=0$$`    `$$3{\times}\log\frac{3}{3}=0$$` --&gt;
+
+&lt;!--   데이터         `$$0{\times}\log\frac{3}{2}=0$$`    `$$5{\times}\log\frac{3}{2}=2$$`    `$$1{\times}\log\frac{3}{2}=0.4$$` --&gt;
+
+&lt;!--   배낭여행       `$$2{\times}\log\frac{3}{3}=0$$`    `$$3{\times}\log\frac{3}{3}=0$$`    `$$5{\times}\log\frac{3}{3}=0$$` --&gt;
+&lt;!--   ---------------------------------------------------------------------------------------------------------------------- --&gt;
+
+&lt;!-- &gt; [참고] 소수점 둘째 자리에서 반올림하여 표기하였습니다. --&gt;
+
+&lt;!-- &lt;br&gt; --&gt;
+
+
+&lt;!-- &gt; [편집] 각 자기소개서 중 TF-IDF 높은 셀 강조하기, 수식 줄 맞춤 --&gt;
+
+
+&lt;!-- ### 3.4.1 단어 빈도 구하기 --&gt;
+
+&lt;!-- TF-IDF의 원리를 살펴봤으니 텍스트를 분석하는데 활용해보겠습니다. 먼저 역대 대통령의 대선 출마 선언문을 담은 `speeches_presidents.csv`를 불러와 기본적인 전처리를 한 다음, 명사를 추출해 단어 빈도를 구하겠습니다. CSV 파일을 불러올 때는 `readr` 패키지의 `read_csv()`를 이용하겠습니다. `read_csv()`는 데이터를 다루기 편한 tibble 구조로 만들어주고 `read.csv()`에 비해 속도가 더 빠릅니다. --&gt;
+
+
+&lt;!-- ```{r echo=F} --&gt;
+&lt;!-- options(tibble.width = 47)      # tibble 출력 폭 제한 --&gt;
+&lt;!-- ``` --&gt;
+
+
+&lt;!-- ```{r eval=F} --&gt;
+&lt;!-- # 데이터 불러오기 --&gt;
+&lt;!-- install.packages("readr") --&gt;
+&lt;!-- library(readr) --&gt;
+
+&lt;!-- raw_speeches &lt;- read_csv("speeches_presidents.csv") --&gt;
+&lt;!-- raw_speeches --&gt;
+&lt;!-- ``` --&gt;
+
+&lt;!-- ```{r echo=F} --&gt;
+&lt;!-- # install.packages("readr") --&gt;
+&lt;!-- library(readr) --&gt;
+&lt;!-- raw_speeches &lt;- read_csv(here::here("files/speeches_presidents.csv")) --&gt;
+&lt;!-- raw_speeches --&gt;
+&lt;!-- ``` --&gt;
+
+
+&lt;!-- ```{r} --&gt;
+&lt;!-- # 기본적인 전처리 --&gt;
+&lt;!-- speeches &lt;- raw_speeches %&gt;% --&gt;
+&lt;!--   mutate(value = str_replace_all(value, "[^가-힣]", " "), --&gt;
+&lt;!--          value = str_squish(value)) --&gt;
+
+&lt;!-- # 토큰화 --&gt;
+&lt;!-- speeches &lt;- speeches %&gt;% --&gt;
+&lt;!--   unnest_tokens(input = value, --&gt;
+&lt;!--                 output = word, --&gt;
+&lt;!--                 token = extractNoun) --&gt;
+
+&lt;!-- # 단어 빈도 구하기 --&gt;
+&lt;!-- frequecy &lt;- speeches %&gt;% --&gt;
+&lt;!--   count(president, word) %&gt;% --&gt;
+&lt;!--   filter(str_count(word) &gt; 1) --&gt;
+
+&lt;!-- frequecy --&gt;
+&lt;!-- ``` --&gt;
+
+
+
+&lt;!-- ```{r echo=F} --&gt;
+&lt;!-- options(tibble.width = 80)      # tibble 출력 폭 제한 --&gt;
+&lt;!-- ``` --&gt;
+
+&lt;!-- ### 3.4.2 TF-IDF 구하기 --&gt;
+
+&lt;!-- `tidytext`패키지의 `bind_tf_idf()`를 이용하면 TF-IDF를 구할 수 있습니다. `bind_tf_idf()`에는 세 가지 파라미터를 입력해야 합니다. --&gt;
+&lt;!-- - `term`     : 단어 --&gt;
+&lt;!-- - `document` : 텍스트 구분 변수 --&gt;
+&lt;!-- - `n`        : 단어 빈도 --&gt;
+
+&lt;!-- 앞에서 만든 `frequecy`를 `bind_tf_idf()`에 적용해 TF-IDF를 구한 다음, `tf_idf`가 높은 순으로 정렬하겠습니다. 출력 결과를 보면 `tf`, `idf`, `tf_idf`가 추가되었음을 확인할 수 있습니다. --&gt;
+
+&lt;!-- ```{r} --&gt;
+&lt;!-- frequecy &lt;- frequecy %&gt;% --&gt;
+&lt;!--   bind_tf_idf(term = word,           # 단어 --&gt;
+&lt;!--               document = president,  # 텍스트 구분 변수 --&gt;
+&lt;!--               n = n) %&gt;%             # 단어 빈도 --&gt;
+&lt;!--   arrange(-tf_idf) --&gt;
+
+&lt;!-- frequecy --&gt;
+&lt;!-- ``` --&gt;
+
+&lt;!-- &gt; [참고] bind_tf_idf()로 생성한 `tf`는 앞에서 설명한 tf와 달리 대상 텍스트의 전체 단어 수에서 해당 단어의 수가 차지하는 '비중'을 의미합니다. 단어 빈도를 전체 단어 빈도로 나눈 '비율'이므로 텍스트에 사용된 전체 단어 수가 많을수록 작아집니다. --&gt;
+
+
+&lt;!-- #### TF-IDF가 높은 단어 살펴보기 --&gt;
+
+&lt;!-- TF-IDF를 구했으니 이제 텍스트의 특징을 드러내는 중요한 단어가 무엇인지 쉽게 파악할 수 있습니다. 살펴볼 텍스트를 추출해 `tf_idf`가 높은 단어를 살펴보면 각 대통령이 다른 대통령들과 달리 무엇을 강조했는지 알 수 있습니다. --&gt;
+
+&lt;!-- ```{r echo=F} --&gt;
+&lt;!-- options( --&gt;
+&lt;!--   tibble.print_min = 5,  # 행 출력 제한 --&gt;
+&lt;!--   tibble.print_max = 5)  # 행 출력 제한 --&gt;
+&lt;!-- ``` --&gt;
+
+
+&lt;!-- ```{r} --&gt;
+&lt;!-- frequecy %&gt;% filter(president == "문재인") --&gt;
+&lt;!-- ``` --&gt;
+
+&lt;!-- &lt;br&gt; --&gt;
+
+&lt;!-- ```{r} --&gt;
+&lt;!-- frequecy %&gt;% filter(president == "박근혜") --&gt;
+&lt;!-- ``` --&gt;
+
+&lt;!-- &gt; [편집] 2단 편집 --&gt;
+
+&lt;!-- &lt;br&gt; --&gt;
+
+&lt;!-- ```{r} --&gt;
+
+&lt;!-- frequecy %&gt;% filter(president == "이명박") --&gt;
+&lt;!-- ``` --&gt;
+
+&lt;!-- &lt;br&gt; --&gt;
+
+&lt;!-- ```{r} --&gt;
+
+&lt;!-- frequecy %&gt;% filter(president == "노무현") --&gt;
+&lt;!-- ``` --&gt;
+
+&lt;!-- &gt; [편집] 2단 편집 --&gt;
+
+
+&lt;!-- #### TF-IDF가 낮은 단어 살펴보기 --&gt;
+
+&lt;!-- 반대로 TF-IDF가 낮은 단어를 살펴보면, 역대 대통령들이 공통적으로 사용한 흔한 단어를 알 수 있습니다. 출력 결과를 보면 "국민", "경제" 등 범용적인 단어의 TF-IDF가 0임을 알 수 있습니다. --&gt;
+
+&lt;!-- ```{r} --&gt;
+&lt;!-- frequecy %&gt;% --&gt;
+&lt;!--   filter(president == "문재인") %&gt;% --&gt;
+&lt;!--   arrange(tf_idf) --&gt;
+
+&lt;!-- frequecy %&gt;% --&gt;
+&lt;!--   filter(president == "박근혜") %&gt;% --&gt;
+&lt;!--   arrange(tf_idf) --&gt;
+&lt;!-- ``` --&gt;
+
+
+&lt;!-- ### 3.4.3 막대 그래프 만들기 --&gt;
+
+&lt;!-- 각 연설문에서 TF-IDF가 높은 단어를 추출해 막대 그래프를 만들겠습니다. 출력한 그래프를 보면 각 대통령의 개성을 드러내는 단어가 무엇인지 쉽게 파악할 수 있습니다. --&gt;
+
+&lt;!-- ```{r} --&gt;
+&lt;!-- # 주요 단어 추출 --&gt;
+&lt;!-- top10 &lt;- frequecy %&gt;% --&gt;
+&lt;!--   group_by(president) %&gt;% --&gt;
+&lt;!--   slice_max(tf_idf, n = 10, with_ties = F) --&gt;
+
+&lt;!-- # 그래프 순서 정하기 --&gt;
+&lt;!-- top10$president &lt;- factor(top10$president, --&gt;
+&lt;!--                           levels = c("문재인", "박근혜", "이명박", "노무현")) --&gt;
+
+&lt;!-- # 막대 그래프 만들기 --&gt;
+&lt;!-- ggplot(top10, aes(x = reorder_within(word, tf_idf, president), --&gt;
+&lt;!--                   y = tf_idf, --&gt;
+&lt;!--                   fill = president)) +   --&gt;
+&lt;!--   geom_col(show.legend = F) + --&gt;
+&lt;!--   coord_flip() + --&gt;
+&lt;!--   facet_wrap(~ president, scales = "free", ncol = 2) + --&gt;
+&lt;!--   scale_x_reordered() + --&gt;
+&lt;!--   labs(x = NULL) + --&gt;
+&lt;!--   theme(text = element_text(family = "nanumgothic")) --&gt;
+&lt;!-- ``` --&gt;
+
+&lt;!-- &gt; [참고] `factor()`를 이용해 변수 항목의 `levles`를 정하면 원하는 순서로 그래프를 나열할 수 있습니다. --&gt;
+
+&lt;!-- &lt;br&gt; --&gt;
+
+&lt;!-- &gt; [알아두면 좋아요] TF-IDF의 한계와 대안 --&gt;
+
+&lt;!-- 모든 문서에 사용된 단어는 IDF가 0이므로 TF-IDF도 0이 됩니다. 따라서 TF-IDF를 활용하면 단어가 특정 문서에서 특출나게 많이 사용됐더라도 발견할 수 없다는 한계가 있습니다. **Weighted log odds**를 활용하면 이런 한계를 극복할 수 있습니다. Weighted log odds는 단어 등장 확률로 가중치를 부여하기 때문에 모든 문서에 사용됐지만 특정 문서에 많이 사용된 단어를 발견할 수 있습니다. 또한 오즈비와 달리 셋 이상의 문서를 비교할 때도 사용할 수 있다는 장점이 있습니다. `tidylo` 패키지를 이용하면 Weighted log odds를 쉽게 구할 수 있습니다. --&gt;
+
+&lt;!-- - tidylo: Weighted Tidy Log Odds Ratio --&gt;
+&lt;!--   [github.com/juliasilge/tidylo](https://github.com/juliasilge/tidylo) --&gt;
+
+
+
+
+
+
+&lt;!-- #### 띄어쓰기 기준 토큰화의 문제 --&gt;
+&lt;!-- - 의미를 지니지 않는 서술어가 가장 많이 추출됨 --&gt;
+&lt;!--     - ex) '합니다', '있습니다' --&gt;
+
+&lt;!-- -- --&gt;
+
+&lt;!-- #### 형태소 분석(Morphological Analysis) --&gt;
+&lt;!-- - 문장에서 형태소를 추출해 명사, 동사, 형용사 등 품사로 분류하는 작업 --&gt;
+&lt;!-- - 특히 명사를 보고 문장 내용 파악 --&gt;
+&lt;!-- - 형태소(Morpheme) --&gt;
+&lt;!--   - 의미를 가진 가장 작은 말의 단위 --&gt;
+&lt;!--   - 더 나누면 뜻이 없는 문자가 됨 --&gt;
+
+
+&lt;!-- --- --&gt;
+
+&lt;!-- #### `KoNLP` 한글 형태소 분석 패키지 설치하기 --&gt;
+
+&lt;!-- ##### 1. 자바와 rJava 패키지 설치하기 --&gt;
+
+&lt;!-- ```{r, eval = F} --&gt;
+&lt;!-- install.packages("multilinguer") --&gt;
+&lt;!-- library(multilinguer) --&gt;
+&lt;!-- install_jdk() --&gt;
+&lt;!-- ``` --&gt;
+
+&lt;!-- ##### 2. KoNLP 의존성 패키지 설치하기 --&gt;
+
+&lt;!-- ```{r, eval = F} --&gt;
+&lt;!-- install.packages(c("stringr", "hash", "tau", "Sejong", "RSQLite", "devtools"), --&gt;
+&lt;!--                  type = "binary") --&gt;
+&lt;!-- ``` --&gt;
+
+&lt;!-- ##### 3. `KoNLP` 패키지 설치하기 --&gt;
+&lt;!-- ```{r, eval=F} --&gt;
+&lt;!-- install.packages("remotes") --&gt;
+&lt;!-- remotes::install_github("haven-jeon/KoNLP", --&gt;
+&lt;!--                         upgrade = "never", --&gt;
+&lt;!--                         INSTALL_opts = c("--no-multiarch")) --&gt;
+
+&lt;!-- library(KoNLP) --&gt;
+&lt;!-- ``` --&gt;
+
+&lt;!-- --- --&gt;
+
+&lt;!-- #### `KoNLP` 한글 형태소 분석 패키지 설치하기 --&gt;
+
+&lt;!-- ##### 4. 형태소 사전 설정하기 --&gt;
+
+&lt;!-- NIA 사전: 120만여 개 단어로 구성된 형태소 사전 --&gt;
+
+&lt;!-- ```{r, eval = F} --&gt;
+&lt;!-- useNIADic() --&gt;
+&lt;!-- ``` --&gt;
+
+&lt;!-- &lt;svg viewBox="0 0 352 512" xmlns="http://www.w3.org/2000/svg" style="height:1em;fill:currentColor;position:relative;display:inline-block;top:.1em;"&gt;  [ comment ]  &lt;path d="M176 80c-52.94 0-96 43.06-96 96 0 8.84 7.16 16 16 16s16-7.16 16-16c0-35.3 28.72-64 64-64 8.84 0 16-7.16 16-16s-7.16-16-16-16zM96.06 459.17c0 3.15.93 6.22 2.68 8.84l24.51 36.84c2.97 4.46 7.97 7.14 13.32 7.14h78.85c5.36 0 10.36-2.68 13.32-7.14l24.51-36.84c1.74-2.62 2.67-5.7 2.68-8.84l.05-43.18H96.02l.04 43.18zM176 0C73.72 0 0 82.97 0 176c0 44.37 16.45 84.85 43.56 115.78 16.64 18.99 42.74 58.8 52.42 92.16v.06h48v-.12c-.01-4.77-.72-9.51-2.15-14.07-5.59-17.81-22.82-64.77-62.17-109.67-20.54-23.43-31.52-53.15-31.61-84.14-.2-73.64 59.67-128 127.95-128 70.58 0 128 57.42 128 128 0 30.97-11.24 60.85-31.65 84.14-39.11 44.61-56.42 91.47-62.1 109.46a47.507 47.507 0 0 0-2.22 14.3v.1h48v-.05c9.68-33.37 35.78-73.18 52.42-92.16C335.55 260.85 352 220.37 352 176 352 78.8 273.2 0 176 0z"&gt;&lt;/path&gt;&lt;/svg&gt; `KoNLP` 패키지 설치 후 한 번만 실행 --&gt;
+
+&lt;!-- --- --&gt;
+
+&lt;!-- #### 형태소 분석기를 이용해 토큰화하기 - 명사 추출 --&gt;
+
+&lt;!-- ##### 샘플 텍스트로 작동 원리 알아보기 --&gt;
+
+&lt;!-- ```{r} --&gt;
+&lt;!-- library(KoNLP) --&gt;
+&lt;!-- library(dplyr) --&gt;
+
+&lt;!-- text &lt;- tibble( --&gt;
+&lt;!--   value = c("대한민국은 민주공화국이다.", --&gt;
+&lt;!--             "대한민국의 주권은 국민에게 있고, 모든 권력은 국민으로부터 나온다.")) --&gt;
+
+&lt;!-- text --&gt;
+&lt;!-- ``` --&gt;
+
+&lt;!-- --- --&gt;
+&lt;!-- `extractNoun()`: 문장에서 추출한 명사를 list 구조로 출력 --&gt;
+
+&lt;!-- ```{r} --&gt;
+&lt;!-- extractNoun(text$value) --&gt;
+&lt;!-- ``` --&gt;
+
+&lt;!-- &lt;svg viewBox="0 0 352 512" xmlns="http://www.w3.org/2000/svg" style="height:1em;fill:currentColor;position:relative;display:inline-block;top:.1em;"&gt;  [ comment ]  &lt;path d="M176 80c-52.94 0-96 43.06-96 96 0 8.84 7.16 16 16 16s16-7.16 16-16c0-35.3 28.72-64 64-64 8.84 0 16-7.16 16-16s-7.16-16-16-16zM96.06 459.17c0 3.15.93 6.22 2.68 8.84l24.51 36.84c2.97 4.46 7.97 7.14 13.32 7.14h78.85c5.36 0 10.36-2.68 13.32-7.14l24.51-36.84c1.74-2.62 2.67-5.7 2.68-8.84l.05-43.18H96.02l.04 43.18zM176 0C73.72 0 0 82.97 0 176c0 44.37 16.45 84.85 43.56 115.78 16.64 18.99 42.74 58.8 52.42 92.16v.06h48v-.12c-.01-4.77-.72-9.51-2.15-14.07-5.59-17.81-22.82-64.77-62.17-109.67-20.54-23.43-31.52-53.15-31.61-84.14-.2-73.64 59.67-128 127.95-128 70.58 0 128 57.42 128 128 0 30.97-11.24 60.85-31.65 84.14-39.11 44.61-56.42 91.47-62.1 109.46a47.507 47.507 0 0 0-2.22 14.3v.1h48v-.05c9.68-33.37 35.78-73.18 52.42-92.16C335.55 260.85 352 220.37 352 176 352 78.8 273.2 0 176 0z"&gt;&lt;/path&gt;&lt;/svg&gt; `extractNoun()`은 두 번째 실행부터 빠르게 작동 --&gt;
+
+&lt;!-- --- --&gt;
+
+&lt;!-- ##### `unnest_tokens()`를 이용해 명사 추출하기 --&gt;
+
+&lt;!-- - 다루기 쉬운 tibble 구조로 명사 출력 --&gt;
+
+&lt;!-- ```{r} --&gt;
+&lt;!-- library(tidytext) --&gt;
+
+&lt;!-- text %&gt;% --&gt;
+&lt;!--   unnest_tokens(input = value,        # 분석 대상 --&gt;
+&lt;!--                 output = word,        # 출력 변수명 --&gt;
+&lt;!--                 token = extractNoun)  # 토큰화 함수  #&lt;&lt; --&gt;
+&lt;!-- ``` --&gt;
+
+&lt;!-- &lt;svg viewBox="0 0 576 512" xmlns="http://www.w3.org/2000/svg" style="height:1em;position:relative;display:inline-block;top:.1em;fill:#FF7333;"&gt;  [ comment ]  &lt;path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"&gt;&lt;/path&gt;&lt;/svg&gt; `token` 파라미터에 입력한 `extractNoun` 앞뒤에 따옴표 X --&gt;
+
+&lt;!-- --- --&gt;
+
+&lt;!-- .pull-left[ --&gt;
+
+&lt;!-- ##### 띄어쓰기 기준 추출 --&gt;
+&lt;!-- ```{r} --&gt;
+&lt;!-- text %&gt;% --&gt;
+&lt;!--   unnest_tokens(input = value,     --&gt;
+&lt;!--                 output = word,     --&gt;
+&lt;!--                 token = "words") #&lt;&lt; --&gt;
+&lt;!-- ``` --&gt;
+
+&lt;!-- ] --&gt;
+
+&lt;!-- .pull-right[ --&gt;
+
+&lt;!-- ##### 명사 추출 --&gt;
+&lt;!-- ```{r} --&gt;
+&lt;!-- text %&gt;% --&gt;
+&lt;!--   unnest_tokens(input = value,     --&gt;
+&lt;!--                 output = word,     --&gt;
+&lt;!--                 token = extractNoun) #&lt;&lt; --&gt;
+&lt;!-- ``` --&gt;
+
+&lt;!-- ] --&gt;
+
+&lt;!-- --- --&gt;
+
+
+&lt;!-- #### 연설문에서 명사 추출하기 --&gt;
+
+&lt;!-- ##### 문재인 대통령 연설문 불러오기 --&gt;
+
+&lt;!-- ```{r eval=F} --&gt;
+&lt;!-- raw_moon &lt;- readLines("speech_moon.txt", encoding = "UTF-8") --&gt;
+&lt;!-- ``` --&gt;
+
+&lt;!-- ##### 기본적인 전처리 --&gt;
+&lt;!-- ```{r eval=F} --&gt;
+&lt;!-- library(stringr) --&gt;
+&lt;!-- library(textclean) --&gt;
+
+&lt;!-- moon &lt;- raw_moon %&gt;% --&gt;
+&lt;!--   str_replace_all("[^가-힣]", " ") %&gt;%  # 한글만 남기기 --&gt;
+&lt;!--   str_squish() %&gt;%                      # 중복 공백 제거 --&gt;
+&lt;!--   as_tibble()                           # tibble로 변환 --&gt;
+
+&lt;!-- moon --&gt;
+&lt;!-- ``` --&gt;
+
+&lt;!-- --- --&gt;
+
+&lt;!-- ```{r echo=F} --&gt;
+&lt;!-- # 문재인 대통령 연설문 불러오기 --&gt;
+&lt;!-- raw_moon &lt;- readLines("../Data/speech_moon.txt", encoding = "UTF-8") --&gt;
+
+&lt;!-- # 기본적인 전처리 --&gt;
+&lt;!-- library(stringr) --&gt;
+&lt;!-- library(textclean) --&gt;
+
+&lt;!-- moon &lt;- raw_moon %&gt;% --&gt;
+&lt;!--   str_replace_all("[^가-힣]", " ") %&gt;%  # 한글만 남기기 --&gt;
+&lt;!--   str_squish() %&gt;%                      # 중복 공백 제거 --&gt;
+&lt;!--   as_tibble()                           # tibble로 변환 --&gt;
+
+&lt;!-- moon --&gt;
+&lt;!-- ``` --&gt;
+
+&lt;!-- --- --&gt;
+
+&lt;!-- ##### 명사 기준 토큰화 --&gt;
+&lt;!-- ```{r} --&gt;
+&lt;!-- word_noun &lt;- moon %&gt;% --&gt;
+&lt;!--   unnest_tokens(input = value, --&gt;
+&lt;!--                 output = word, --&gt;
+&lt;!--                 token = extractNoun) --&gt;
+
+&lt;!-- word_noun --&gt;
+&lt;!-- ``` --&gt;
+
+
+&lt;!-- --- --&gt;
+
+
+&lt;!-- name: 02-2 --&gt;
+&lt;!-- class: title1 --&gt;
+
+&lt;!-- 02-2 명사 빈도 분석하기 --&gt;
+
+&lt;!-- --- --&gt;
+
+&lt;!-- ##### 단어 빈도 구하기 --&gt;
+
+&lt;!-- - 빈도가 높은 명사를 보면 글쓴이가 무엇을 강조했는지 알 수 있음 --&gt;
+&lt;!-- - `# A tibble: 704 x 2`: 연설문이 704개의 명사로 구성됨 --&gt;
+
+&lt;!-- ```{r} --&gt;
+&lt;!-- word_noun &lt;- word_noun %&gt;% --&gt;
+&lt;!--   count(word, sort = T) %&gt;%    # 단어 빈도 구해 내림차순 정렬 --&gt;
+&lt;!--   filter(str_count(word) &gt; 1)  # 두 글자 이상만 남기기 --&gt;
+
+&lt;!-- word_noun --&gt;
+&lt;!-- ``` --&gt;
+
+&lt;!-- --- --&gt;
+
+&lt;!-- .pull-left[ --&gt;
+
+&lt;!-- ##### 띄어쓰기 기준 추출 --&gt;
+&lt;!-- ```{r} --&gt;
+&lt;!-- moon %&gt;% --&gt;
+&lt;!--   unnest_tokens(input = value, --&gt;
+&lt;!--                 output = word, --&gt;
+&lt;!--                 token = "words") %&gt;% #&lt;&lt; --&gt;
+&lt;!--   count(word, sort = T) %&gt;% --&gt;
+&lt;!--   filter(str_count(word) &gt; 1) --&gt;
+
+&lt;!-- ``` --&gt;
+&lt;!-- ] --&gt;
+
+&lt;!-- .pull-right[ --&gt;
+
+&lt;!-- ##### 명사 추출 --&gt;
+&lt;!-- ```{r} --&gt;
+&lt;!-- moon %&gt;% --&gt;
+&lt;!--   unnest_tokens(input = value, --&gt;
+&lt;!--                 output = word, --&gt;
+&lt;!--                 token = extractNoun) %&gt;% #&lt;&lt;  --&gt;
+&lt;!--   count(word, sort = T) %&gt;% --&gt;
+&lt;!--   filter(str_count(word) &gt; 1) --&gt;
+
+&lt;!-- ``` --&gt;
+
+&lt;!-- ] --&gt;
+
+&lt;!-- --- --&gt;
+
+&lt;!-- ##### 막대 그래프 만들기 --&gt;
+
+&lt;!-- ```{r} --&gt;
+&lt;!-- # 상위 20개 단어 추출 --&gt;
+&lt;!-- top20 &lt;- word_noun %&gt;% --&gt;
+&lt;!--   head(20) --&gt;
+&lt;!-- ``` --&gt;
+
+&lt;!-- ```{r eval=F} --&gt;
+&lt;!-- # 막대 그래프 만들기 --&gt;
+&lt;!-- library(ggplot2) --&gt;
+
+&lt;!-- ggplot(top20, aes(x = reorder(word, n), y = n)) + --&gt;
+&lt;!--   geom_col() + --&gt;
+&lt;!--   coord_flip() + --&gt;
+&lt;!--   geom_text(aes(label = n), hjust = -0.3) + --&gt;
+&lt;!--   labs(x = NULL) + --&gt;
+&lt;!--   theme(text = element_text(family = "nanumgothic")) --&gt;
+&lt;!-- ``` --&gt;
+
+&lt;!-- --- --&gt;
+
+&lt;!-- - 명사로 되어있기 때문에 연설문의 내용을 이해하기 쉬움 --&gt;
+
+&lt;!-- ```{r echo=F, fig.height = 5, out.width = "80%"} --&gt;
+&lt;!-- showtext_opts(dpi = 300) # opts_chunk$set(dpi=300) --&gt;
+
+&lt;!-- library(ggplot2) --&gt;
+&lt;!-- ggplot(top20, aes(x = reorder(word, n), y = n)) + --&gt;
+&lt;!--   geom_col() + --&gt;
+&lt;!--   coord_flip() + --&gt;
+&lt;!--   geom_text(aes(label = n), hjust = -0.3) + --&gt;
+&lt;!--   labs(x = NULL) + --&gt;
+&lt;!--   theme(text = element_text(family = "nanumgothic")) --&gt;
+&lt;!-- ``` --&gt;
+
+&lt;!-- --- --&gt;
+
+&lt;!-- &lt;br&gt; --&gt;
+
+&lt;!-- .pull-left[ --&gt;
+
+&lt;!-- ##### &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;띄어쓰기 기준 추출 --&gt;
+
+&lt;!-- ```{r, echo=FALSE} --&gt;
+&lt;!-- include_graphics("https://raw.githubusercontent.com/youngwoos/Doit_textmining/main/Image/01/01_3_1.png") --&gt;
+&lt;!-- ``` --&gt;
+&lt;!-- ] --&gt;
+
+&lt;!-- .pull-right[ --&gt;
+
+&lt;!-- ##### &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;명사 추출 --&gt;
+&lt;!-- ```{r, echo=FALSE} --&gt;
+&lt;!-- include_graphics("https://raw.githubusercontent.com/youngwoos/Doit_textmining/main/Image/02/01_2_1.png") --&gt;
+&lt;!-- ``` --&gt;
+&lt;!-- ] --&gt;
+
+&lt;!-- --- --&gt;
+
+&lt;!-- ##### 워드 클라우드 만들기 --&gt;
+
+&lt;!-- ```{r eval=F} --&gt;
+&lt;!-- # 폰트 설정 --&gt;
+&lt;!-- library(showtext) --&gt;
+&lt;!-- font_add_google(name = "Black Han Sans", family = "blackhansans") --&gt;
+&lt;!-- showtext_auto() --&gt;
+
+&lt;!-- library(ggwordcloud) --&gt;
+&lt;!-- ggplot(word_noun, aes(label = word, size = n, col = n)) + --&gt;
+&lt;!--   geom_text_wordcloud(seed = 1234, family = "blackhansans") + --&gt;
+&lt;!--   scale_radius(limits = c(3, NA), --&gt;
+&lt;!--                range = c(3, 15)) + --&gt;
+&lt;!--   scale_color_gradient(low = "#66aaf2", high = "#004EA1") + --&gt;
+&lt;!--   theme_minimal() --&gt;
+&lt;!-- ``` --&gt;
+
+&lt;!-- --- --&gt;
+&lt;!-- &lt;br-back-50&gt; --&gt;
+
+&lt;!-- ```{r echo=F} --&gt;
+&lt;!-- include_graphics("https://raw.githubusercontent.com/youngwoos/Doit_textmining/main/Image/02/01_2_2.png") --&gt;
+&lt;!-- ``` --&gt;
+
+&lt;!-- --- --&gt;
+
+&lt;!-- &lt;br&gt; --&gt;
+
+&lt;!-- .pull-left[ --&gt;
+
+&lt;!-- ##### &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;띄어쓰기 기준 추출 --&gt;
+
+&lt;!-- &lt;br-back-10&gt; --&gt;
+
+&lt;!-- ```{r, echo=FALSE, out.width="90%", out.height="90%"} --&gt;
+&lt;!-- include_graphics("https://raw.githubusercontent.com/youngwoos/Doit_textmining/main/Image/01/01_3_6.png") --&gt;
+&lt;!-- ``` --&gt;
+&lt;!-- ] --&gt;
+
+&lt;!-- .pull-right[  --&gt;
+
+&lt;!-- ##### &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;명사 추출 --&gt;
+
+&lt;!-- &lt;br-back-20&gt; --&gt;
+
+&lt;!-- ```{r, echo=FALSE} --&gt;
+&lt;!-- include_graphics("https://raw.githubusercontent.com/youngwoos/Doit_textmining/main/Image/02/01_2_2.png") --&gt;
+&lt;!-- ``` --&gt;
+&lt;!-- ] --&gt;
+
+&lt;!-- --- --&gt;
+
+&lt;!-- name: 02-3 --&gt;
+&lt;!-- class: title1 --&gt;
+
+&lt;!-- 02-3 특정 단어가 사용된 문장 살펴보기 --&gt;
+
+&lt;!-- --- --&gt;
+
+&lt;!-- - 고빈도 단어 사용된 문장 직접 읽어보기 --&gt;
+&lt;!-- - 글쓴이가 어떤 의미로 단어를 사용했는지 이해할 수 있음 --&gt;
+
+&lt;!-- -- --&gt;
+
+&lt;!-- ##### 문장 기준으로 토큰화하기 --&gt;
+
+&lt;!-- - 원문 `raw_moon`을 문장 기준으로 토큰화 --&gt;
+
+&lt;!-- ```{r eval=F} --&gt;
+&lt;!-- sentences_moon &lt;- raw_moon %&gt;% --&gt;
+&lt;!--   str_squish() %&gt;% --&gt;
+&lt;!--   as_tibble() %&gt;% --&gt;
+&lt;!--   unnest_tokens(input = value, --&gt;
+&lt;!--                 output = sentence, --&gt;
+&lt;!--                 token = "sentences") #&lt;&lt; --&gt;
+
+&lt;!-- sentences_moon --&gt;
+&lt;!-- ``` --&gt;
+
+&lt;!-- &lt;svg viewBox="0 0 576 512" xmlns="http://www.w3.org/2000/svg" style="height:1em;position:relative;display:inline-block;top:.1em;fill:#FF7333;"&gt;  [ comment ]  &lt;path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"&gt;&lt;/path&gt;&lt;/svg&gt; 문장으로 토큰화할 때는 마침표가 문장의 기준점이 되므로 특수 문자 제거 X --&gt;
+
+&lt;!-- --- --&gt;
+
+&lt;!-- ```{r echo=F} --&gt;
+&lt;!-- sentences_moon &lt;- raw_moon %&gt;% --&gt;
+&lt;!--   str_squish() %&gt;% --&gt;
+&lt;!--   as_tibble() %&gt;% --&gt;
+&lt;!--   unnest_tokens(input = value, --&gt;
+&lt;!--                 output = sentence, --&gt;
+&lt;!--                 token = "sentences") --&gt;
+
+&lt;!-- sentences_moon --&gt;
+&lt;!-- ``` --&gt;
+
+&lt;!-- --- --&gt;
+
+&lt;!-- #### 특정 단어가 사용된 문장 추출하기 --&gt;
+
+&lt;!-- ##### 특정 단어가 들어 있는지 확인하기 - `str_detect()` --&gt;
+
+&lt;!-- - 단어가 문장에 있으면 `TRUE`, 그렇지 않으면 `FALSE` 반환 --&gt;
+
+&lt;!-- ```{r} --&gt;
+&lt;!-- str_detect("치킨은 맛있다", "치킨") --&gt;
+&lt;!-- str_detect("치킨은 맛있다", "피자") --&gt;
+&lt;!-- ``` --&gt;
+
+&lt;!-- --- --&gt;
+
+&lt;!-- ##### 특정 단어가 사용된 문장 추출하기 --&gt;
+
+&lt;!-- .scroll-box-24[ --&gt;
+
+&lt;!-- ```{r} --&gt;
+&lt;!-- sentences_moon %&gt;% --&gt;
+&lt;!--   filter(str_detect(sentence, "국민")) --&gt;
+&lt;!-- ``` --&gt;
+&lt;!-- ] --&gt;
+
+&lt;!-- --- --&gt;
+
+&lt;!-- ##### 특정 단어가 사용된 문장 추출하기 --&gt;
+
+&lt;!-- .scroll-box-24[ --&gt;
+
+&lt;!-- ```{r} --&gt;
+&lt;!-- sentences_moon %&gt;% --&gt;
+&lt;!--   filter(str_detect(sentence, "일자리")) --&gt;
+&lt;!-- ``` --&gt;
+&lt;!-- ] --&gt;
+
+&lt;!-- --- --&gt;
+
+&lt;!-- &lt;svg viewBox="0 0 352 512" xmlns="http://www.w3.org/2000/svg" style="height:1em;fill:currentColor;position:relative;display:inline-block;top:.1em;"&gt;  [ comment ]  &lt;path d="M176 80c-52.94 0-96 43.06-96 96 0 8.84 7.16 16 16 16s16-7.16 16-16c0-35.3 28.72-64 64-64 8.84 0 16-7.16 16-16s-7.16-16-16-16zM96.06 459.17c0 3.15.93 6.22 2.68 8.84l24.51 36.84c2.97 4.46 7.97 7.14 13.32 7.14h78.85c5.36 0 10.36-2.68 13.32-7.14l24.51-36.84c1.74-2.62 2.67-5.7 2.68-8.84l.05-43.18H96.02l.04 43.18zM176 0C73.72 0 0 82.97 0 176c0 44.37 16.45 84.85 43.56 115.78 16.64 18.99 42.74 58.8 52.42 92.16v.06h48v-.12c-.01-4.77-.72-9.51-2.15-14.07-5.59-17.81-22.82-64.77-62.17-109.67-20.54-23.43-31.52-53.15-31.61-84.14-.2-73.64 59.67-128 127.95-128 70.58 0 128 57.42 128 128 0 30.97-11.24 60.85-31.65 84.14-39.11 44.61-56.42 91.47-62.1 109.46a47.507 47.507 0 0 0-2.22 14.3v.1h48v-.05c9.68-33.37 35.78-73.18 52.42-92.16C335.55 260.85 352 220.37 352 176 352 78.8 273.2 0 176 0z"&gt;&lt;/path&gt;&lt;/svg&gt; tibble 구조는 텍스트가 길면 Console 창 크기에 맞춰 일부만 출력함 --&gt;
+
+&lt;!-- - 모든 내용 출력 하려면: `%&gt;% data.frame()` --&gt;
+&lt;!-- - 왼쪽 정렬 출력 하려면: `%&gt;% print.data.frame(right = F)` --&gt;
+
+&lt;!-- --- --&gt;
+
+&lt;!-- .box[ --&gt;
+
+&lt;!-- .info[&lt;svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" style="height:1em;position:relative;display:inline-block;top:.1em;fill:#FF7333;"&gt;  [ comment ]  &lt;path d="M505.12019,19.09375c-1.18945-5.53125-6.65819-11-12.207-12.1875C460.716,0,435.507,0,410.40747,0,307.17523,0,245.26909,55.20312,199.05238,128H94.83772c-16.34763.01562-35.55658,11.875-42.88664,26.48438L2.51562,253.29688A28.4,28.4,0,0,0,0,264a24.00867,24.00867,0,0,0,24.00582,24H127.81618l-22.47457,22.46875c-11.36521,11.36133-12.99607,32.25781,0,45.25L156.24582,406.625c11.15623,11.1875,32.15619,13.15625,45.27726,0l22.47457-22.46875V488a24.00867,24.00867,0,0,0,24.00581,24,28.55934,28.55934,0,0,0,10.707-2.51562l98.72834-49.39063c14.62888-7.29687,26.50776-26.5,26.50776-42.85937V312.79688c72.59753-46.3125,128.03493-108.40626,128.03493-211.09376C512.07526,76.5,512.07526,51.29688,505.12019,19.09375ZM384.04033,168A40,40,0,1,1,424.05,128,40.02322,40.02322,0,0,1,384.04033,168Z"&gt;&lt;/path&gt;&lt;/svg&gt; 형태소 분석기의 한계] --&gt;
+
+&lt;!-- - 분석 결과에 '하게' 처럼 의미를 알 수 없는 단어가 들어 있음 --&gt;
+&lt;!--   - 형태소 사전에 '하게'라는 명사가 있음 --&gt;
+&lt;!--   - '당당하게', '절실하게' 등의 '하게'를 명사로 분류해 생긴 오류 --&gt;
+&lt;!-- - 형태소 분석기의 성능에 한계가 있기 때문에 분석하면서 오류를 찾아 수정해야 함 --&gt;
+
+&lt;!-- ] --&gt;
+
+&lt;!-- --- --&gt;
+
+&lt;!-- class: title1 --&gt;
+
+&lt;!-- 정리하기 --&gt;
+
+&lt;!-- --- --&gt;
+
+&lt;!-- ### 정리하기 --&gt;
+
+&lt;!-- ##### 1. 명사 추출하기 --&gt;
+
+&lt;!-- ```{r eval=F} --&gt;
+&lt;!-- # 명사 기준 토큰화 --&gt;
+&lt;!-- word_noun &lt;- moon %&gt;% --&gt;
+&lt;!--   unnest_tokens(input = value, --&gt;
+&lt;!--                 output = word, --&gt;
+&lt;!--                 token = extractNoun) --&gt;
+&lt;!-- ``` --&gt;
+
+
+&lt;!-- ##### 2. 특정 단어가 사용된 문장 살펴보기 --&gt;
+&lt;!-- ```{r eval=F} --&gt;
+&lt;!-- # 문장 기준 토큰화 --&gt;
+&lt;!-- sentences_moon &lt;- raw_moon %&gt;% --&gt;
+&lt;!--   unnest_tokens(input = value, --&gt;
+&lt;!--                 output = sentence, --&gt;
+&lt;!--                 token = "sentences") --&gt;
+
+&lt;!-- # 특정 단어가 사용된 문장 추출 --&gt;
+&lt;!-- sentences_moon %&gt;% --&gt;
+&lt;!--   filter(str_detect(sentence, "국민")) --&gt;
+&lt;!-- ``` --&gt;
+
+&lt;!-- --- --&gt;
+
+&lt;!-- class: title1 --&gt;
+
+&lt;!-- 분석 도전 --&gt;
+
+&lt;!-- --- --&gt;
+
+&lt;!-- ### 분석 도전 --&gt;
+
+&lt;!-- 박근혜 전 대통령의 대선 출마 선언문이 들어있는 `speech_park.txt`를 이용해 문제를 해결해 보세요. --&gt;
+
+&lt;!-- Q1. `speech_park.txt`를 불러와 분석에 적합하게 전처리한 다음 연설문에서 명사를 추출하세요. --&gt;
+
+&lt;!-- Q2. 가장 자주 사용된 단어 20개를 추출하세요. --&gt;
+
+&lt;!-- Q3. 가장 자주 사용된 단어 20개의 빈도를 나타낸 막대 그래프를 만드세요. --&gt;
+
+&lt;!-- Q4. 전처리하지 않은 연설문에서 연속된 공백을 제거하고 tibble 구조로 변환한 다음 &lt;br&gt; &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;문장 기준으로 토큰화하세요. --&gt;
+
+&lt;!-- Q5. 연설문에서 `"경제"`가 사용된 문장을 출력하세요. --&gt;
+
+&lt;!-- --- --&gt;
+
+&lt;!-- Q1. `speech_park.txt`를 불러와 분석에 적합하게 전처리한 다음 연설문에서 명사를 추출하세요. --&gt;
+
+&lt;!-- ```{r eval=F} --&gt;
+&lt;!-- raw_park &lt;- readLines("speech_park.txt", encoding = "UTF-8") --&gt;
+
+&lt;!-- # 전처리 --&gt;
+&lt;!-- library(dplyr) --&gt;
+&lt;!-- library(stringr) --&gt;
+&lt;!-- park &lt;- raw_park %&gt;% --&gt;
+&lt;!--   str_replace_all("[^가-힣]", " ") %&gt;%  # 한글만 남기기 --&gt;
+&lt;!--   str_squish() %&gt;%                      # 연속된 공백 제거 --&gt;
+&lt;!--   as_tibble()                           # tibble로 변환 --&gt;
+
+&lt;!-- park --&gt;
+&lt;!-- ``` --&gt;
+
+&lt;!-- --- --&gt;
+
+&lt;!-- Q1. `speech_park.txt`를 불러와 분석에 적합하게 전처리한 다음 연설문에서 명사를 추출하세요. --&gt;
+
+&lt;!-- ```{r echo=F} --&gt;
+&lt;!-- raw_park &lt;- readLines(here("Data/speech_park.txt"), encoding = "UTF-8") --&gt;
+
+&lt;!-- # 전처리 --&gt;
+&lt;!-- library(dplyr) --&gt;
+&lt;!-- library(stringr) --&gt;
+&lt;!-- park &lt;- raw_park %&gt;% --&gt;
+&lt;!--   str_replace_all("[^가-힣]", " ") %&gt;%  # 한글만 남기기 --&gt;
+&lt;!--   str_squish() %&gt;%                      # 연속된 공백 제거 --&gt;
+&lt;!--   as_tibble()                           # tibble로 변환 --&gt;
+
+&lt;!-- park --&gt;
+&lt;!-- ``` --&gt;
+
+
+&lt;!-- --- --&gt;
+
+&lt;!-- Q1. `speech_park.txt`를 불러와 분석에 적합하게 전처리한 다음 연설문에서 명사를 추출하세요. --&gt;
+
+&lt;!-- .scroll-box-26[ --&gt;
+&lt;!-- ```{r} --&gt;
+&lt;!-- # 명사 기준 토큰화 --&gt;
+&lt;!-- library(tidytext) --&gt;
+&lt;!-- library(KoNLP) --&gt;
+
+&lt;!-- word_noun &lt;- park %&gt;% --&gt;
+&lt;!--   unnest_tokens(input = value, --&gt;
+&lt;!--                 output = word, --&gt;
+&lt;!--                 token = extractNoun) --&gt;
+
+&lt;!-- word_noun --&gt;
+&lt;!-- ``` --&gt;
+&lt;!-- ] --&gt;
+
+&lt;!-- --- --&gt;
+
+&lt;!-- Q2. 가장 자주 사용된 단어 20개를 추출하세요. --&gt;
+
+&lt;!-- .scroll-box-26[ --&gt;
+&lt;!-- ```{r} --&gt;
+&lt;!-- top20 &lt;- word_noun %&gt;% --&gt;
+&lt;!--   count(word, sort = T) %&gt;% --&gt;
+&lt;!--   filter(str_count(word) &gt; 1) %&gt;% --&gt;
+&lt;!--   head(20) --&gt;
+
+&lt;!-- top20 --&gt;
+&lt;!-- ``` --&gt;
+&lt;!-- ] --&gt;
+
+&lt;!-- --- --&gt;
+
+&lt;!-- Q3. 가장 자주 사용된 단어 20개의 빈도를 나타낸 막대 그래프를 만드세요. --&gt;
+&lt;!-- ```{r eval=F} --&gt;
+&lt;!-- library(ggplot2) --&gt;
+&lt;!-- ggplot(top20, aes(x = reorder(word, n), y = n)) + --&gt;
+&lt;!--   geom_col() + --&gt;
+&lt;!--   coord_flip () + --&gt;
+&lt;!--   geom_text(aes(label = n), hjust = -0.3) + --&gt;
+&lt;!--   labs(x = NULL) --&gt;
+&lt;!-- ``` --&gt;
+
+&lt;!-- --- --&gt;
+
+&lt;!-- ```{r echo=F} --&gt;
+&lt;!-- library(ggplot2) --&gt;
+&lt;!-- ggplot(top20, aes(x = reorder(word, n), y = n)) + --&gt;
+&lt;!--   geom_col() + --&gt;
+&lt;!--   coord_flip () + --&gt;
+&lt;!--   geom_text(aes(label = n), hjust = -0.3) + --&gt;
+&lt;!--   labs(x = NULL) --&gt;
+&lt;!-- ``` --&gt;
+
+&lt;!-- --- --&gt;
+
+&lt;!-- Q4. 전처리하지 않은 연설문에서 연속된 공백을 제거하고 tibble 구조로 변환한 다음 &lt;br&gt; &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;문장 기준으로 토큰화하세요. --&gt;
+
+&lt;!-- .scroll-box-26[ --&gt;
+&lt;!-- ```{r} --&gt;
+&lt;!-- sentences_park &lt;- raw_park %&gt;% --&gt;
+&lt;!--   str_squish() %&gt;%                    # 연속된 공백 제거 --&gt;
+&lt;!--   as_tibble() %&gt;%                     # tibble로 변환 --&gt;
+&lt;!--   unnest_tokens(input = value, --&gt;
+&lt;!--                 output = sentence, --&gt;
+&lt;!--                 token = "sentences") --&gt;
+
+&lt;!-- sentences_park --&gt;
+&lt;!-- ``` --&gt;
+&lt;!-- ] --&gt;
+
+&lt;!-- --- --&gt;
+
+&lt;!-- Q5. 연설문에서 `"경제"`가 사용된 문장을 출력하세요. --&gt;
+
+&lt;!-- .scroll-box-26[ --&gt;
+&lt;!-- ```{r} --&gt;
+&lt;!-- sentences_park %&gt;% --&gt;
+&lt;!--   filter(str_detect(sentence, "경제")) --&gt;
+&lt;!-- ``` --&gt;
+&lt;!-- ] --&gt;
+
+&lt;!-- --- --&gt;
+
+&lt;!-- class: title0 --&gt;
+
+&lt;!-- 끝 --&gt;
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="libs/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:10",
+"navigation": {
+"scroll": true
+}
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
