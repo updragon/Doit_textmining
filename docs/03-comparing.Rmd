@@ -1277,18 +1277,18 @@ include_graphics("Image/03/03_3_1.png")
 ```
 ---
 
-#### 로그 오즈비 구하기
+<!-- #### 로그 오즈비 구하기 -->
 
 
-```{r R.options=list(tibble.width = Inf, width = 80, pillar.min_chars = Inf)}
-frequency_wide <- frequency_wide %>%
-  mutate(log_odds_ratio = log(odds_ratio))
+<!-- ```{r R.options=list(tibble.width = Inf, width = 80, pillar.min_chars = Inf)} -->
+<!-- frequency_wide <- frequency_wide %>% -->
+<!--   mutate(log_odds_ratio = log(odds_ratio)) -->
 
-frequency_wide
-```
+<!-- frequency_wide -->
+<!-- ``` -->
 
 
----
+<!-- --- -->
 
 <!-- - **부호**와 **크기**를 보면 단어가 어느 연설문에서 더 중요한지 알 수 있음 -->
 <!--   - 0보다 큰 양수일수록 `"moon`"에서 비중이 큼 -->
