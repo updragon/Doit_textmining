@@ -1212,270 +1212,270 @@ frequency_wide %>%
 
 ---
 
-<!-- name: 03-3 -->
-<!-- class: title1 -->
+name: 03-3
+class: title1
 
-<!-- 03-3 로그 오즈비로 단어 비교하기 -->
-<!-- --- -->
-<!-- ##### 로그 오즈비(log odds ratio) -->
-<!-- - 오즈비에 로그를 취한 값 -->
-<!-- - 단어의 오즈비가 1보다 크면 `+`, 1보다 작으면 `-`가 됨 -->
-<!-- - 단어가 두 텍스트 중 어디에서 비중이 큰지에 따라 서로 다른 부호 -->
-<!--   - `"moon"`에서 비중이 커서 `odds_ratio`가 1보다 큰 단어 `+` -->
-<!--   - `"park"`에서 비중이 커서 `odds_ratio`가 1보다 작은 단어 `-` -->
+03-3 로그 오즈비로 단어 비교하기
+---
+##### 로그 오즈비(log odds ratio)
+- 오즈비에 로그를 취한 값
+- 단어의 오즈비가 1보다 크면 `+`, 1보다 작으면 `-`가 됨
+- 단어가 두 텍스트 중 어디에서 비중이 큰지에 따라 서로 다른 부호
+  - `"moon"`에서 비중이 커서 `odds_ratio`가 1보다 큰 단어 `+`
+  - `"park"`에서 비중이 커서 `odds_ratio`가 1보다 작은 단어 `-`
 
-<!-- <br> -->
+<br>
 
-<!-- ```{r, echo=F, out.width="60%", out.height="60%"} -->
-<!-- include_graphics("Image/etc/03_3_table1.png") -->
-<!-- ``` -->
+```{r, echo=F, out.width="60%", out.height="60%"}
+include_graphics("Image/etc/03_3_table1.png")
+```
 
-<!-- --- -->
+---
 
-<!-- ##### 로그 오즈비(log odds ratio) -->
-<!-- - 오즈비에 로그를 취한 값 -->
-<!-- - 단어의 오즈비가 1보다 크면 `+`, 1보다 작으면 `-`가 됨 -->
-<!-- - 단어가 두 텍스트 중 어디에서 비중이 큰지에 따라 서로 다른 부호 -->
-<!--   - `"moon"`에서 비중이 커서 `odds_ratio`가 1보다 큰 단어 `+` -->
-<!--   - `"park"`에서 비중이 커서 `odds_ratio`가 1보다 작은 단어 `-` -->
+##### 로그 오즈비(log odds ratio)
+- 오즈비에 로그를 취한 값
+- 단어의 오즈비가 1보다 크면 `+`, 1보다 작으면 `-`가 됨
+- 단어가 두 텍스트 중 어디에서 비중이 큰지에 따라 서로 다른 부호
+  - `"moon"`에서 비중이 커서 `odds_ratio`가 1보다 큰 단어 `+`
+  - `"park"`에서 비중이 커서 `odds_ratio`가 1보다 작은 단어 `-`
 
-<!-- <br> -->
+<br>
 
 
-<!-- .center[ -->
+.center[
 
-<!-- $${\large\text{odds ratio} = \frac{\left(\frac{n+1}{\text{total}+1}\right)_\text{Text A}} -->
-<!--                            {\left(\frac{n+1}{\text{total}+1}\right)_\text{Text B}}}$$ -->
-<!-- ]                 -->
+$${\large\text{odds ratio} = \frac{\left(\frac{n+1}{\text{total}+1}\right)_\text{Text A}}
+                           {\left(\frac{n+1}{\text{total}+1}\right)_\text{Text B}}}$$
+]
 
-<!-- --- -->
+---
 
-<!-- ##### 로그 오즈비(log odds ratio) -->
-<!-- - 오즈비에 로그를 취한 값 -->
-<!-- - 단어의 오즈비가 1보다 크면 `+`, 1보다 작으면 `-`가 됨 -->
-<!-- - 단어가 두 텍스트 중 어디에서 비중이 큰지에 따라 서로 다른 부호 -->
-<!--   - `"moon"`에서 비중이 커서 `odds_ratio`가 1보다 큰 단어 `+` -->
-<!--   - `"park"`에서 비중이 커서 `odds_ratio`가 1보다 작은 단어 `-` -->
+##### 로그 오즈비(log odds ratio)
+- 오즈비에 로그를 취한 값
+- 단어의 오즈비가 1보다 크면 `+`, 1보다 작으면 `-`가 됨
+- 단어가 두 텍스트 중 어디에서 비중이 큰지에 따라 서로 다른 부호
+  - `"moon"`에서 비중이 커서 `odds_ratio`가 1보다 큰 단어 `+`
+  - `"park"`에서 비중이 커서 `odds_ratio`가 1보다 작은 단어 `-`
 
-<!-- <br> -->
+<br>
 
 
 
 
-<!-- .center[ -->
-<!-- $${\large\text{log odds ratio} = \log{\left(\frac{\left(\frac{n+1}{\text{total}+1}\right)_\text{Text A}} -->
-<!--                               {\left(\frac{n+1}{\text{total}+1}\right)_\text{Text B}}\right)}}$$ -->
-<!-- ] -->
+.center[
+$${\large\text{log odds ratio} = \log{\left(\frac{\left(\frac{n+1}{\text{total}+1}\right)_\text{Text A}}
+                              {\left(\frac{n+1}{\text{total}+1}\right)_\text{Text B}}\right)}}$$
+]
 
-<!-- --- -->
+---
 
-<!-- - 텍스트 차이 분명하게 드러나도록 시각화하는데 활용 -->
-<!-- - 단어가 어느 텍스트에서 중요한지에 따라 막대를 반대 방향으로 표현 -->
+- 텍스트 차이 분명하게 드러나도록 시각화하는데 활용
+- 단어가 어느 텍스트에서 중요한지에 따라 막대를 반대 방향으로 표현
 
-<!-- ```{r, echo=F, out.width="60%", out.height="60%"} -->
-<!-- include_graphics("Image/03/03_3_1.png") -->
-<!-- ``` -->
-<!-- --- -->
+```{r, echo=F, out.width="60%", out.height="60%"}
+include_graphics("Image/03/03_3_1.png")
+```
+---
 
-<!-- #### 로그 오즈비 구하기 -->
+#### 로그 오즈비 구하기
 
 
-<!-- ```{r R.options=list(tibble.width = Inf, width = 80, pillar.min_chars = Inf)} -->
-<!-- frequency_wide <- frequency_wide %>% -->
-<!--   mutate(log_odds_ratio = log(odds_ratio)) -->
+```{r R.options=list(tibble.width = Inf, width = 80, pillar.min_chars = Inf)}
+frequency_wide <- frequency_wide %>%
+  mutate(log_odds_ratio = log(odds_ratio))
 
-<!-- frequency_wide -->
-<!-- ``` -->
+frequency_wide
+```
 
 
-<!-- --- -->
+---
 
-<!-- - **부호**와 **크기**를 보면 단어가 어느 연설문에서 더 중요한지 알 수 있음 -->
-<!--   - 0보다 큰 양수일수록 `"moon`"에서 비중이 큼 -->
-<!--   - 0보다 작은 음수일수록 `"park"`에서 비중이 큼 -->
-<!--   - 0에 가까우면 두 연설문에서 비중 비슷함 -->
+- **부호**와 **크기**를 보면 단어가 어느 연설문에서 더 중요한지 알 수 있음
+  - 0보다 큰 양수일수록 `"moon`"에서 비중이 큼
+  - 0보다 작은 음수일수록 `"park"`에서 비중이 큼
+  - 0에 가까우면 두 연설문에서 비중 비슷함
 
-<!-- --- -->
+---
 
-<!-- - 부호와 크기를 보면 단어가 어느 연설문에서 더 중요한지 알 수 있음 -->
-<!--   - **0보다 큰 양수일수록 `"moon`"에서 비중이 큼** -->
-<!--   - 0보다 작은 음수일수록 `"park"`에서 비중이 큼 -->
-<!--   - 0에 가까우면 두 연설문에서 비중 비슷함 -->
+- 부호와 크기를 보면 단어가 어느 연설문에서 더 중요한지 알 수 있음
+  - **0보다 큰 양수일수록 `"moon`"에서 비중이 큼**
+  - 0보다 작은 음수일수록 `"park"`에서 비중이 큼
+  - 0에 가까우면 두 연설문에서 비중 비슷함
 
-<!-- ```{r R.options=list(tibble.width = Inf, width = 80, pillar.min_chars = Inf)} -->
-<!-- # moon에서 비중이 큰 단어 -->
-<!-- frequency_wide %>% -->
-<!--   arrange(-log_odds_ratio) #<< -->
-<!-- ``` -->
+```{r R.options=list(tibble.width = Inf, width = 80, pillar.min_chars = Inf)}
+# moon에서 비중이 큰 단어
+frequency_wide %>%
+  arrange(-log_odds_ratio) #<<
+```
 
-<!-- --- -->
+---
 
-<!-- - 부호와 크기를 보면 단어가 어느 연설문에서 더 중요한지 알 수 있음 -->
-<!--   - 0보다 큰 양수일수록 `"moon`"에서 비중이 큼 -->
-<!--   - **0보다 작은 음수일수록 `"park"`에서 비중이 큼** -->
-<!--   - 0에 가까우면 두 연설문에서 비중 비슷함 -->
+- 부호와 크기를 보면 단어가 어느 연설문에서 더 중요한지 알 수 있음
+  - 0보다 큰 양수일수록 `"moon`"에서 비중이 큼
+  - **0보다 작은 음수일수록 `"park"`에서 비중이 큼**
+  - 0에 가까우면 두 연설문에서 비중 비슷함
 
-<!-- ```{r R.options=list(tibble.width = Inf, width = 80, pillar.min_chars = Inf)} -->
-<!-- # park에서 비중이 큰 단어 -->
-<!-- frequency_wide %>% -->
-<!--   arrange(log_odds_ratio) #<< -->
-<!-- ``` -->
+```{r R.options=list(tibble.width = Inf, width = 80, pillar.min_chars = Inf)}
+# park에서 비중이 큰 단어
+frequency_wide %>%
+  arrange(log_odds_ratio) #<<
+```
 
-<!-- --- -->
+---
 
-<!-- - 부호와 크기를 보면 단어가 어느 연설문에서 더 중요한지 알 수 있음 -->
-<!--   - 0보다 큰 양수일수록 `"moon`"에서 비중이 큼 -->
-<!--   - 0보다 작은 음수일수록 `"park"`에서 비중이 큼 -->
-<!--   - **0에 가까우면 두 연설문에서 비중 비슷함** -->
+- 부호와 크기를 보면 단어가 어느 연설문에서 더 중요한지 알 수 있음
+  - 0보다 큰 양수일수록 `"moon`"에서 비중이 큼
+  - 0보다 작은 음수일수록 `"park"`에서 비중이 큼
+  - **0에 가까우면 두 연설문에서 비중 비슷함**
 
-<!-- ```{r R.options=list(tibble.width = Inf, width = 80, pillar.min_chars = Inf)} -->
-<!-- # 비중이 비슷한 단어 -->
-<!-- frequency_wide %>% -->
-<!--   arrange(abs(log_odds_ratio)) #<< -->
-<!-- ``` -->
-<!-- --- -->
+```{r R.options=list(tibble.width = Inf, width = 80, pillar.min_chars = Inf)}
+# 비중이 비슷한 단어
+frequency_wide %>%
+  arrange(abs(log_odds_ratio)) #<<
+```
+---
 
-<!-- .box[ -->
+.box[
 
-<!--   .info[`r icon_style(fontawesome("rocket"), fill = "#FF7333")` 로그 오즈비 간단히 구하기] -->
+  .info[`r icon_style(fontawesome("rocket"), fill = "#FF7333")` 로그 오즈비 간단히 구하기]
 
 
-<!-- ```{r, eval = F} -->
-<!-- frequency_wide <- frequency_wide %>% -->
-<!--   mutate(log_odds_ratio = log(((moon + 1) / (sum(moon + 1))) / -->
-<!--                               ((park + 1) / (sum(park + 1))))) -->
-<!-- ``` -->
+```{r, eval = F}
+frequency_wide <- frequency_wide %>%
+  mutate(log_odds_ratio = log(((moon + 1) / (sum(moon + 1))) /
+                              ((park + 1) / (sum(park + 1)))))
+```
 
-<!-- ] -->
+]
 
-<!-- --- -->
+---
 
 
 
-<!-- #### 로그 오즈비를 이용해 중요한 단어 비교하기 -->
+#### 로그 오즈비를 이용해 중요한 단어 비교하기
 
-<!-- - 두 연설문 각각 `log_odds_ratio` Top 10 추출 -->
+- 두 연설문 각각 `log_odds_ratio` Top 10 추출
 
-<!-- ```{r eval=F} -->
-<!-- top10 <- frequency_wide %>% -->
-<!--   group_by(president = ifelse(log_odds_ratio > 0, "moon", "park")) %>% -->
-<!--   slice_max(abs(log_odds_ratio), n = 10, with_ties = F) -->
+```{r eval=F}
+top10 <- frequency_wide %>%
+  group_by(president = ifelse(log_odds_ratio > 0, "moon", "park")) %>%
+  slice_max(abs(log_odds_ratio), n = 10, with_ties = F)
 
-<!-- top10 -->
+top10
 
-<!-- ``` -->
+```
 
 
-<!-- <br-back-22> -->
+<br-back-22>
 
-<!-- .scroll-box-14[ -->
+.scroll-box-14[
 
-<!-- ```{r echo=FALSE, R.options=list(tibble.width = Inf, width = 90, pillar.min_chars = Inf)} -->
-<!-- top10 <- frequency_wide %>% -->
-<!--   group_by(president = ifelse(log_odds_ratio > 0, "moon", "park")) %>% -->
-<!--   slice_max(abs(log_odds_ratio), n = 10, with_ties = F) -->
+```{r echo=FALSE, R.options=list(tibble.width = Inf, width = 90, pillar.min_chars = Inf)}
+top10 <- frequency_wide %>%
+  group_by(president = ifelse(log_odds_ratio > 0, "moon", "park")) %>%
+  slice_max(abs(log_odds_ratio), n = 10, with_ties = F)
 
-<!-- top10 -->
+top10
 
-<!-- ``` -->
+```
 
-<!-- ] -->
+]
 
-<!-- --- -->
+---
 
-<!-- ##### 주요 변수 추출 -->
+##### 주요 변수 추출
 
 
 
-<!-- ```{r eval=FALSE} -->
-<!-- top10 %>% -->
-<!--   arrange(-log_odds_ratio) %>% -->
-<!--   select(word, log_odds_ratio, president) -->
-<!-- ``` -->
+```{r eval=FALSE}
+top10 %>%
+  arrange(-log_odds_ratio) %>%
+  select(word, log_odds_ratio, president)
+```
 
 
-<!-- <br-back-20> -->
-<!-- .scroll-box-20[ -->
-<!-- ```{r echo=FALSE, R.options=list(tibble.width = Inf, width = 80, pillar.min_chars = Inf)} -->
-<!-- top10 %>% -->
-<!--   arrange(-log_odds_ratio) %>% -->
-<!--   select(word, log_odds_ratio, president) -->
-<!-- ``` -->
+<br-back-20>
+.scroll-box-20[
+```{r echo=FALSE, R.options=list(tibble.width = Inf, width = 80, pillar.min_chars = Inf)}
+top10 %>%
+  arrange(-log_odds_ratio) %>%
+  select(word, log_odds_ratio, president)
+```
 
-<!-- ] -->
-<!-- --- -->
+]
+---
 
-<!-- ```{r echo=F, R.options=list(tibble.width = Inf, width = 100, pillar.min_chars = Inf), highlight.output=c(5:14)} -->
-<!-- top10 %>% -->
-<!--   arrange(-log_odds_ratio) %>% -->
-<!--   select(word, log_odds_ratio, president) -->
-<!-- ``` -->
+```{r echo=F, R.options=list(tibble.width = Inf, width = 100, pillar.min_chars = Inf), highlight.output=c(5:14)}
+top10 %>%
+  arrange(-log_odds_ratio) %>%
+  select(word, log_odds_ratio, president)
+```
 
 
-<!-- --- -->
+---
 
-<!-- ```{r echo=F, R.options=list(tibble.width = Inf, width = 100, pillar.min_chars = Inf), highlight.output=c(15:24)} -->
-<!-- top10 %>% -->
-<!--   arrange(-log_odds_ratio) %>% -->
-<!--   select(word, log_odds_ratio, president) -->
-<!-- ``` -->
+```{r echo=F, R.options=list(tibble.width = Inf, width = 100, pillar.min_chars = Inf), highlight.output=c(15:24)}
+top10 %>%
+  arrange(-log_odds_ratio) %>%
+  select(word, log_odds_ratio, president)
+```
 
 
 
 
-<!-- --- -->
+---
 
-<!-- **오즈비 기준 상·하위 10개 추출했을 때와 단어 동일** -->
+**오즈비 기준 상·하위 10개 추출했을 때와 단어 동일**
 
-<!-- ```{r eval=F} -->
-<!-- frequency_wide %>% -->
-<!--   filter(rank(odds_ratio) <= 10 | rank(-odds_ratio) <= 10) %>%  -->
-<!--   arrange(-odds_ratio) -->
-<!-- ``` -->
+```{r eval=F}
+frequency_wide %>%
+  filter(rank(odds_ratio) <= 10 | rank(-odds_ratio) <= 10) %>%
+  arrange(-odds_ratio)
+```
 
 
-<!-- <br-back-20> -->
-<!-- .scroll-box-20[ -->
+<br-back-20>
+.scroll-box-20[
 
-<!-- ```{r echo=FALSE, R.options=list(tibble.width = Inf, width = 100, pillar.min_chars = Inf)} -->
-<!-- frequency_wide %>% -->
-<!--   filter(rank(odds_ratio) <= 10 | rank(-odds_ratio) <= 10) %>%  -->
-<!--   arrange(-odds_ratio) -->
-<!-- ``` -->
+```{r echo=FALSE, R.options=list(tibble.width = Inf, width = 100, pillar.min_chars = Inf)}
+frequency_wide %>%
+  filter(rank(odds_ratio) <= 10 | rank(-odds_ratio) <= 10) %>%
+  arrange(-odds_ratio)
+```
 
-<!-- ] -->
+]
 
 
-<!-- --- -->
+---
 
-<!-- #### 막대 그래프 만들기 -->
+#### 막대 그래프 만들기
 
-<!-- - 단어가 어느 연설문에서 중요한지에 따라 서로 다른 축 방향으로 표현됨 -->
+- 단어가 어느 연설문에서 중요한지에 따라 서로 다른 축 방향으로 표현됨
 
-<!-- ```{r fig.width=6, fig.height=4, out.width="45%"} -->
-<!-- ggplot(top10, aes(x = reorder(word, log_odds_ratio), -->
-<!--                   y = log_odds_ratio, -->
-<!--                   fill = president)) + -->
-<!--   geom_col() + -->
-<!--   coord_flip() + -->
-<!--   labs(x = NULL) + -->
-<!--   theme(text = element_text(family = "nanumgothic")) -->
-<!-- ``` -->
+```{r fig.width=6, fig.height=4, out.width="45%"}
+ggplot(top10, aes(x = reorder(word, log_odds_ratio),
+                  y = log_odds_ratio,
+                  fill = president)) +
+  geom_col() +
+  coord_flip() +
+  labs(x = NULL) +
+  theme(text = element_text(family = "nanumgothic"))
+```
 
-<!-- --- -->
+---
 
-<!-- <br> -->
-<!-- ```{r echo=FALSE, fig.width=6, fig.height=4, out.width="80%"} -->
-<!-- ggplot(top10, aes(x = reorder(word, log_odds_ratio), -->
-<!--                   y = log_odds_ratio, -->
-<!--                   fill = president)) + -->
-<!--   geom_col() + -->
-<!--   coord_flip() + -->
-<!--   labs(x = NULL) + -->
-<!--   theme(text = element_text(family = "nanumgothic")) -->
-<!-- ``` -->
+<br>
+```{r echo=FALSE, fig.width=6, fig.height=4, out.width="80%"}
+ggplot(top10, aes(x = reorder(word, log_odds_ratio),
+                  y = log_odds_ratio,
+                  fill = president)) +
+  geom_col() +
+  coord_flip() +
+  labs(x = NULL) +
+  theme(text = element_text(family = "nanumgothic"))
+```
 
-<!-- --- -->
+---
 
 <!-- name: 03-4 -->
 <!-- class: title1 -->

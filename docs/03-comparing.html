@@ -1817,270 +1817,442 @@ frequency_wide %&gt;%
 
 ---
 
-&lt;!-- name: 03-3 --&gt;
-&lt;!-- class: title1 --&gt;
+name: 03-3
+class: title1
 
-&lt;!-- 03-3 로그 오즈비로 단어 비교하기 --&gt;
-&lt;!-- --- --&gt;
-&lt;!-- ##### 로그 오즈비(log odds ratio) --&gt;
-&lt;!-- - 오즈비에 로그를 취한 값 --&gt;
-&lt;!-- - 단어의 오즈비가 1보다 크면 `+`, 1보다 작으면 `-`가 됨 --&gt;
-&lt;!-- - 단어가 두 텍스트 중 어디에서 비중이 큰지에 따라 서로 다른 부호 --&gt;
-&lt;!--   - `"moon"`에서 비중이 커서 `odds_ratio`가 1보다 큰 단어 `+` --&gt;
-&lt;!--   - `"park"`에서 비중이 커서 `odds_ratio`가 1보다 작은 단어 `-` --&gt;
+03-3 로그 오즈비로 단어 비교하기
+---
+##### 로그 오즈비(log odds ratio)
+- 오즈비에 로그를 취한 값
+- 단어의 오즈비가 1보다 크면 `+`, 1보다 작으면 `-`가 됨
+- 단어가 두 텍스트 중 어디에서 비중이 큰지에 따라 서로 다른 부호
+  - `"moon"`에서 비중이 커서 `odds_ratio`가 1보다 큰 단어 `+`
+  - `"park"`에서 비중이 커서 `odds_ratio`가 1보다 작은 단어 `-`
 
-&lt;!-- &lt;br&gt; --&gt;
+&lt;br&gt;
 
-&lt;!-- ```{r, echo=F, out.width="60%", out.height="60%"} --&gt;
-&lt;!-- include_graphics("Image/etc/03_3_table1.png") --&gt;
-&lt;!-- ``` --&gt;
+&lt;img src="Image/etc/03_3_table1.png" width="60%" height="60%" /&gt;
 
-&lt;!-- --- --&gt;
+---
 
-&lt;!-- ##### 로그 오즈비(log odds ratio) --&gt;
-&lt;!-- - 오즈비에 로그를 취한 값 --&gt;
-&lt;!-- - 단어의 오즈비가 1보다 크면 `+`, 1보다 작으면 `-`가 됨 --&gt;
-&lt;!-- - 단어가 두 텍스트 중 어디에서 비중이 큰지에 따라 서로 다른 부호 --&gt;
-&lt;!--   - `"moon"`에서 비중이 커서 `odds_ratio`가 1보다 큰 단어 `+` --&gt;
-&lt;!--   - `"park"`에서 비중이 커서 `odds_ratio`가 1보다 작은 단어 `-` --&gt;
+##### 로그 오즈비(log odds ratio)
+- 오즈비에 로그를 취한 값
+- 단어의 오즈비가 1보다 크면 `+`, 1보다 작으면 `-`가 됨
+- 단어가 두 텍스트 중 어디에서 비중이 큰지에 따라 서로 다른 부호
+  - `"moon"`에서 비중이 커서 `odds_ratio`가 1보다 큰 단어 `+`
+  - `"park"`에서 비중이 커서 `odds_ratio`가 1보다 작은 단어 `-`
 
-&lt;!-- &lt;br&gt; --&gt;
+&lt;br&gt;
 
 
-&lt;!-- .center[ --&gt;
+.center[
 
-&lt;!-- $${\large\text{odds ratio} = \frac{\left(\frac{n+1}{\text{total}+1}\right)_\text{Text A}} --&gt;
-&lt;!--                            {\left(\frac{n+1}{\text{total}+1}\right)_\text{Text B}}}$$ --&gt;
-&lt;!-- ]                 --&gt;
+`$${\large\text{odds ratio} = \frac{\left(\frac{n+1}{\text{total}+1}\right)_\text{Text A}}
+                           {\left(\frac{n+1}{\text{total}+1}\right)_\text{Text B}}}$$`
+]
 
-&lt;!-- --- --&gt;
+---
 
-&lt;!-- ##### 로그 오즈비(log odds ratio) --&gt;
-&lt;!-- - 오즈비에 로그를 취한 값 --&gt;
-&lt;!-- - 단어의 오즈비가 1보다 크면 `+`, 1보다 작으면 `-`가 됨 --&gt;
-&lt;!-- - 단어가 두 텍스트 중 어디에서 비중이 큰지에 따라 서로 다른 부호 --&gt;
-&lt;!--   - `"moon"`에서 비중이 커서 `odds_ratio`가 1보다 큰 단어 `+` --&gt;
-&lt;!--   - `"park"`에서 비중이 커서 `odds_ratio`가 1보다 작은 단어 `-` --&gt;
+##### 로그 오즈비(log odds ratio)
+- 오즈비에 로그를 취한 값
+- 단어의 오즈비가 1보다 크면 `+`, 1보다 작으면 `-`가 됨
+- 단어가 두 텍스트 중 어디에서 비중이 큰지에 따라 서로 다른 부호
+  - `"moon"`에서 비중이 커서 `odds_ratio`가 1보다 큰 단어 `+`
+  - `"park"`에서 비중이 커서 `odds_ratio`가 1보다 작은 단어 `-`
 
-&lt;!-- &lt;br&gt; --&gt;
+&lt;br&gt;
 
 
 
 
-&lt;!-- .center[ --&gt;
-&lt;!-- $${\large\text{log odds ratio} = \log{\left(\frac{\left(\frac{n+1}{\text{total}+1}\right)_\text{Text A}} --&gt;
-&lt;!--                               {\left(\frac{n+1}{\text{total}+1}\right)_\text{Text B}}\right)}}$$ --&gt;
-&lt;!-- ] --&gt;
+.center[
+`$${\large\text{log odds ratio} = \log{\left(\frac{\left(\frac{n+1}{\text{total}+1}\right)_\text{Text A}}
+                              {\left(\frac{n+1}{\text{total}+1}\right)_\text{Text B}}\right)}}$$`
+]
 
-&lt;!-- --- --&gt;
+---
+
+- 텍스트 차이 분명하게 드러나도록 시각화하는데 활용
+- 단어가 어느 텍스트에서 중요한지에 따라 막대를 반대 방향으로 표현
+
+&lt;img src="Image/03/03_3_1.png" width="60%" height="60%" /&gt;
+---
+
+#### 로그 오즈비 구하기
+
+
+
+```r
+frequency_wide &lt;- frequency_wide %&gt;%
+  mutate(log_odds_ratio = log(odds_ratio))
 
-&lt;!-- - 텍스트 차이 분명하게 드러나도록 시각화하는데 활용 --&gt;
-&lt;!-- - 단어가 어느 텍스트에서 중요한지에 따라 막대를 반대 방향으로 표현 --&gt;
-
-&lt;!-- ```{r, echo=F, out.width="60%", out.height="60%"} --&gt;
-&lt;!-- include_graphics("Image/03/03_3_1.png") --&gt;
-&lt;!-- ``` --&gt;
-&lt;!-- --- --&gt;
-
-&lt;!-- #### 로그 오즈비 구하기 --&gt;
-
-
-&lt;!-- ```{r R.options=list(tibble.width = Inf, width = 80, pillar.min_chars = Inf)} --&gt;
-&lt;!-- frequency_wide &lt;- frequency_wide %&gt;% --&gt;
-&lt;!--   mutate(log_odds_ratio = log(odds_ratio)) --&gt;
-
-&lt;!-- frequency_wide --&gt;
-&lt;!-- ``` --&gt;
-
-
-&lt;!-- --- --&gt;
-
-&lt;!-- - **부호**와 **크기**를 보면 단어가 어느 연설문에서 더 중요한지 알 수 있음 --&gt;
-&lt;!--   - 0보다 큰 양수일수록 `"moon`"에서 비중이 큼 --&gt;
-&lt;!--   - 0보다 작은 음수일수록 `"park"`에서 비중이 큼 --&gt;
-&lt;!--   - 0에 가까우면 두 연설문에서 비중 비슷함 --&gt;
-
-&lt;!-- --- --&gt;
-
-&lt;!-- - 부호와 크기를 보면 단어가 어느 연설문에서 더 중요한지 알 수 있음 --&gt;
-&lt;!--   - **0보다 큰 양수일수록 `"moon`"에서 비중이 큼** --&gt;
-&lt;!--   - 0보다 작은 음수일수록 `"park"`에서 비중이 큼 --&gt;
-&lt;!--   - 0에 가까우면 두 연설문에서 비중 비슷함 --&gt;
-
-&lt;!-- ```{r R.options=list(tibble.width = Inf, width = 80, pillar.min_chars = Inf)} --&gt;
-&lt;!-- # moon에서 비중이 큰 단어 --&gt;
-&lt;!-- frequency_wide %&gt;% --&gt;
-&lt;!--   arrange(-log_odds_ratio) #&lt;&lt; --&gt;
-&lt;!-- ``` --&gt;
-
-&lt;!-- --- --&gt;
-
-&lt;!-- - 부호와 크기를 보면 단어가 어느 연설문에서 더 중요한지 알 수 있음 --&gt;
-&lt;!--   - 0보다 큰 양수일수록 `"moon`"에서 비중이 큼 --&gt;
-&lt;!--   - **0보다 작은 음수일수록 `"park"`에서 비중이 큼** --&gt;
-&lt;!--   - 0에 가까우면 두 연설문에서 비중 비슷함 --&gt;
-
-&lt;!-- ```{r R.options=list(tibble.width = Inf, width = 80, pillar.min_chars = Inf)} --&gt;
-&lt;!-- # park에서 비중이 큰 단어 --&gt;
-&lt;!-- frequency_wide %&gt;% --&gt;
-&lt;!--   arrange(log_odds_ratio) #&lt;&lt; --&gt;
-&lt;!-- ``` --&gt;
-
-&lt;!-- --- --&gt;
-
-&lt;!-- - 부호와 크기를 보면 단어가 어느 연설문에서 더 중요한지 알 수 있음 --&gt;
-&lt;!--   - 0보다 큰 양수일수록 `"moon`"에서 비중이 큼 --&gt;
-&lt;!--   - 0보다 작은 음수일수록 `"park"`에서 비중이 큼 --&gt;
-&lt;!--   - **0에 가까우면 두 연설문에서 비중 비슷함** --&gt;
-
-&lt;!-- ```{r R.options=list(tibble.width = Inf, width = 80, pillar.min_chars = Inf)} --&gt;
-&lt;!-- # 비중이 비슷한 단어 --&gt;
-&lt;!-- frequency_wide %&gt;% --&gt;
-&lt;!--   arrange(abs(log_odds_ratio)) #&lt;&lt; --&gt;
-&lt;!-- ``` --&gt;
-&lt;!-- --- --&gt;
-
-&lt;!-- .box[ --&gt;
-
-&lt;!--   .info[&lt;svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" style="height:1em;position:relative;display:inline-block;top:.1em;fill:#FF7333;"&gt;  [ comment ]  &lt;path d="M505.12019,19.09375c-1.18945-5.53125-6.65819-11-12.207-12.1875C460.716,0,435.507,0,410.40747,0,307.17523,0,245.26909,55.20312,199.05238,128H94.83772c-16.34763.01562-35.55658,11.875-42.88664,26.48438L2.51562,253.29688A28.4,28.4,0,0,0,0,264a24.00867,24.00867,0,0,0,24.00582,24H127.81618l-22.47457,22.46875c-11.36521,11.36133-12.99607,32.25781,0,45.25L156.24582,406.625c11.15623,11.1875,32.15619,13.15625,45.27726,0l22.47457-22.46875V488a24.00867,24.00867,0,0,0,24.00581,24,28.55934,28.55934,0,0,0,10.707-2.51562l98.72834-49.39063c14.62888-7.29687,26.50776-26.5,26.50776-42.85937V312.79688c72.59753-46.3125,128.03493-108.40626,128.03493-211.09376C512.07526,76.5,512.07526,51.29688,505.12019,19.09375ZM384.04033,168A40,40,0,1,1,424.05,128,40.02322,40.02322,0,0,1,384.04033,168Z"&gt;&lt;/path&gt;&lt;/svg&gt; 로그 오즈비 간단히 구하기] --&gt;
-
-
-&lt;!-- ```{r, eval = F} --&gt;
-&lt;!-- frequency_wide &lt;- frequency_wide %&gt;% --&gt;
-&lt;!--   mutate(log_odds_ratio = log(((moon + 1) / (sum(moon + 1))) / --&gt;
-&lt;!--                               ((park + 1) / (sum(park + 1))))) --&gt;
-&lt;!-- ``` --&gt;
-
-&lt;!-- ] --&gt;
-
-&lt;!-- --- --&gt;
-
-
-
-&lt;!-- #### 로그 오즈비를 이용해 중요한 단어 비교하기 --&gt;
-
-&lt;!-- - 두 연설문 각각 `log_odds_ratio` Top 10 추출 --&gt;
-
-&lt;!-- ```{r eval=F} --&gt;
-&lt;!-- top10 &lt;- frequency_wide %&gt;% --&gt;
-&lt;!--   group_by(president = ifelse(log_odds_ratio &gt; 0, "moon", "park")) %&gt;% --&gt;
-&lt;!--   slice_max(abs(log_odds_ratio), n = 10, with_ties = F) --&gt;
-
-&lt;!-- top10 --&gt;
-
-&lt;!-- ``` --&gt;
-
-
-&lt;!-- &lt;br-back-22&gt; --&gt;
-
-&lt;!-- .scroll-box-14[ --&gt;
-
-&lt;!-- ```{r echo=FALSE, R.options=list(tibble.width = Inf, width = 90, pillar.min_chars = Inf)} --&gt;
-&lt;!-- top10 &lt;- frequency_wide %&gt;% --&gt;
-&lt;!--   group_by(president = ifelse(log_odds_ratio &gt; 0, "moon", "park")) %&gt;% --&gt;
-&lt;!--   slice_max(abs(log_odds_ratio), n = 10, with_ties = F) --&gt;
-
-&lt;!-- top10 --&gt;
-
-&lt;!-- ``` --&gt;
-
-&lt;!-- ] --&gt;
-
-&lt;!-- --- --&gt;
-
-&lt;!-- ##### 주요 변수 추출 --&gt;
-
-
-
-&lt;!-- ```{r eval=FALSE} --&gt;
-&lt;!-- top10 %&gt;% --&gt;
-&lt;!--   arrange(-log_odds_ratio) %&gt;% --&gt;
-&lt;!--   select(word, log_odds_ratio, president) --&gt;
-&lt;!-- ``` --&gt;
-
-
-&lt;!-- &lt;br-back-20&gt; --&gt;
-&lt;!-- .scroll-box-20[ --&gt;
-&lt;!-- ```{r echo=FALSE, R.options=list(tibble.width = Inf, width = 80, pillar.min_chars = Inf)} --&gt;
-&lt;!-- top10 %&gt;% --&gt;
-&lt;!--   arrange(-log_odds_ratio) %&gt;% --&gt;
-&lt;!--   select(word, log_odds_ratio, president) --&gt;
-&lt;!-- ``` --&gt;
-
-&lt;!-- ] --&gt;
-&lt;!-- --- --&gt;
-
-&lt;!-- ```{r echo=F, R.options=list(tibble.width = Inf, width = 100, pillar.min_chars = Inf), highlight.output=c(5:14)} --&gt;
-&lt;!-- top10 %&gt;% --&gt;
-&lt;!--   arrange(-log_odds_ratio) %&gt;% --&gt;
-&lt;!--   select(word, log_odds_ratio, president) --&gt;
-&lt;!-- ``` --&gt;
-
-
-&lt;!-- --- --&gt;
-
-&lt;!-- ```{r echo=F, R.options=list(tibble.width = Inf, width = 100, pillar.min_chars = Inf), highlight.output=c(15:24)} --&gt;
-&lt;!-- top10 %&gt;% --&gt;
-&lt;!--   arrange(-log_odds_ratio) %&gt;% --&gt;
-&lt;!--   select(word, log_odds_ratio, president) --&gt;
-&lt;!-- ``` --&gt;
-
-
-
-
-&lt;!-- --- --&gt;
-
-&lt;!-- **오즈비 기준 상·하위 10개 추출했을 때와 단어 동일** --&gt;
-
-&lt;!-- ```{r eval=F} --&gt;
-&lt;!-- frequency_wide %&gt;% --&gt;
-&lt;!--   filter(rank(odds_ratio) &lt;= 10 | rank(-odds_ratio) &lt;= 10) %&gt;%  --&gt;
-&lt;!--   arrange(-odds_ratio) --&gt;
-&lt;!-- ``` --&gt;
-
-
-&lt;!-- &lt;br-back-20&gt; --&gt;
-&lt;!-- .scroll-box-20[ --&gt;
-
-&lt;!-- ```{r echo=FALSE, R.options=list(tibble.width = Inf, width = 100, pillar.min_chars = Inf)} --&gt;
-&lt;!-- frequency_wide %&gt;% --&gt;
-&lt;!--   filter(rank(odds_ratio) &lt;= 10 | rank(-odds_ratio) &lt;= 10) %&gt;%  --&gt;
-&lt;!--   arrange(-odds_ratio) --&gt;
-&lt;!-- ``` --&gt;
-
-&lt;!-- ] --&gt;
-
-
-&lt;!-- --- --&gt;
-
-&lt;!-- #### 막대 그래프 만들기 --&gt;
-
-&lt;!-- - 단어가 어느 연설문에서 중요한지에 따라 서로 다른 축 방향으로 표현됨 --&gt;
-
-&lt;!-- ```{r fig.width=6, fig.height=4, out.width="45%"} --&gt;
-&lt;!-- ggplot(top10, aes(x = reorder(word, log_odds_ratio), --&gt;
-&lt;!--                   y = log_odds_ratio, --&gt;
-&lt;!--                   fill = president)) + --&gt;
-&lt;!--   geom_col() + --&gt;
-&lt;!--   coord_flip() + --&gt;
-&lt;!--   labs(x = NULL) + --&gt;
-&lt;!--   theme(text = element_text(family = "nanumgothic")) --&gt;
-&lt;!-- ``` --&gt;
-
-&lt;!-- --- --&gt;
-
-&lt;!-- &lt;br&gt; --&gt;
-&lt;!-- ```{r echo=FALSE, fig.width=6, fig.height=4, out.width="80%"} --&gt;
-&lt;!-- ggplot(top10, aes(x = reorder(word, log_odds_ratio), --&gt;
-&lt;!--                   y = log_odds_ratio, --&gt;
-&lt;!--                   fill = president)) + --&gt;
-&lt;!--   geom_col() + --&gt;
-&lt;!--   coord_flip() + --&gt;
-&lt;!--   labs(x = NULL) + --&gt;
-&lt;!--   theme(text = element_text(family = "nanumgothic")) --&gt;
-&lt;!-- ``` --&gt;
-
-&lt;!-- --- --&gt;
+frequency_wide
+```
+
+```
+## # A tibble: 955 x 7
+##    word      moon  park ratio_moon ratio_park odds_ratio log_odds_ratio
+##    &lt;chr&gt;    &lt;int&gt; &lt;int&gt;      &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;          &lt;dbl&gt;
+##  1 가동         1     0   0.000873   0.000552      1.58           0.459
+##  2 가사         1     0   0.000873   0.000552      1.58           0.459
+##  3 가슴         2     0   0.00131    0.000552      2.37           0.865
+##  4 가족         1     1   0.000873   0.00110       0.791         -0.234
+##  5 가족구조     1     0   0.000873   0.000552      1.58           0.459
+##  6 가지         4     0   0.00218    0.000552      3.96           1.38 
+##  7 가치         3     1   0.00175    0.00110       1.58           0.459
+##  8 각종         1     0   0.000873   0.000552      1.58           0.459
+##  9 감당         1     0   0.000873   0.000552      1.58           0.459
+## 10 강력         3     0   0.00175    0.000552      3.17           1.15 
+## # ... with 945 more rows
+```
+
+
+---
+
+- **부호**와 **크기**를 보면 단어가 어느 연설문에서 더 중요한지 알 수 있음
+  - 0보다 큰 양수일수록 `"moon`"에서 비중이 큼
+  - 0보다 작은 음수일수록 `"park"`에서 비중이 큼
+  - 0에 가까우면 두 연설문에서 비중 비슷함
+
+---
+
+- 부호와 크기를 보면 단어가 어느 연설문에서 더 중요한지 알 수 있음
+  - **0보다 큰 양수일수록 `"moon`"에서 비중이 큼**
+  - 0보다 작은 음수일수록 `"park"`에서 비중이 큼
+  - 0에 가까우면 두 연설문에서 비중 비슷함
+
+
+```r
+# moon에서 비중이 큰 단어
+frequency_wide %&gt;%
+* arrange(-log_odds_ratio)
+```
+
+```
+## # A tibble: 955 x 7
+##    word      moon  park ratio_moon ratio_park odds_ratio log_odds_ratio
+##    &lt;chr&gt;    &lt;int&gt; &lt;int&gt;      &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;          &lt;dbl&gt;
+##  1 복지국가     8     0    0.00393   0.000552       7.12           1.96
+##  2 세상         6     0    0.00306   0.000552       5.54           1.71
+##  3 여성         6     0    0.00306   0.000552       5.54           1.71
+##  4 정의         6     0    0.00306   0.000552       5.54           1.71
+##  5 강자         5     0    0.00262   0.000552       4.75           1.56
+##  6 공평         5     0    0.00262   0.000552       4.75           1.56
+##  7 대통령의     5     0    0.00262   0.000552       4.75           1.56
+##  8 보통         5     0    0.00262   0.000552       4.75           1.56
+##  9 상생         5     0    0.00262   0.000552       4.75           1.56
+## 10 지방         5     0    0.00262   0.000552       4.75           1.56
+## # ... with 945 more rows
+```
+
+---
+
+- 부호와 크기를 보면 단어가 어느 연설문에서 더 중요한지 알 수 있음
+  - 0보다 큰 양수일수록 `"moon`"에서 비중이 큼
+  - **0보다 작은 음수일수록 `"park"`에서 비중이 큼**
+  - 0에 가까우면 두 연설문에서 비중 비슷함
+
+
+```r
+# park에서 비중이 큰 단어
+frequency_wide %&gt;%
+* arrange(log_odds_ratio)
+```
+
+```
+## # A tibble: 955 x 7
+##    word      moon  park ratio_moon ratio_park odds_ratio log_odds_ratio
+##    &lt;chr&gt;    &lt;int&gt; &lt;int&gt;      &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;          &lt;dbl&gt;
+##  1 박근혜       0     8   0.000436    0.00496     0.0879          -2.43
+##  2 여러분       2    20   0.00131     0.0116      0.113           -2.18
+##  3 행복         3    23   0.00175     0.0132      0.132           -2.03
+##  4 실천         0     5   0.000436    0.00331     0.132           -2.03
+##  5 정보         0     5   0.000436    0.00331     0.132           -2.03
+##  6 투명         0     5   0.000436    0.00331     0.132           -2.03
+##  7 과제         0     4   0.000436    0.00276     0.158           -1.84
+##  8 국정운영     0     4   0.000436    0.00276     0.158           -1.84
+##  9 시작         0     4   0.000436    0.00276     0.158           -1.84
+## 10 지식         0     4   0.000436    0.00276     0.158           -1.84
+## # ... with 945 more rows
+```
+
+---
+
+- 부호와 크기를 보면 단어가 어느 연설문에서 더 중요한지 알 수 있음
+  - 0보다 큰 양수일수록 `"moon`"에서 비중이 큼
+  - 0보다 작은 음수일수록 `"park"`에서 비중이 큼
+  - **0에 가까우면 두 연설문에서 비중 비슷함**
+
+
+```r
+# 비중이 비슷한 단어
+frequency_wide %&gt;%
+* arrange(abs(log_odds_ratio))
+```
+
+```
+## # A tibble: 955 x 7
+##    word    moon  park ratio_moon ratio_park odds_ratio log_odds_ratio
+##    &lt;chr&gt;  &lt;int&gt; &lt;int&gt;      &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;          &lt;dbl&gt;
+##  1 때문       4     3    0.00218    0.00221      0.989        -0.0109
+##  2 강화       3     2    0.00175    0.00165      1.06          0.0537
+##  3 부담       3     2    0.00175    0.00165      1.06          0.0537
+##  4 세계       3     2    0.00175    0.00165      1.06          0.0537
+##  5 책임       3     2    0.00175    0.00165      1.06          0.0537
+##  6 협력       3     2    0.00175    0.00165      1.06          0.0537
+##  7 거대       2     1    0.00131    0.00110      1.19          0.171 
+##  8 교체       2     1    0.00131    0.00110      1.19          0.171 
+##  9 근본적     2     1    0.00131    0.00110      1.19          0.171 
+## 10 기반       2     1    0.00131    0.00110      1.19          0.171 
+## # ... with 945 more rows
+```
+---
+
+.box[
+
+  .info[&lt;svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" style="height:1em;position:relative;display:inline-block;top:.1em;fill:#FF7333;"&gt;  [ comment ]  &lt;path d="M505.12019,19.09375c-1.18945-5.53125-6.65819-11-12.207-12.1875C460.716,0,435.507,0,410.40747,0,307.17523,0,245.26909,55.20312,199.05238,128H94.83772c-16.34763.01562-35.55658,11.875-42.88664,26.48438L2.51562,253.29688A28.4,28.4,0,0,0,0,264a24.00867,24.00867,0,0,0,24.00582,24H127.81618l-22.47457,22.46875c-11.36521,11.36133-12.99607,32.25781,0,45.25L156.24582,406.625c11.15623,11.1875,32.15619,13.15625,45.27726,0l22.47457-22.46875V488a24.00867,24.00867,0,0,0,24.00581,24,28.55934,28.55934,0,0,0,10.707-2.51562l98.72834-49.39063c14.62888-7.29687,26.50776-26.5,26.50776-42.85937V312.79688c72.59753-46.3125,128.03493-108.40626,128.03493-211.09376C512.07526,76.5,512.07526,51.29688,505.12019,19.09375ZM384.04033,168A40,40,0,1,1,424.05,128,40.02322,40.02322,0,0,1,384.04033,168Z"&gt;&lt;/path&gt;&lt;/svg&gt; 로그 오즈비 간단히 구하기]
+
+
+
+```r
+frequency_wide &lt;- frequency_wide %&gt;%
+  mutate(log_odds_ratio = log(((moon + 1) / (sum(moon + 1))) /
+                              ((park + 1) / (sum(park + 1)))))
+```
+
+]
+
+---
+
+
+
+#### 로그 오즈비를 이용해 중요한 단어 비교하기
+
+- 두 연설문 각각 `log_odds_ratio` Top 10 추출
+
+
+```r
+top10 &lt;- frequency_wide %&gt;%
+  group_by(president = ifelse(log_odds_ratio &gt; 0, "moon", "park")) %&gt;%
+  slice_max(abs(log_odds_ratio), n = 10, with_ties = F)
+
+top10
+```
+
+
+&lt;br-back-22&gt;
+
+.scroll-box-14[
+
+
+```
+## # A tibble: 20 x 8
+## # Groups:   president [2]
+##    word      moon  park ratio_moon ratio_park odds_ratio log_odds_ratio president
+##    &lt;chr&gt;    &lt;int&gt; &lt;int&gt;      &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;          &lt;dbl&gt; &lt;chr&gt;    
+##  1 복지국가     8     0   0.00393    0.000552     7.12             1.96 moon     
+##  2 세상         6     0   0.00306    0.000552     5.54             1.71 moon     
+##  3 여성         6     0   0.00306    0.000552     5.54             1.71 moon     
+##  4 정의         6     0   0.00306    0.000552     5.54             1.71 moon     
+##  5 강자         5     0   0.00262    0.000552     4.75             1.56 moon     
+##  6 공평         5     0   0.00262    0.000552     4.75             1.56 moon     
+##  7 대통령의     5     0   0.00262    0.000552     4.75             1.56 moon     
+##  8 보통         5     0   0.00262    0.000552     4.75             1.56 moon     
+##  9 상생         5     0   0.00262    0.000552     4.75             1.56 moon     
+## 10 지방         5     0   0.00262    0.000552     4.75             1.56 moon     
+## 11 박근혜       0     8   0.000436   0.00496      0.0879          -2.43 park     
+## 12 여러분       2    20   0.00131    0.0116       0.113           -2.18 park     
+## 13 행복         3    23   0.00175    0.0132       0.132           -2.03 park     
+## 14 실천         0     5   0.000436   0.00331      0.132           -2.03 park     
+## 15 정보         0     5   0.000436   0.00331      0.132           -2.03 park     
+## 16 투명         0     5   0.000436   0.00331      0.132           -2.03 park     
+## 17 과제         0     4   0.000436   0.00276      0.158           -1.84 park     
+## 18 국정운영     0     4   0.000436   0.00276      0.158           -1.84 park     
+## 19 시작         0     4   0.000436   0.00276      0.158           -1.84 park     
+## 20 지식         0     4   0.000436   0.00276      0.158           -1.84 park
+```
+
+]
+
+---
+
+##### 주요 변수 추출
+
+
+
+
+```r
+top10 %&gt;%
+  arrange(-log_odds_ratio) %&gt;%
+  select(word, log_odds_ratio, president)
+```
+
+
+&lt;br-back-20&gt;
+.scroll-box-20[
+
+```
+## # A tibble: 20 x 3
+## # Groups:   president [2]
+##    word     log_odds_ratio president
+##    &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt;    
+##  1 복지국가           1.96 moon     
+##  2 세상               1.71 moon     
+##  3 여성               1.71 moon     
+##  4 정의               1.71 moon     
+##  5 강자               1.56 moon     
+##  6 공평               1.56 moon     
+##  7 대통령의           1.56 moon     
+##  8 보통               1.56 moon     
+##  9 상생               1.56 moon     
+## 10 지방               1.56 moon     
+## 11 과제              -1.84 park     
+## 12 국정운영          -1.84 park     
+## 13 시작              -1.84 park     
+## 14 지식              -1.84 park     
+## 15 행복              -2.03 park     
+## 16 실천              -2.03 park     
+## 17 정보              -2.03 park     
+## 18 투명              -2.03 park     
+## 19 여러분            -2.18 park     
+## 20 박근혜            -2.43 park
+```
+
+]
+---
+
+
+```
+## # A tibble: 20 x 3
+## # Groups:   president [2]
+##    word     log_odds_ratio president
+##    &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt;    
+*##  1 복지국가           1.96 moon     
+*##  2 세상               1.71 moon     
+*##  3 여성               1.71 moon     
+*##  4 정의               1.71 moon     
+*##  5 강자               1.56 moon     
+*##  6 공평               1.56 moon     
+*##  7 대통령의           1.56 moon     
+*##  8 보통               1.56 moon     
+*##  9 상생               1.56 moon     
+*## 10 지방               1.56 moon     
+## 11 과제              -1.84 park     
+## 12 국정운영          -1.84 park     
+## 13 시작              -1.84 park     
+## 14 지식              -1.84 park     
+## 15 행복              -2.03 park     
+## 16 실천              -2.03 park     
+## 17 정보              -2.03 park     
+## 18 투명              -2.03 park     
+## 19 여러분            -2.18 park     
+## 20 박근혜            -2.43 park
+```
+
+
+---
+
+
+```
+## # A tibble: 20 x 3
+## # Groups:   president [2]
+##    word     log_odds_ratio president
+##    &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt;    
+##  1 복지국가           1.96 moon     
+##  2 세상               1.71 moon     
+##  3 여성               1.71 moon     
+##  4 정의               1.71 moon     
+##  5 강자               1.56 moon     
+##  6 공평               1.56 moon     
+##  7 대통령의           1.56 moon     
+##  8 보통               1.56 moon     
+##  9 상생               1.56 moon     
+## 10 지방               1.56 moon     
+*## 11 과제              -1.84 park     
+*## 12 국정운영          -1.84 park     
+*## 13 시작              -1.84 park     
+*## 14 지식              -1.84 park     
+*## 15 행복              -2.03 park     
+*## 16 실천              -2.03 park     
+*## 17 정보              -2.03 park     
+*## 18 투명              -2.03 park     
+*## 19 여러분            -2.18 park     
+*## 20 박근혜            -2.43 park
+```
+
+
+
+
+---
+
+**오즈비 기준 상·하위 10개 추출했을 때와 단어 동일**
+
+
+```r
+frequency_wide %&gt;%
+  filter(rank(odds_ratio) &lt;= 10 | rank(-odds_ratio) &lt;= 10) %&gt;%
+  arrange(-odds_ratio)
+```
+
+
+&lt;br-back-20&gt;
+.scroll-box-20[
+
+
+```
+## # A tibble: 20 x 7
+##    word      moon  park ratio_moon ratio_park odds_ratio log_odds_ratio
+##    &lt;chr&gt;    &lt;int&gt; &lt;int&gt;      &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;          &lt;dbl&gt;
+##  1 복지국가     8     0   0.00393    0.000552     7.12             1.96
+##  2 세상         6     0   0.00306    0.000552     5.54             1.71
+##  3 여성         6     0   0.00306    0.000552     5.54             1.71
+##  4 정의         6     0   0.00306    0.000552     5.54             1.71
+##  5 강자         5     0   0.00262    0.000552     4.75             1.56
+##  6 공평         5     0   0.00262    0.000552     4.75             1.56
+##  7 대통령의     5     0   0.00262    0.000552     4.75             1.56
+##  8 보통         5     0   0.00262    0.000552     4.75             1.56
+##  9 상생         5     0   0.00262    0.000552     4.75             1.56
+## 10 지방         5     0   0.00262    0.000552     4.75             1.56
+## 11 과제         0     4   0.000436   0.00276      0.158           -1.84
+## 12 국정운영     0     4   0.000436   0.00276      0.158           -1.84
+## 13 시작         0     4   0.000436   0.00276      0.158           -1.84
+## 14 지식         0     4   0.000436   0.00276      0.158           -1.84
+## 15 행복         3    23   0.00175    0.0132       0.132           -2.03
+## 16 실천         0     5   0.000436   0.00331      0.132           -2.03
+## 17 정보         0     5   0.000436   0.00331      0.132           -2.03
+## 18 투명         0     5   0.000436   0.00331      0.132           -2.03
+## 19 여러분       2    20   0.00131    0.0116       0.113           -2.18
+## 20 박근혜       0     8   0.000436   0.00496      0.0879          -2.43
+```
+
+]
+
+
+---
+
+#### 막대 그래프 만들기
+
+- 단어가 어느 연설문에서 중요한지에 따라 서로 다른 축 방향으로 표현됨
+
+
+```r
+ggplot(top10, aes(x = reorder(word, log_odds_ratio),
+                  y = log_odds_ratio,
+                  fill = president)) +
+  geom_col() +
+  coord_flip() +
+  labs(x = NULL) +
+  theme(text = element_text(family = "nanumgothic"))
+```
+
+&lt;img src="03-comparing_files/figure-html/unnamed-chunk-94-1.png" width="45%" /&gt;
+
+---
+
+&lt;br&gt;
+&lt;img src="03-comparing_files/figure-html/unnamed-chunk-95-1.png" width="80%" /&gt;
+
+---
 
 &lt;!-- name: 03-4 --&gt;
 &lt;!-- class: title1 --&gt;
