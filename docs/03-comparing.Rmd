@@ -1477,436 +1477,436 @@ ggplot(top10, aes(x = reorder(word, log_odds_ratio),
 
 ---
 
-name: 03-4
-class: title1
+<!-- name: 03-4 -->
+<!-- class: title1 -->
 
-03-4 TF-IDF:
-<br>
-여러 텍스트의 단어 비교하기
+<!-- 03-4 TF-IDF: -->
+<!-- <br> -->
+<!-- 여러 텍스트의 단어 비교하기 -->
 
----
+<!-- --- -->
 
-##### 오즈비의 한계
+<!-- ##### 오즈비의 한계 -->
 
-- 두 조건의 확률을 이용해 계산
-- 여러 텍스트 비교하기 불편
-- 두 개 이상의 텍스트 비교할 때는 **TF-IDF** 활용
+<!-- - 두 조건의 확률을 이용해 계산 -->
+<!-- - 여러 텍스트 비교하기 불편 -->
+<!-- - 두 개 이상의 텍스트 비교할 때는 **TF-IDF** 활용 -->
 
---
+<!-- -- -->
 
-##### 중요한 단어?
+<!-- ##### 중요한 단어? -->
 
-- 흔하지 않으면서도 특정 텍스트에서는 자주 사용된 단어
-- 텍스트가 다른 텍스트와 구별되는 특징, 개성을 드러내는 단어
-    - ex) 자기소개서: "저는" vs "스카이다이빙"
-  
-  
----
+<!-- - 흔하지 않으면서도 특정 텍스트에서는 자주 사용된 단어 -->
+<!-- - 텍스트가 다른 텍스트와 구별되는 특징, 개성을 드러내는 단어 -->
+<!--     - ex) 자기소개서: "저는" vs "스카이다이빙" -->
 
 
-#### TF-IDF(Term Frequency - Inverse Document Frequency)
-- 어떤 단어가 흔하지 않으면서도 특정 텍스트에서는 자주 사용된 정도를 나타낸 지표
-- 텍스트의 개성을 드러내는 주요 단어를 찾는데 활용
+<!-- --- -->
 
---
 
-##### TF(Term Frequency)
+<!-- #### TF-IDF(Term Frequency - Inverse Document Frequency) -->
+<!-- - 어떤 단어가 흔하지 않으면서도 특정 텍스트에서는 자주 사용된 정도를 나타낸 지표 -->
+<!-- - 텍스트의 개성을 드러내는 주요 단어를 찾는데 활용 -->
 
-- 단어가 특정 텍스트에 사용된 횟수 - 단어 빈도
+<!-- -- -->
 
-<br>
-<br-back-30>
+<!-- ##### TF(Term Frequency) -->
 
-```{r, echo=F, out.width="50%", out.height="50%"}
-include_graphics("Image/etc/03_4_table1.png")
-```
+<!-- - 단어가 특정 텍스트에 사용된 횟수 - 단어 빈도 -->
 
----
+<!-- <br> -->
+<!-- <br-back-30> -->
 
-##### DF와 IDF
+<!-- ```{r, echo=F, out.width="50%", out.height="50%"} -->
+<!-- include_graphics("Image/etc/03_4_table1.png") -->
+<!-- ``` -->
 
-- **DF(Document Frequency)**
-  - 단어가 사용된 텍스트 수 - '문서 빈도'
-  - 클수록 여러 문서에 흔하게 사용된 일반적인 단어
-  
-  
---
+<!-- --- -->
 
+<!-- ##### DF와 IDF -->
 
-- **IDF(Inverse Document Frequency)**
-  - '역문서 빈도'
-     - (1) 전체 문서 수(N)에서 DF가 차지하는 비중을 구함
-     - (2) 그 값의 역수를 취함
-     - (3) 로그를 취함
-  - DF가 클수록 작아지고, 반대로 DF가 작을수록 커짐
-  - 클수록 드물게 사용되는 특이한 단어, 작을수록 흔하게 사용되는 일반적인 단어
+<!-- - **DF(Document Frequency)** -->
+<!--   - 단어가 사용된 텍스트 수 - '문서 빈도' -->
+<!--   - 클수록 여러 문서에 흔하게 사용된 일반적인 단어 -->
 
-<br>
-<br-back-30>
 
-$${\large\text{IDF} = \log{\frac{{\text{N}}}{{\text{DF}}}}}$$
+<!-- -- -->
 
----
 
-##### DF와 IDF
+<!-- - **IDF(Inverse Document Frequency)** -->
+<!--   - '역문서 빈도' -->
+<!--      - (1) 전체 문서 수(N)에서 DF가 차지하는 비중을 구함 -->
+<!--      - (2) 그 값의 역수를 취함 -->
+<!--      - (3) 로그를 취함 -->
+<!--   - DF가 클수록 작아지고, 반대로 DF가 작을수록 커짐 -->
+<!--   - 클수록 드물게 사용되는 특이한 단어, 작을수록 흔하게 사용되는 일반적인 단어 -->
 
-<br>
-<br-back-20>
+<!-- <br> -->
+<!-- <br-back-30> -->
 
-```{r, echo=F, out.width="50%", out.height="50%"}
-include_graphics("Image/etc/03_4_table2.png", dpi = 300)
-```
+<!-- $${\large\text{IDF} = \log{\frac{{\text{N}}}{{\text{DF}}}}}$$ -->
 
-`r fontawesome("lightbulb")` 소수점 둘째 자리에서 반올림하여 표기
+<!-- --- -->
 
+<!-- ##### DF와 IDF -->
 
----
+<!-- <br> -->
+<!-- <br-back-20> -->
 
+<!-- ```{r, echo=F, out.width="50%", out.height="50%"} -->
+<!-- include_graphics("Image/etc/03_4_table2.png", dpi = 300) -->
+<!-- ``` -->
 
+<!-- `r fontawesome("lightbulb")` 소수점 둘째 자리에서 반올림하여 표기 -->
 
-##### TF-IDF
 
+<!-- --- -->
 
-- TF(단어 빈도)와 IDF(역 문서 빈도)를 곱한 값
-  - TF: 단어가 분석 대상이 되는 텍스트 내에서 많이 사용될수록 커짐
-  - IDF: 단어가 사용된 텍스트가 드물수록 커짐
 
 
---
+<!-- ##### TF-IDF -->
 
 
-<br>
-<br-back-20>
+<!-- - TF(단어 빈도)와 IDF(역 문서 빈도)를 곱한 값 -->
+<!--   - TF: 단어가 분석 대상이 되는 텍스트 내에서 많이 사용될수록 커짐 -->
+<!--   - IDF: 단어가 사용된 텍스트가 드물수록 커짐 -->
 
-$${\large\text{TF-IDF} = TF{\times}\log\frac{{\text{N}}}{{\text{DF}}}}$$
 
-<br>
+<!-- -- -->
 
 
----
+<!-- <br> -->
+<!-- <br-back-20> -->
 
-##### TF-IDF
+<!-- $${\large\text{TF-IDF} = TF{\times}\log\frac{{\text{N}}}{{\text{DF}}}}$$ -->
 
-- **흔하지 않은 단어**인데 **특정 텍스트에서 자주 사용**될수록 큰 값
-  - TF-IDF가 큰 단어를 보면 다른 텍스트와 구별되는 특징을 알 수 있음
+<!-- <br> -->
 
-<br>
-<br-back-30>
 
-```{r, echo=F, out.width="60%", out.height="60%", fig.align='center'}
-include_graphics("Image/etc/03_4_table3.png", dpi = 300)
-```
+<!-- --- -->
 
-.center[
-`r fontawesome("lightbulb")` 소수점 둘째 자리에서 반올림하여 표기
-]
----
+<!-- ##### TF-IDF -->
 
+<!-- - **흔하지 않은 단어**인데 **특정 텍스트에서 자주 사용**될수록 큰 값 -->
+<!--   - TF-IDF가 큰 단어를 보면 다른 텍스트와 구별되는 특징을 알 수 있음 -->
 
-#### TF-IDF 구하기
+<!-- <br> -->
+<!-- <br-back-30> -->
 
+<!-- ```{r, echo=F, out.width="60%", out.height="60%", fig.align='center'} -->
+<!-- include_graphics("Image/etc/03_4_table3.png", dpi = 300) -->
+<!-- ``` -->
 
-##### 1. 단어 빈도 구하기
+<!-- .center[ -->
+<!-- `r fontawesome("lightbulb")` 소수점 둘째 자리에서 반올림하여 표기 -->
+<!-- ] -->
+<!-- --- -->
 
-- `speeches_presidents.csv` : 역대 대통령의 대선 출마 선언문
-- `readr::read_csv()` 데이터를 다루기 편한 tibble 구조로 만들어 줌, read.csv()보다 빠름
 
-```{r eval=F}
-# 데이터 불러오기
-install.packages("readr")
-library(readr)
+<!-- #### TF-IDF 구하기 -->
 
-raw_speeches <- read_csv("speeches_presidents.csv")
-raw_speeches
-```
 
-```{r echo=FALSE, R.options=list(tibble.width = 50)}
-# install.packages("readr")
-library(readr)
-raw_speeches <- read_csv("../Data//speeches_presidents.csv")
-raw_speeches
-```
+<!-- ##### 1. 단어 빈도 구하기 -->
 
----
+<!-- - `speeches_presidents.csv` : 역대 대통령의 대선 출마 선언문 -->
+<!-- - `readr::read_csv()` 데이터를 다루기 편한 tibble 구조로 만들어 줌, read.csv()보다 빠름 -->
 
-```{r eval=FALSE}
-# 기본적인 전처리
-speeches <- raw_speeches %>%
-  mutate(value = str_replace_all(value, "[^가-힣]", " "),
-         value = str_squish(value))
+<!-- ```{r eval=F} -->
+<!-- # 데이터 불러오기 -->
+<!-- install.packages("readr") -->
+<!-- library(readr) -->
 
-# 토큰화
-speeches <- speeches %>%
-  unnest_tokens(input = value,
-                output = word,
-                token = extractNoun)
+<!-- raw_speeches <- read_csv("speeches_presidents.csv") -->
+<!-- raw_speeches -->
+<!-- ``` -->
 
-# 단어 빈도 구하기
-frequecy <- speeches %>%
-  count(president, word) %>%
-  filter(str_count(word) > 1)
+<!-- ```{r echo=FALSE, R.options=list(tibble.width = 50)} -->
+<!-- # install.packages("readr") -->
+<!-- library(readr) -->
+<!-- raw_speeches <- read_csv("../Data//speeches_presidents.csv") -->
+<!-- raw_speeches -->
+<!-- ``` -->
 
-frequecy
-```
+<!-- --- -->
 
+<!-- ```{r eval=FALSE} -->
+<!-- # 기본적인 전처리 -->
+<!-- speeches <- raw_speeches %>% -->
+<!--   mutate(value = str_replace_all(value, "[^가-힣]", " "), -->
+<!--          value = str_squish(value)) -->
 
-```{r echo=FALSE}
-# 기본적인 전처리
-speeches <- raw_speeches %>%
-  mutate(value = str_replace_all(value, "[^가-힣]", " "),
-         value = str_squish(value))
+<!-- # 토큰화 -->
+<!-- speeches <- speeches %>% -->
+<!--   unnest_tokens(input = value, -->
+<!--                 output = word, -->
+<!--                 token = extractNoun) -->
 
-# 토큰화
-speeches <- speeches %>%
-  unnest_tokens(input = value,
-                output = word,
-                token = extractNoun)
+<!-- # 단어 빈도 구하기 -->
+<!-- frequecy <- speeches %>% -->
+<!--   count(president, word) %>% -->
+<!--   filter(str_count(word) > 1) -->
 
-# 단어 빈도 구하기
-frequecy <- speeches %>%
-  count(president, word) %>%
-  filter(str_count(word) > 1)
-```
+<!-- frequecy -->
+<!-- ``` -->
 
----
 
-```{r echo=FALSE}
-frequecy
-```
+<!-- ```{r echo=FALSE} -->
+<!-- # 기본적인 전처리 -->
+<!-- speeches <- raw_speeches %>% -->
+<!--   mutate(value = str_replace_all(value, "[^가-힣]", " "), -->
+<!--          value = str_squish(value)) -->
 
----
+<!-- # 토큰화 -->
+<!-- speeches <- speeches %>% -->
+<!--   unnest_tokens(input = value, -->
+<!--                 output = word, -->
+<!--                 token = extractNoun) -->
 
-#### 3.4.2 TF-IDF 구하기
+<!-- # 단어 빈도 구하기 -->
+<!-- frequecy <- speeches %>% -->
+<!--   count(president, word) %>% -->
+<!--   filter(str_count(word) > 1) -->
+<!-- ``` -->
 
-- `tidytext::bind_tf_idf()`
-  - `term`     : 단어
-  - `document` : 텍스트 구분 기준
-  - `n`        : 단어 빈도
+<!-- --- -->
 
+<!-- ```{r echo=FALSE} -->
+<!-- frequecy -->
+<!-- ``` -->
 
-```{r eval=F}
-frequecy <- frequecy %>%
-  bind_tf_idf(term = word,           # 단어
-              document = president,  # 텍스트 구분 기준
-              n = n) %>%             # 단어 빈도
-  arrange(-tf_idf)
+<!-- --- -->
 
-frequecy
-```
+<!-- #### 3.4.2 TF-IDF 구하기 -->
 
+<!-- - `tidytext::bind_tf_idf()` -->
+<!--   - `term`     : 단어 -->
+<!--   - `document` : 텍스트 구분 기준 -->
+<!--   - `n`        : 단어 빈도 -->
 
 
+<!-- ```{r eval=F} -->
+<!-- frequecy <- frequecy %>% -->
+<!--   bind_tf_idf(term = word,           # 단어 -->
+<!--               document = president,  # 텍스트 구분 기준 -->
+<!--               n = n) %>%             # 단어 빈도 -->
+<!--   arrange(-tf_idf) -->
 
----
+<!-- frequecy -->
+<!-- ``` -->
 
-```{r echo=FALSE}
-frequecy <- frequecy %>%
-  bind_tf_idf(term = word,           # 단어
-              document = president,  # 텍스트 구분 기준
-              n = n) %>%             # 단어 빈도
-  arrange(-tf_idf)
 
-frequecy
-```
 
-`r fontawesome("lightbulb")` `tf`: 대상 텍스트의 전체 단어 수에서 해당 단어의 수가 차지하는 '비중'. 텍스트에 사용된 전체 단어 수가 &nbsp;&nbsp;&nbsp;&nbsp;많을수록 작아짐
 
----
+<!-- --- -->
 
-##### TF-IDF가 높은 단어 살펴보기
+<!-- ```{r echo=FALSE} -->
+<!-- frequecy <- frequecy %>% -->
+<!--   bind_tf_idf(term = word,           # 단어 -->
+<!--               document = president,  # 텍스트 구분 기준 -->
+<!--               n = n) %>%             # 단어 빈도 -->
+<!--   arrange(-tf_idf) -->
 
-- 텍스트의 특징을 드러내는 중요한 단어
-- 각 대통령이 다른 대통령들과 달리 무엇을 강조했는지 알 수 있음
+<!-- frequecy -->
+<!-- ``` -->
 
-```{r}
-frequecy %>% filter(president == "문재인")
-```
+<!-- `r fontawesome("lightbulb")` `tf`: 대상 텍스트의 전체 단어 수에서 해당 단어의 수가 차지하는 '비중'. 텍스트에 사용된 전체 단어 수가 &nbsp;&nbsp;&nbsp;&nbsp;많을수록 작아짐 -->
 
----
+<!-- --- -->
 
-##### TF-IDF가 높은 단어 살펴보기
+<!-- ##### TF-IDF가 높은 단어 살펴보기 -->
 
-- 텍스트의 특징을 드러내는 중요한 단어
-- 각 대통령이 다른 대통령들과 달리 무엇을 강조했는지 알 수 있음
+<!-- - 텍스트의 특징을 드러내는 중요한 단어 -->
+<!-- - 각 대통령이 다른 대통령들과 달리 무엇을 강조했는지 알 수 있음 -->
 
-```{r}
-frequecy %>% filter(president == "박근혜")
-```
+<!-- ```{r} -->
+<!-- frequecy %>% filter(president == "문재인") -->
+<!-- ``` -->
 
----
+<!-- --- -->
 
-##### TF-IDF가 높은 단어 살펴보기
+<!-- ##### TF-IDF가 높은 단어 살펴보기 -->
 
-- 텍스트의 특징을 드러내는 중요한 단어
-- 각 대통령이 다른 대통령들과 달리 무엇을 강조했는지 알 수 있음
+<!-- - 텍스트의 특징을 드러내는 중요한 단어 -->
+<!-- - 각 대통령이 다른 대통령들과 달리 무엇을 강조했는지 알 수 있음 -->
 
-```{r}
-frequecy %>% filter(president == "이명박")
-```
+<!-- ```{r} -->
+<!-- frequecy %>% filter(president == "박근혜") -->
+<!-- ``` -->
 
----
+<!-- --- -->
 
-##### TF-IDF가 높은 단어 살펴보기
+<!-- ##### TF-IDF가 높은 단어 살펴보기 -->
 
-- 텍스트의 특징을 드러내는 중요한 단어
-- 각 대통령이 다른 대통령들과 달리 무엇을 강조했는지 알 수 있음
+<!-- - 텍스트의 특징을 드러내는 중요한 단어 -->
+<!-- - 각 대통령이 다른 대통령들과 달리 무엇을 강조했는지 알 수 있음 -->
 
-```{r}
-frequecy %>% filter(president == "노무현")
-```
+<!-- ```{r} -->
+<!-- frequecy %>% filter(president == "이명박") -->
+<!-- ``` -->
 
+<!-- --- -->
 
----
+<!-- ##### TF-IDF가 높은 단어 살펴보기 -->
 
+<!-- - 텍스트의 특징을 드러내는 중요한 단어 -->
+<!-- - 각 대통령이 다른 대통령들과 달리 무엇을 강조했는지 알 수 있음 -->
 
-##### TF-IDF가 낮은 단어 살펴보기
+<!-- ```{r} -->
+<!-- frequecy %>% filter(president == "노무현") -->
+<!-- ``` -->
 
-- 역대 대통령들이 공통적으로 사용한 흔한 단어, 범용 단어
 
-```{r}
-frequecy %>%
-  filter(president == "문재인") %>%
-  arrange(tf_idf)
-```
+<!-- --- -->
 
----
 
-##### TF-IDF가 낮은 단어 살펴보기
+<!-- ##### TF-IDF가 낮은 단어 살펴보기 -->
 
-- 역대 대통령들이 공통적으로 사용한 흔한 단어, 범용 단어
+<!-- - 역대 대통령들이 공통적으로 사용한 흔한 단어, 범용 단어 -->
 
-```{r}
-frequecy %>%
-  filter(president == "박근혜") %>%
-  arrange(tf_idf)
-```
+<!-- ```{r} -->
+<!-- frequecy %>% -->
+<!--   filter(president == "문재인") %>% -->
+<!--   arrange(tf_idf) -->
+<!-- ``` -->
 
----
+<!-- --- -->
 
-#### 막대 그래프 만들기
+<!-- ##### TF-IDF가 낮은 단어 살펴보기 -->
 
-```{r eval=F}
-# 주요 단어 추출
-top10 <- frequecy %>%
-  group_by(president) %>%
-  slice_max(tf_idf, n = 10, with_ties = F)
+<!-- - 역대 대통령들이 공통적으로 사용한 흔한 단어, 범용 단어 -->
 
-# 그래프 순서 정하기
-top10$president <- factor(top10$president,
-                          levels = c("문재인", "박근혜", "이명박", "노무현"))
+<!-- ```{r} -->
+<!-- frequecy %>% -->
+<!--   filter(president == "박근혜") %>% -->
+<!--   arrange(tf_idf) -->
+<!-- ``` -->
 
-# 막대 그래프 만들기
-ggplot(top10, aes(x = reorder_within(word, tf_idf, president),
-                  y = tf_idf,
-                  fill = president)) +
-  geom_col(show.legend = F) +
-  coord_flip() +
-  facet_wrap(~ president, scales = "free", ncol = 2) +
-  scale_x_reordered() +
-  labs(x = NULL) +
-  theme(text = element_text(family = "nanumgothic"))
-```
+<!-- --- -->
 
----
+<!-- #### 막대 그래프 만들기 -->
 
-```{r echo=F, fig.width=6, fig.height=5, out.width="75%"}
-# 주요 단어 추출
-top10 <- frequecy %>%
-  group_by(president) %>%
-  slice_max(tf_idf, n = 10, with_ties = F)
+<!-- ```{r eval=F} -->
+<!-- # 주요 단어 추출 -->
+<!-- top10 <- frequecy %>% -->
+<!--   group_by(president) %>% -->
+<!--   slice_max(tf_idf, n = 10, with_ties = F) -->
 
-# 그래프 순서 정하기
-top10$president <- factor(top10$president,
-                          levels = c("문재인", "박근혜", "이명박", "노무현"))
+<!-- # 그래프 순서 정하기 -->
+<!-- top10$president <- factor(top10$president, -->
+<!--                           levels = c("문재인", "박근혜", "이명박", "노무현")) -->
 
-# 막대 그래프 만들기
-ggplot(top10, aes(x = reorder_within(word, tf_idf, president),
-                  y = tf_idf,
-                  fill = president)) +
-  geom_col(show.legend = F) +
-  coord_flip() +
-  facet_wrap(~ president, scales = "free", ncol = 2) +
-  scale_x_reordered() +
-  labs(x = NULL) +
-  theme(text = element_text(family = "nanumgothic"))
-```
+<!-- # 막대 그래프 만들기 -->
+<!-- ggplot(top10, aes(x = reorder_within(word, tf_idf, president), -->
+<!--                   y = tf_idf, -->
+<!--                   fill = president)) + -->
+<!--   geom_col(show.legend = F) + -->
+<!--   coord_flip() + -->
+<!--   facet_wrap(~ president, scales = "free", ncol = 2) + -->
+<!--   scale_x_reordered() + -->
+<!--   labs(x = NULL) + -->
+<!--   theme(text = element_text(family = "nanumgothic")) -->
+<!-- ``` -->
 
----
+<!-- --- -->
 
-class: title1
+<!-- ```{r echo=F, fig.width=6, fig.height=5, out.width="75%"} -->
+<!-- # 주요 단어 추출 -->
+<!-- top10 <- frequecy %>% -->
+<!--   group_by(president) %>% -->
+<!--   slice_max(tf_idf, n = 10, with_ties = F) -->
 
-정리하기
+<!-- # 그래프 순서 정하기 -->
+<!-- top10$president <- factor(top10$president, -->
+<!--                           levels = c("문재인", "박근혜", "이명박", "노무현")) -->
 
----
+<!-- # 막대 그래프 만들기 -->
+<!-- ggplot(top10, aes(x = reorder_within(word, tf_idf, president), -->
+<!--                   y = tf_idf, -->
+<!--                   fill = president)) + -->
+<!--   geom_col(show.legend = F) + -->
+<!--   coord_flip() + -->
+<!--   facet_wrap(~ president, scales = "free", ncol = 2) + -->
+<!--   scale_x_reordered() + -->
+<!--   labs(x = NULL) + -->
+<!--   theme(text = element_text(family = "nanumgothic")) -->
+<!-- ``` -->
 
-### 정리하기
+<!-- --- -->
 
-##### 1. 단어 빈도 비교하기
+<!-- class: title1 -->
 
-```{r eval=F}
-# 토큰화
-speeches <- speeches %>%
-  unnest_tokens(input = value,
-                output = word,
-                token = extractNoun)
+<!-- 정리하기 -->
 
-# 하위 집단별 단어 빈도 구하기
-frequency <- speeches %>%
-  count(president, word) %>%
-  filter(str_count(word) > 1)
+<!-- --- -->
 
-# 가장 많이 사용된 단어 추출
-top10 <- frequency %>%
-  group_by(president) %>%
-  slice_max(n, n = 10, with_ties = F)
-```
+<!-- ### 정리하기 -->
 
----
+<!-- ##### 1. 단어 빈도 비교하기 -->
 
-### 정리하기
+<!-- ```{r eval=F} -->
+<!-- # 토큰화 -->
+<!-- speeches <- speeches %>% -->
+<!--   unnest_tokens(input = value, -->
+<!--                 output = word, -->
+<!--                 token = extractNoun) -->
 
-##### 2. 로그 오즈비로 단어 비교하기
+<!-- # 하위 집단별 단어 빈도 구하기 -->
+<!-- frequency <- speeches %>% -->
+<!--   count(president, word) %>% -->
+<!--   filter(str_count(word) > 1) -->
 
-```{r}
-# long form을 wide form으로 변환
-frequency_wide <- frequency %>%
-  pivot_wider(names_from = president,
-              values_from = n,
-              values_fill = list(n = 0))
+<!-- # 가장 많이 사용된 단어 추출 -->
+<!-- top10 <- frequency %>% -->
+<!--   group_by(president) %>% -->
+<!--   slice_max(n, n = 10, with_ties = F) -->
+<!-- ``` -->
 
-# 로그 오즈비 구하기
-frequency_wide <- frequency_wide %>%
-  mutate(log_odds_ratio = log(((moon + 1) / (sum(moon + 1))) /
-                              ((park + 1) / (sum(park + 1)))))
+<!-- --- -->
 
-# 상대적으로 중요한 단어 추출
-top10 <- frequency_wide %>%
-  group_by(president = ifelse(log_odds_ratio > 0, "moon", "park")) %>%
-  slice_max(abs(log_odds_ratio), n = 10, with_ties = F)
-```
+<!-- ### 정리하기 -->
 
----
+<!-- ##### 2. 로그 오즈비로 단어 비교하기 -->
 
-### 정리하기
+<!-- ```{r} -->
+<!-- # long form을 wide form으로 변환 -->
+<!-- frequency_wide <- frequency %>% -->
+<!--   pivot_wider(names_from = president, -->
+<!--               values_from = n, -->
+<!--               values_fill = list(n = 0)) -->
 
-##### 3. TF-IDF로 단어 비교하기
+<!-- # 로그 오즈비 구하기 -->
+<!-- frequency_wide <- frequency_wide %>% -->
+<!--   mutate(log_odds_ratio = log(((moon + 1) / (sum(moon + 1))) / -->
+<!--                               ((park + 1) / (sum(park + 1))))) -->
 
-```{r eval=F}
-# TF-IDF 구하기
-frequecy <- frequecy %>%
-  bind_tf_idf(term = word,
-              document = president,
-              n = n) %>%
-  arrange(-tf_idf)
+<!-- # 상대적으로 중요한 단어 추출 -->
+<!-- top10 <- frequency_wide %>% -->
+<!--   group_by(president = ifelse(log_odds_ratio > 0, "moon", "park")) %>% -->
+<!--   slice_max(abs(log_odds_ratio), n = 10, with_ties = F) -->
+<!-- ``` -->
 
-# 상대적으로 중요한 단어 추출
-top10 <- frequecy %>%
-  arrange(tf_idf) %>%
-  group_by(president) %>%
-  slice_max(tf_idf, n = 10, with_ties = F)
-```
+<!-- --- -->
 
----
+<!-- ### 정리하기 -->
+
+<!-- ##### 3. TF-IDF로 단어 비교하기 -->
+
+<!-- ```{r eval=F} -->
+<!-- # TF-IDF 구하기 -->
+<!-- frequecy <- frequecy %>% -->
+<!--   bind_tf_idf(term = word, -->
+<!--               document = president, -->
+<!--               n = n) %>% -->
+<!--   arrange(-tf_idf) -->
+
+<!-- # 상대적으로 중요한 단어 추출 -->
+<!-- top10 <- frequecy %>% -->
+<!--   arrange(tf_idf) %>% -->
+<!--   group_by(president) %>% -->
+<!--   slice_max(tf_idf, n = 10, with_ties = F) -->
+<!-- ``` -->
+
+<!-- --- -->
 
 <!-- class: title1 -->
 
