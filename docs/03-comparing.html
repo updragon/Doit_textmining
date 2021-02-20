@@ -98,571 +98,775 @@ class: title1
 
 ---
 
-&lt;!-- ### 비교 분석 --&gt;
-&lt;!-- - 여러 텍스트를 비교해 차이를 알아보는 분석 방법 --&gt;
-&lt;!-- - 단어 빈도 분석을 응용해 자주 사용된 단어의 차이를 살펴봄 --&gt;
+### 비교 분석
+- 여러 텍스트를 비교해 차이를 알아보는 분석 방법
+- 단어 빈도 분석을 응용해 자주 사용된 단어의 차이를 살펴봄
 
-&lt;!-- --- --&gt;
+---
 
-&lt;!-- ### 텍스트 합치기 --&gt;
+### 텍스트 합치기
 
-&lt;!-- - 텍스트를 비교하기 위해 여러 개의 텍스트를 하나의 데이터셋으로 합치는 작업 --&gt;
+- 텍스트를 비교하기 위해 여러 개의 텍스트를 하나의 데이터셋으로 합치는 작업
 
-&lt;!-- ##### 데이터 불러오기 --&gt;
+##### 데이터 불러오기
 
-&lt;!-- - 문재인 대통령과 박근혜 전 대통령의 대선 출마 선언문 불러오기 --&gt;
-&lt;!-- - tibble 구조로 변환하고 연설문 구분 위해 대통령 이름 부여 --&gt;
+- 문재인 대통령과 박근혜 전 대통령의 대선 출마 선언문 불러오기
+- tibble 구조로 변환하고 연설문 구분 위해 대통령 이름 부여
 
-&lt;!-- ```{r eval=FALSE} --&gt;
-&lt;!-- library(dplyr) --&gt;
 
-&lt;!-- # 문재인 대통령 연설문 불러오기 --&gt;
-&lt;!-- raw_moon &lt;- readLines("speech_moon.txt", encoding = "UTF-8") --&gt;
-&lt;!-- moon &lt;- raw_moon %&gt;% --&gt;
-&lt;!--   as_tibble() %&gt;% --&gt;
-&lt;!--   mutate(president = "moon") --&gt;
+```r
+library(dplyr)
 
-&lt;!-- # 박근혜 대통령 연설문 불러오기 --&gt;
-&lt;!-- raw_park &lt;- readLines("speech_park.txt", encoding = "UTF-8") --&gt;
-&lt;!-- park &lt;- raw_park %&gt;% --&gt;
-&lt;!--   as_tibble() %&gt;% --&gt;
-&lt;!--   mutate(president = "park") --&gt;
-&lt;!-- ``` --&gt;
+# 문재인 대통령 연설문 불러오기
+raw_moon &lt;- readLines("speech_moon.txt", encoding = "UTF-8")
+moon &lt;- raw_moon %&gt;%
+  as_tibble() %&gt;%
+  mutate(president = "moon")
 
-&lt;!-- ```{r echo=F} --&gt;
-&lt;!-- library(dplyr) --&gt;
+# 박근혜 대통령 연설문 불러오기
+raw_park &lt;- readLines("speech_park.txt", encoding = "UTF-8")
+park &lt;- raw_park %&gt;%
+  as_tibble() %&gt;%
+  mutate(president = "park")
+```
 
-&lt;!-- # 문재인 대통령 연설문 불러오기 --&gt;
-&lt;!-- raw_moon &lt;- readLines("../Data/speech_moon.txt", encoding = "UTF-8") --&gt;
 
-&lt;!-- moon &lt;- raw_moon %&gt;% --&gt;
-&lt;!--   as_tibble() %&gt;% --&gt;
-&lt;!--   mutate(president = "moon") --&gt;
 
-&lt;!-- # 박근혜 대통령 연설문 불러오기 --&gt;
-&lt;!-- raw_park &lt;- readLines("../Data/speech_park.txt", encoding = "UTF-8") --&gt;
+---
 
-&lt;!-- park &lt;- raw_park %&gt;% --&gt;
-&lt;!--   as_tibble() %&gt;% --&gt;
-&lt;!--   mutate(president = "park") --&gt;
-&lt;!-- ``` --&gt;
+##### 데이터 합치기
 
-&lt;!-- --- --&gt;
+- 두 데이터를 행(세로) 방향으로 결합
+- 출력 결과 보기 편하게 `select()`로 변수 순서 바꾸기
+- 윗부분은 문재인 대통령, 아랫부분은 박근혜 전 대통령 연설문
 
-&lt;!-- ##### 데이터 합치기 --&gt;
 
-&lt;!-- - 두 데이터를 행(세로) 방향으로 결합 --&gt;
-&lt;!-- - 출력 결과 보기 편하게 `select()`로 변수 순서 바꾸기 --&gt;
-&lt;!-- - 윗부분은 문재인 대통령, 아랫부분은 박근혜 전 대통령 연설문 --&gt;
+```r
+bind_speeches &lt;- bind_rows(moon, park) %&gt;%
+  select(president, value)
+```
 
-&lt;!-- ```{r} --&gt;
-&lt;!-- bind_speeches &lt;- bind_rows(moon, park) %&gt;% --&gt;
-&lt;!--   select(president, value) --&gt;
-&lt;!-- ``` --&gt;
+--
 
-&lt;!-- -- --&gt;
+&lt;br-back-30&gt;
 
-&lt;!-- &lt;br-back-30&gt; --&gt;
+.pull-left[
 
-&lt;!-- .pull-left[ --&gt;
 
-&lt;!-- ```{r, R.options = list(tibble.width = 25)} --&gt;
-&lt;!-- head(bind_speeches) --&gt;
-&lt;!-- ``` --&gt;
-&lt;!-- ] --&gt;
+```r
+head(bind_speeches)
+```
 
-&lt;!-- .pull-right[ --&gt;
+```
+## # A tibble: 6 x 2
+##   president value        
+##   &lt;chr&gt;     &lt;chr&gt;        
+## 1 moon      "정권교체 하겠습니다!~
+## 2 moon      "  정치교체 하겠습니~
+## 3 moon      "  시대교체 하겠습니~
+## 4 moon      "  "         
+## 5 moon      "  ‘불비불명(不飛不~
+## 6 moon      ""
+```
+]
 
-&lt;!-- ```{r, R.options = list(tibble.width = 25)} --&gt;
-&lt;!-- tail(bind_speeches) --&gt;
-&lt;!-- ``` --&gt;
-&lt;!-- ] --&gt;
+.pull-right[
 
 
+```r
+tail(bind_speeches)
+```
 
+```
+## # A tibble: 6 x 2
+##   president value        
+##   &lt;chr&gt;     &lt;chr&gt;        
+## 1 park      "국민들이 꿈으로만 가~
+## 2 park      ""           
+## 3 park      "감사합니다."
+## 4 park      ""           
+## 5 park      "2012년 7월 10~
+## 6 park      "새누리당 예비후보 박~
+```
+]
 
-&lt;!-- &lt;svg viewBox="0 0 352 512" xmlns="http://www.w3.org/2000/svg" style="height:1em;fill:currentColor;position:relative;display:inline-block;top:.1em;"&gt;  [ comment ]  &lt;path d="M176 80c-52.94 0-96 43.06-96 96 0 8.84 7.16 16 16 16s16-7.16 16-16c0-35.3 28.72-64 64-64 8.84 0 16-7.16 16-16s-7.16-16-16-16zM96.06 459.17c0 3.15.93 6.22 2.68 8.84l24.51 36.84c2.97 4.46 7.97 7.14 13.32 7.14h78.85c5.36 0 10.36-2.68 13.32-7.14l24.51-36.84c1.74-2.62 2.67-5.7 2.68-8.84l.05-43.18H96.02l.04 43.18zM176 0C73.72 0 0 82.97 0 176c0 44.37 16.45 84.85 43.56 115.78 16.64 18.99 42.74 58.8 52.42 92.16v.06h48v-.12c-.01-4.77-.72-9.51-2.15-14.07-5.59-17.81-22.82-64.77-62.17-109.67-20.54-23.43-31.52-53.15-31.61-84.14-.2-73.64 59.67-128 127.95-128 70.58 0 128 57.42 128 128 0 30.97-11.24 60.85-31.65 84.14-39.11 44.61-56.42 91.47-62.1 109.46a47.507 47.507 0 0 0-2.22 14.3v.1h48v-.05c9.68-33.37 35.78-73.18 52.42-92.16C335.55 260.85 352 220.37 352 176 352 78.8 273.2 0 176 0z"&gt;&lt;/path&gt;&lt;/svg&gt; 박근혜 전 대통령의 대선 출마 선언문 출처: [bit.ly/easytext_31](https://bit.ly/easytext_31) --&gt;
 
 
-&lt;!-- --- --&gt;
 
+&lt;svg viewBox="0 0 352 512" xmlns="http://www.w3.org/2000/svg" style="height:1em;fill:currentColor;position:relative;display:inline-block;top:.1em;"&gt;  [ comment ]  &lt;path d="M176 80c-52.94 0-96 43.06-96 96 0 8.84 7.16 16 16 16s16-7.16 16-16c0-35.3 28.72-64 64-64 8.84 0 16-7.16 16-16s-7.16-16-16-16zM96.06 459.17c0 3.15.93 6.22 2.68 8.84l24.51 36.84c2.97 4.46 7.97 7.14 13.32 7.14h78.85c5.36 0 10.36-2.68 13.32-7.14l24.51-36.84c1.74-2.62 2.67-5.7 2.68-8.84l.05-43.18H96.02l.04 43.18zM176 0C73.72 0 0 82.97 0 176c0 44.37 16.45 84.85 43.56 115.78 16.64 18.99 42.74 58.8 52.42 92.16v.06h48v-.12c-.01-4.77-.72-9.51-2.15-14.07-5.59-17.81-22.82-64.77-62.17-109.67-20.54-23.43-31.52-53.15-31.61-84.14-.2-73.64 59.67-128 127.95-128 70.58 0 128 57.42 128 128 0 30.97-11.24 60.85-31.65 84.14-39.11 44.61-56.42 91.47-62.1 109.46a47.507 47.507 0 0 0-2.22 14.3v.1h48v-.05c9.68-33.37 35.78-73.18 52.42-92.16C335.55 260.85 352 220.37 352 176 352 78.8 273.2 0 176 0z"&gt;&lt;/path&gt;&lt;/svg&gt; 박근혜 전 대통령의 대선 출마 선언문 출처: [bit.ly/easytext_31](https://bit.ly/easytext_31)
 
-&lt;!-- #### 집단별 단어 빈도 구하기 --&gt;
 
-&lt;!-- ##### 1. 기본적인 전처리 및 토큰화 --&gt;
+---
 
-&lt;!-- - 한글 이외의 문자, 연속된 공백 제거 --&gt;
-&lt;!-- - `bind_speeches`는 tibble 구조이므로 `mutate()` 활용 --&gt;
 
-&lt;!-- &lt;br-back-20&gt;   --&gt;
-&lt;!-- .scroll-box-20[ --&gt;
+#### 집단별 단어 빈도 구하기
 
-&lt;!-- ```{r R.options=list(tibble.width = 50)} --&gt;
-&lt;!-- # 기본적인 전처리 --&gt;
-&lt;!-- library(stringr) --&gt;
-&lt;!-- speeches &lt;- bind_speeches %&gt;% --&gt;
-&lt;!--   mutate(value = str_replace_all(value, "[^가-힣]", " "), --&gt;
-&lt;!--          value = str_squish(value)) --&gt;
+##### 1. 기본적인 전처리 및 토큰화
 
-&lt;!-- speeches --&gt;
-&lt;!-- ``` --&gt;
-&lt;!-- ] --&gt;
+- 한글 이외의 문자, 연속된 공백 제거
+- `bind_speeches`는 tibble 구조이므로 `mutate()` 활용
 
-&lt;!-- --- --&gt;
+&lt;br-back-20&gt;
+.scroll-box-20[
 
-&lt;!-- - 형태소 분석기를 이용해 명사 기준 토큰화 --&gt;
 
+```r
+# 기본적인 전처리
+library(stringr)
+speeches &lt;- bind_speeches %&gt;%
+  mutate(value = str_replace_all(value, "[^가-힣]", " "),
+         value = str_squish(value))
 
-&lt;!-- ```{r eval=F} --&gt;
-&lt;!-- # 토큰화 --&gt;
-&lt;!-- library(tidytext) --&gt;
-&lt;!-- library(KoNLP) --&gt;
+speeches
+```
 
-&lt;!-- speeches &lt;- speeches %&gt;% --&gt;
-&lt;!--   unnest_tokens(input = value, --&gt;
-&lt;!--                 output = word, --&gt;
-&lt;!--                 token = extractNoun) --&gt;
+```
+## # A tibble: 213 x 2
+##    president value                                
+##    &lt;chr&gt;     &lt;chr&gt;                                
+##  1 moon      "정권교체 하겠습니다"                
+##  2 moon      "정치교체 하겠습니다"                
+##  3 moon      "시대교체 하겠습니다"                
+##  4 moon      ""                                   
+##  5 moon      "불비불명 이라는 고사가 있습니다 남쪽 언덕 나뭇가지에 앉아 년 ~
+##  6 moon      ""                                   
+##  7 moon      "그 동안 정치와 거리를 둬 왔습니다 그러나 암울한 시대가 저를 ~
+##  8 moon      ""                                   
+##  9 moon      ""                                   
+## 10 moon      "우리나라 대통령 이 되겠습니다"      
+## # ... with 203 more rows
+```
+]
 
-&lt;!-- speeches --&gt;
-&lt;!-- ``` --&gt;
+---
 
-&lt;!-- &lt;br-back-20&gt;   --&gt;
+- 형태소 분석기를 이용해 명사 기준 토큰화
 
-&lt;!-- .scroll-box-14[ --&gt;
 
-&lt;!-- ```{r echo=F} --&gt;
-&lt;!-- # 토큰화 --&gt;
-&lt;!-- library(tidytext) --&gt;
-&lt;!-- library(KoNLP) --&gt;
 
-&lt;!-- speeches &lt;- speeches %&gt;% --&gt;
-&lt;!--   unnest_tokens(input = value, --&gt;
-&lt;!--                 output = word, --&gt;
-&lt;!--                 token = extractNoun) --&gt;
+```r
+# 토큰화
+library(tidytext)
+library(KoNLP)
 
-&lt;!-- speeches --&gt;
-&lt;!-- ``` --&gt;
+speeches &lt;- speeches %&gt;%
+  unnest_tokens(input = value,
+                output = word,
+                token = extractNoun)
 
-&lt;!-- ] --&gt;
+speeches
+```
 
-&lt;!-- --- --&gt;
+&lt;br-back-20&gt;
 
+.scroll-box-14[
 
 
-&lt;!-- #### 하위 집단별 단어 빈도 구하기 - `count()` --&gt;
+```
+## # A tibble: 2,997 x 2
+##    president word      
+##    &lt;chr&gt;     &lt;chr&gt;     
+##  1 moon      "정권교체"
+##  2 moon      "하겠습니"
+##  3 moon      "정치"    
+##  4 moon      "교체"    
+##  5 moon      "하겠습니"
+##  6 moon      "시대"    
+##  7 moon      "교체"    
+##  8 moon      "하겠습니"
+##  9 moon      ""        
+## 10 moon      "불비불명"
+## # ... with 2,987 more rows
+```
 
-&lt;!-- - `"moon"`과 `"park"`의 단어 빈도 각각 구하기 --&gt;
+]
 
-&lt;!-- ##### 샘플 텍스트로 작동 원리 알아보기 --&gt;
+---
 
-&lt;!-- - `count()`에 집단을 구성하는 두 변수를 순서대로 입력 --&gt;
 
-&lt;!-- ```{r} --&gt;
-&lt;!-- df &lt;- tibble(class = c("a", "a", "a", "b", "b", "b"), --&gt;
-&lt;!--              sex = c("female", "male", "female", "male", "male", "female")) --&gt;
-&lt;!-- ``` --&gt;
 
-&lt;!-- .pull-left[ --&gt;
+#### 하위 집단별 단어 빈도 구하기 - `count()`
 
-&lt;!-- ```{r} --&gt;
-&lt;!-- df --&gt;
-&lt;!-- ``` --&gt;
-&lt;!-- ] --&gt;
+- `"moon"`과 `"park"`의 단어 빈도 각각 구하기
 
+##### 샘플 텍스트로 작동 원리 알아보기
 
-&lt;!-- .pull-right[ --&gt;
+- `count()`에 집단을 구성하는 두 변수를 순서대로 입력
 
-&lt;!-- ```{r} --&gt;
-&lt;!-- df %&gt;% count(class, sex) --&gt;
-&lt;!-- ``` --&gt;
-&lt;!-- ] --&gt;
 
-&lt;!-- --- --&gt;
+```r
+df &lt;- tibble(class = c("a", "a", "a", "b", "b", "b"),
+             sex = c("female", "male", "female", "male", "male", "female"))
+```
 
+.pull-left[
 
-&lt;!-- ##### 두 연설문의 단어 빈도 구하기 --&gt;
 
-&lt;!-- ```{r} --&gt;
-&lt;!-- frequency &lt;- speeches %&gt;% --&gt;
-&lt;!--   count(president, word) %&gt;%   # 연설문 및 단어별 빈도 --&gt;
-&lt;!--   filter(str_count(word) &gt; 1)  # 두 글자 이상 추출 --&gt;
+```r
+df
+```
 
-&lt;!-- head(frequency) --&gt;
-&lt;!-- ``` --&gt;
+```
+## # A tibble: 6 x 2
+##   class sex   
+##   &lt;chr&gt; &lt;chr&gt; 
+## 1 a     female
+## 2 a     male  
+## 3 a     female
+## 4 b     male  
+## 5 b     male  
+## 6 b     female
+```
+]
 
-&lt;!-- &lt;svg viewBox="0 0 352 512" xmlns="http://www.w3.org/2000/svg" style="height:1em;fill:currentColor;position:relative;display:inline-block;top:.1em;"&gt;  [ comment ]  &lt;path d="M176 80c-52.94 0-96 43.06-96 96 0 8.84 7.16 16 16 16s16-7.16 16-16c0-35.3 28.72-64 64-64 8.84 0 16-7.16 16-16s-7.16-16-16-16zM96.06 459.17c0 3.15.93 6.22 2.68 8.84l24.51 36.84c2.97 4.46 7.97 7.14 13.32 7.14h78.85c5.36 0 10.36-2.68 13.32-7.14l24.51-36.84c1.74-2.62 2.67-5.7 2.68-8.84l.05-43.18H96.02l.04 43.18zM176 0C73.72 0 0 82.97 0 176c0 44.37 16.45 84.85 43.56 115.78 16.64 18.99 42.74 58.8 52.42 92.16v.06h48v-.12c-.01-4.77-.72-9.51-2.15-14.07-5.59-17.81-22.82-64.77-62.17-109.67-20.54-23.43-31.52-53.15-31.61-84.14-.2-73.64 59.67-128 127.95-128 70.58 0 128 57.42 128 128 0 30.97-11.24 60.85-31.65 84.14-39.11 44.61-56.42 91.47-62.1 109.46a47.507 47.507 0 0 0-2.22 14.3v.1h48v-.05c9.68-33.37 35.78-73.18 52.42-92.16C335.55 260.85 352 220.37 352 176 352 78.8 273.2 0 176 0z"&gt;&lt;/path&gt;&lt;/svg&gt;  `count()`는 입력한 변수의 알파벳, 가나다순으로 행을 정렬함 --&gt;
 
-&lt;!-- --- --&gt;
+.pull-right[
 
 
-&lt;!-- #### 자주 사용된 단어 추출하기 --&gt;
+```r
+df %&gt;% count(class, sex)
+```
 
-&lt;!-- - `dplyr::slice_max()`: 값이 큰 상위 n개의 행을 추출해 내림차순 정렬 --&gt;
+```
+## # A tibble: 4 x 3
+##   class sex        n
+##   &lt;chr&gt; &lt;chr&gt;  &lt;int&gt;
+## 1 a     female     2
+## 2 a     male       1
+## 3 b     female     1
+## 4 b     male       2
+```
+]
 
-&lt;!-- ##### 샘플 데이터로 작동 원리 알아보기 --&gt;
+---
 
 
-&lt;!-- ```{r} --&gt;
-&lt;!-- df &lt;- tibble(x = c(1:100)) --&gt;
-&lt;!-- ``` --&gt;
+##### 두 연설문의 단어 빈도 구하기
 
-&lt;!-- &lt;br-back-20&gt; --&gt;
 
-&lt;!-- .pull-left[ --&gt;
+```r
+frequency &lt;- speeches %&gt;%
+  count(president, word) %&gt;%   # 연설문 및 단어별 빈도
+  filter(str_count(word) &gt; 1)  # 두 글자 이상 추출
 
-&lt;!-- ```{r} --&gt;
-&lt;!-- df --&gt;
-&lt;!-- ``` --&gt;
-&lt;!-- ] --&gt;
+head(frequency)
+```
 
-&lt;!-- .pull-right[ --&gt;
-&lt;!-- ```{r} --&gt;
-&lt;!-- df %&gt;% slice_max(x, n = 3) --&gt;
-&lt;!-- ``` --&gt;
+```
+## # A tibble: 6 x 3
+##   president word         n
+##   &lt;chr&gt;     &lt;chr&gt;    &lt;int&gt;
+## 1 moon      가동         1
+## 2 moon      가사         1
+## 3 moon      가슴         2
+## 4 moon      가족         1
+## 5 moon      가족구조     1
+## 6 moon      가지         4
+```
 
+&lt;svg viewBox="0 0 352 512" xmlns="http://www.w3.org/2000/svg" style="height:1em;fill:currentColor;position:relative;display:inline-block;top:.1em;"&gt;  [ comment ]  &lt;path d="M176 80c-52.94 0-96 43.06-96 96 0 8.84 7.16 16 16 16s16-7.16 16-16c0-35.3 28.72-64 64-64 8.84 0 16-7.16 16-16s-7.16-16-16-16zM96.06 459.17c0 3.15.93 6.22 2.68 8.84l24.51 36.84c2.97 4.46 7.97 7.14 13.32 7.14h78.85c5.36 0 10.36-2.68 13.32-7.14l24.51-36.84c1.74-2.62 2.67-5.7 2.68-8.84l.05-43.18H96.02l.04 43.18zM176 0C73.72 0 0 82.97 0 176c0 44.37 16.45 84.85 43.56 115.78 16.64 18.99 42.74 58.8 52.42 92.16v.06h48v-.12c-.01-4.77-.72-9.51-2.15-14.07-5.59-17.81-22.82-64.77-62.17-109.67-20.54-23.43-31.52-53.15-31.61-84.14-.2-73.64 59.67-128 127.95-128 70.58 0 128 57.42 128 128 0 30.97-11.24 60.85-31.65 84.14-39.11 44.61-56.42 91.47-62.1 109.46a47.507 47.507 0 0 0-2.22 14.3v.1h48v-.05c9.68-33.37 35.78-73.18 52.42-92.16C335.55 260.85 352 220.37 352 176 352 78.8 273.2 0 176 0z"&gt;&lt;/path&gt;&lt;/svg&gt;  `count()`는 입력한 변수의 알파벳, 가나다순으로 행을 정렬함
 
+---
 
-&lt;!-- ] --&gt;
 
-&lt;!-- --- --&gt;
+#### 자주 사용된 단어 추출하기
 
-&lt;!-- .pull-left[ --&gt;
+- `dplyr::slice_max()`: 값이 큰 상위 n개의 행을 추출해 내림차순 정렬
 
-&lt;!-- &lt;svg viewBox="0 0 352 512" xmlns="http://www.w3.org/2000/svg" style="height:1em;fill:currentColor;position:relative;display:inline-block;top:.1em;"&gt;  [ comment ]  &lt;path d="M176 80c-52.94 0-96 43.06-96 96 0 8.84 7.16 16 16 16s16-7.16 16-16c0-35.3 28.72-64 64-64 8.84 0 16-7.16 16-16s-7.16-16-16-16zM96.06 459.17c0 3.15.93 6.22 2.68 8.84l24.51 36.84c2.97 4.46 7.97 7.14 13.32 7.14h78.85c5.36 0 10.36-2.68 13.32-7.14l24.51-36.84c1.74-2.62 2.67-5.7 2.68-8.84l.05-43.18H96.02l.04 43.18zM176 0C73.72 0 0 82.97 0 176c0 44.37 16.45 84.85 43.56 115.78 16.64 18.99 42.74 58.8 52.42 92.16v.06h48v-.12c-.01-4.77-.72-9.51-2.15-14.07-5.59-17.81-22.82-64.77-62.17-109.67-20.54-23.43-31.52-53.15-31.61-84.14-.2-73.64 59.67-128 127.95-128 70.58 0 128 57.42 128 128 0 30.97-11.24 60.85-31.65 84.14-39.11 44.61-56.42 91.47-62.1 109.46a47.507 47.507 0 0 0-2.22 14.3v.1h48v-.05c9.68-33.37 35.78-73.18 52.42-92.16C335.55 260.85 352 220.37 352 176 352 78.8 273.2 0 176 0z"&gt;&lt;/path&gt;&lt;/svg&gt;  `slice_min()`: 값이 작은 하위 n개 추출 --&gt;
-&lt;!-- ```{r} --&gt;
-&lt;!-- df %&gt;% slice_min(x, n = 3) --&gt;
-&lt;!-- ``` --&gt;
-&lt;!-- ] --&gt;
+##### 샘플 데이터로 작동 원리 알아보기
 
 
-&lt;!-- --- --&gt;
 
-&lt;!-- #### 연설문에 가장 많이 사용된 단어 추출하기 --&gt;
+```r
+df &lt;- tibble(x = c(1:100))
+```
 
-&lt;!-- - `president`별 고빈도 단어 상위 10개 추출 --&gt;
+&lt;br-back-20&gt;
 
-&lt;!-- &lt;br-back-20&gt; --&gt;
+.pull-left[
 
-&lt;!-- .scroll-box-24[ --&gt;
 
-&lt;!-- ```{r} --&gt;
-&lt;!-- top10 &lt;- frequency %&gt;% --&gt;
-&lt;!--   group_by(president) %&gt;%  # president별로 분리 --&gt;
-&lt;!--   slice_max(n, n = 10)     # 상위 10개 추출 --&gt;
+```r
+df
+```
 
-&lt;!-- top10 --&gt;
-&lt;!-- ``` --&gt;
+```
+## # A tibble: 100 x 1
+##        x
+##    &lt;int&gt;
+##  1     1
+##  2     2
+##  3     3
+##  4     4
+##  5     5
+##  6     6
+##  7     7
+##  8     8
+##  9     9
+## 10    10
+## # ... with 90 more rows
+```
+]
 
-&lt;!-- ] --&gt;
-&lt;!-- --- --&gt;
+.pull-right[
 
-&lt;!-- #### 단어 빈도 동점 처리 --&gt;
+```r
+df %&gt;% slice_max(x, n = 3)
+```
 
-&lt;!-- - 두 연설문에서 단어 10개씩 추출했는데 20행이 아니라 22행 --&gt;
-&lt;!-- - 단어 빈도 동점인 행이 전부 추출되었기 때문 --&gt;
+```
+## # A tibble: 3 x 1
+##       x
+##   &lt;int&gt;
+## 1   100
+## 2    99
+## 3    98
+```
 
-&lt;!-- &lt;br-back-20&gt;   --&gt;
-&lt;!-- .scroll-box-22[ --&gt;
 
-&lt;!-- ```{r highlight.output = 1} --&gt;
-&lt;!-- top10 --&gt;
-&lt;!-- ``` --&gt;
-&lt;!-- ] --&gt;
 
-&lt;!-- --- --&gt;
+]
 
-&lt;!-- - 박근혜 전 대통령의 연설문 단어 12개 --&gt;
-&lt;!--   - `"교육"`, `"사람"`, `"사회"`, `"일자리"` 빈도 동점, 모두 추출되면서 행 늘어남 --&gt;
+---
 
+.pull-left[
 
-&lt;!-- ```{r, highlight.output = c(13:16)} --&gt;
-&lt;!-- top10 %&gt;% --&gt;
-&lt;!--   filter(president == "park") --&gt;
-&lt;!-- ``` --&gt;
+&lt;svg viewBox="0 0 352 512" xmlns="http://www.w3.org/2000/svg" style="height:1em;fill:currentColor;position:relative;display:inline-block;top:.1em;"&gt;  [ comment ]  &lt;path d="M176 80c-52.94 0-96 43.06-96 96 0 8.84 7.16 16 16 16s16-7.16 16-16c0-35.3 28.72-64 64-64 8.84 0 16-7.16 16-16s-7.16-16-16-16zM96.06 459.17c0 3.15.93 6.22 2.68 8.84l24.51 36.84c2.97 4.46 7.97 7.14 13.32 7.14h78.85c5.36 0 10.36-2.68 13.32-7.14l24.51-36.84c1.74-2.62 2.67-5.7 2.68-8.84l.05-43.18H96.02l.04 43.18zM176 0C73.72 0 0 82.97 0 176c0 44.37 16.45 84.85 43.56 115.78 16.64 18.99 42.74 58.8 52.42 92.16v.06h48v-.12c-.01-4.77-.72-9.51-2.15-14.07-5.59-17.81-22.82-64.77-62.17-109.67-20.54-23.43-31.52-53.15-31.61-84.14-.2-73.64 59.67-128 127.95-128 70.58 0 128 57.42 128 128 0 30.97-11.24 60.85-31.65 84.14-39.11 44.61-56.42 91.47-62.1 109.46a47.507 47.507 0 0 0-2.22 14.3v.1h48v-.05c9.68-33.37 35.78-73.18 52.42-92.16C335.55 260.85 352 220.37 352 176 352 78.8 273.2 0 176 0z"&gt;&lt;/path&gt;&lt;/svg&gt;  `slice_min()`: 값이 작은 하위 n개 추출
 
+```r
+df %&gt;% slice_min(x, n = 3)
+```
 
-&lt;!-- --- --&gt;
+```
+## # A tibble: 3 x 1
+##       x
+##   &lt;int&gt;
+## 1     1
+## 2     2
+## 3     3
+```
+]
 
 
-&lt;!-- #### 빈도 동점 단어 제외하고 추출하기  --&gt;
-&lt;!-- - `slice_max(with_ties = F)`: 원본 데이터의 정렬 순서에 따라 행 추출 --&gt;
+---
 
-&lt;!-- ##### 샘플 데이터로 작동 원리 알아보기 --&gt;
+#### 연설문에 가장 많이 사용된 단어 추출하기
 
-&lt;!-- ```{r} --&gt;
-&lt;!-- df &lt;- tibble(x = c("A", "B", "C", "D"), y = c(4, 3, 2, 2)) --&gt;
-&lt;!-- ``` --&gt;
+- `president`별 고빈도 단어 상위 10개 추출
 
-&lt;!-- &lt;br-back-20&gt; --&gt;
+&lt;br-back-20&gt;
 
-&lt;!-- .pull-left[ --&gt;
+.scroll-box-24[
 
-&lt;!-- ```{r} --&gt;
-&lt;!-- df %&gt;% --&gt;
-&lt;!--   slice_max(y, n = 3) --&gt;
-&lt;!-- ``` --&gt;
-&lt;!-- ] --&gt;
 
-&lt;!-- .pull-right[ --&gt;
-&lt;!-- ```{r} --&gt;
-&lt;!-- df %&gt;% --&gt;
-&lt;!--   slice_max(y, n = 3, with_ties = F) --&gt;
-&lt;!-- ``` --&gt;
-&lt;!-- ] --&gt;
-&lt;!-- --- --&gt;
+```r
+top10 &lt;- frequency %&gt;%
+  group_by(president) %&gt;%  # president별로 분리
+  slice_max(n, n = 10)     # 상위 10개 추출
 
-&lt;!-- #### 연설문에 적용하기 --&gt;
+top10
+```
 
-&lt;!-- ```{r eval=F} --&gt;
-&lt;!-- top10 &lt;- frequency %&gt;% --&gt;
-&lt;!--   group_by(president) %&gt;% --&gt;
-&lt;!--   slice_max(n, n = 10, with_ties = F) --&gt;
+```
+## # A tibble: 22 x 3
+## # Groups:   president [2]
+##    president word       n
+##    &lt;chr&gt;     &lt;chr&gt;  &lt;int&gt;
+##  1 moon      국민      21
+##  2 moon      일자리    21
+##  3 moon      나라      19
+##  4 moon      우리      17
+##  5 moon      경제      15
+##  6 moon      사회      14
+##  7 moon      성장      13
+##  8 moon      대통령    12
+##  9 moon      정치      12
+## 10 moon      하게      12
+## 11 park      국민      72
+## 12 park      행복      23
+## 13 park      여러분    20
+## 14 park      정부      17
+## 15 park      경제      15
+## 16 park      신뢰      11
+## 17 park      국가      10
+## 18 park      우리      10
+## 19 park      교육       9
+## 20 park      사람       9
+## 21 park      사회       9
+## 22 park      일자리     9
+```
 
-&lt;!-- top10 --&gt;
+]
+---
 
-&lt;!-- ``` --&gt;
+#### 단어 빈도 동점 처리
 
-&lt;!-- &lt;br-back-20&gt; --&gt;
-&lt;!-- .scroll-box-18[ --&gt;
-&lt;!-- ```{r, echo=FALSE, highlight.output=1} --&gt;
-&lt;!-- top10 &lt;- frequency %&gt;% --&gt;
-&lt;!--   group_by(president) %&gt;% --&gt;
-&lt;!--   slice_max(n, n = 10, with_ties = F) --&gt;
+- 두 연설문에서 단어 10개씩 추출했는데 20행이 아니라 22행
+- 단어 빈도 동점인 행이 전부 추출되었기 때문
 
-&lt;!-- top10 --&gt;
+&lt;br-back-20&gt;
+.scroll-box-22[
 
-&lt;!-- ``` --&gt;
-&lt;!-- ] --&gt;
 
-&lt;!-- --- --&gt;
+```r
+top10
+```
 
-&lt;!-- #### 막대 그래프 만들기 --&gt;
+```
+*## # A tibble: 22 x 3
+## # Groups:   president [2]
+##    president word       n
+##    &lt;chr&gt;     &lt;chr&gt;  &lt;int&gt;
+##  1 moon      국민      21
+##  2 moon      일자리    21
+##  3 moon      나라      19
+##  4 moon      우리      17
+##  5 moon      경제      15
+##  6 moon      사회      14
+##  7 moon      성장      13
+##  8 moon      대통령    12
+##  9 moon      정치      12
+## 10 moon      하게      12
+## 11 park      국민      72
+## 12 park      행복      23
+## 13 park      여러분    20
+## 14 park      정부      17
+## 15 park      경제      15
+## 16 park      신뢰      11
+## 17 park      국가      10
+## 18 park      우리      10
+## 19 park      교육       9
+## 20 park      사람       9
+## 21 park      사회       9
+## 22 park      일자리     9
+```
+]
 
-&lt;!-- ##### 1. 변수의 항목별로 그래프만들기 - `facet_wrap()` --&gt;
-&lt;!-- - `~` 뒤에 그래프를 나누는 기준 변수 입력 --&gt;
+---
 
-&lt;!-- ```{r eval=F} --&gt;
-&lt;!-- library(ggplot2) --&gt;
-&lt;!-- ggplot(top10, aes(x = reorder(word, n), --&gt;
-&lt;!--                   y = n, --&gt;
-&lt;!--                   fill = president)) + --&gt;
-&lt;!--   geom_col() + --&gt;
-&lt;!--   coord_flip() + --&gt;
-&lt;!--   facet_wrap(~ president) --&gt;
-&lt;!-- ``` --&gt;
+- 박근혜 전 대통령의 연설문 단어 12개
+  - `"교육"`, `"사람"`, `"사회"`, `"일자리"` 빈도 동점, 모두 추출되면서 행 늘어남
 
-&lt;!-- --- --&gt;
 
-&lt;!-- ```{r echo=F} --&gt;
-&lt;!-- library(ggplot2) --&gt;
-&lt;!-- ggplot(top10, aes(x = reorder(word, n), --&gt;
-&lt;!--                   y = n, --&gt;
-&lt;!--                   fill = president)) + --&gt;
-&lt;!--   geom_col() + --&gt;
-&lt;!--   coord_flip() + --&gt;
-&lt;!--   facet_wrap(~ president) --&gt;
-&lt;!-- ``` --&gt;
 
+```r
+top10 %&gt;%
+  filter(president == "park")
+```
 
-&lt;!-- --- --&gt;
+```
+## # A tibble: 12 x 3
+## # Groups:   president [1]
+##    president word       n
+##    &lt;chr&gt;     &lt;chr&gt;  &lt;int&gt;
+##  1 park      국민      72
+##  2 park      행복      23
+##  3 park      여러분    20
+##  4 park      정부      17
+##  5 park      경제      15
+##  6 park      신뢰      11
+##  7 park      국가      10
+##  8 park      우리      10
+*##  9 park      교육       9
+*## 10 park      사람       9
+*## 11 park      사회       9
+*## 12 park      일자리     9
+```
+
+
+---
+
+
+#### 빈도 동점 단어 제외하고 추출하기
+- `slice_max(with_ties = F)`: 원본 데이터의 정렬 순서에 따라 행 추출
+
+##### 샘플 데이터로 작동 원리 알아보기
+
+
+```r
+df &lt;- tibble(x = c("A", "B", "C", "D"), y = c(4, 3, 2, 2))
+```
+
+&lt;br-back-20&gt;
+
+.pull-left[
+
+
+```r
+df %&gt;%
+  slice_max(y, n = 3)
+```
 
+```
+## # A tibble: 4 x 2
+##   x         y
+##   &lt;chr&gt; &lt;dbl&gt;
+## 1 A         4
+## 2 B         3
+## 3 C         2
+## 4 D         2
+```
+]
 
-&lt;!-- ##### 2. 그래프별 y축 설정하기 --&gt;
+.pull-right[
 
-&lt;!-- - 축을 구성하는 단어가 한 범주에만 있으면 축은 있지만 막대는 없는 항목 생김 --&gt;
-&lt;!--   - ex) `"행복"`, `"나라"` --&gt;
+```r
+df %&gt;%
+  slice_max(y, n = 3, with_ties = F)
+```
 
+```
+## # A tibble: 3 x 2
+##   x         y
+##   &lt;chr&gt; &lt;dbl&gt;
+## 1 A         4
+## 2 B         3
+## 3 C         2
+```
+]
+---
 
-&lt;!-- ```{r echo=F, out.width="90%"} --&gt;
-&lt;!-- library(ggplot2) --&gt;
-&lt;!-- ggplot(top10, aes(x = reorder(word, n), --&gt;
-&lt;!--                   y = n, --&gt;
-&lt;!--                   fill = president)) + --&gt;
-&lt;!--   geom_col() + --&gt;
-&lt;!--   coord_flip() + --&gt;
-&lt;!--   facet_wrap(~ president) --&gt;
-&lt;!-- ``` --&gt;
+#### 연설문에 적용하기
 
 
-&lt;!-- --- --&gt;
+```r
+top10 &lt;- frequency %&gt;%
+  group_by(president) %&gt;%
+  slice_max(n, n = 10, with_ties = F)
 
-&lt;!-- ##### 2. 그래프별 y축 설정하기 --&gt;
+top10
+```
 
-&lt;!-- - 축을 구성하는 단어가 한 범주에만 있으면 축은 있지만 막대는 없는 항목 생김 --&gt;
-&lt;!--   - ex) `"행복"`, `"나라"` --&gt;
+&lt;br-back-20&gt;
+.scroll-box-18[
 
+```
+*## # A tibble: 20 x 3
+## # Groups:   president [2]
+##    president word       n
+##    &lt;chr&gt;     &lt;chr&gt;  &lt;int&gt;
+##  1 moon      국민      21
+##  2 moon      일자리    21
+##  3 moon      나라      19
+##  4 moon      우리      17
+##  5 moon      경제      15
+##  6 moon      사회      14
+##  7 moon      성장      13
+##  8 moon      대통령    12
+##  9 moon      정치      12
+## 10 moon      하게      12
+## 11 park      국민      72
+## 12 park      행복      23
+## 13 park      여러분    20
+## 14 park      정부      17
+## 15 park      경제      15
+## 16 park      신뢰      11
+## 17 park      국가      10
+## 18 park      우리      10
+## 19 park      교육       9
+## 20 park      사람       9
+```
+]
 
-&lt;!-- - `scales`: 그래프의 축 통일 또는 각각 생성 결정 --&gt;
-&lt;!--   - `"fixed"`: 축 통일(기본값) --&gt;
-&lt;!--   - `"free_y"`: 범주별로 y축 만듦 --&gt;
+---
 
-&lt;!-- ```{r eval=F} --&gt;
-&lt;!-- ggplot(top10, aes(x = reorder(word, n), --&gt;
-&lt;!--                   y = n, --&gt;
-&lt;!--                   fill = president)) + --&gt;
-&lt;!--   geom_col() + --&gt;
-&lt;!--   coord_flip() + --&gt;
-&lt;!--   facet_wrap(~ president,         # president별 그래프 생성 --&gt;
-&lt;!--               scales = "free_y")  # y축 통일하지 않음 #&lt;&lt; --&gt;
-&lt;!-- ``` --&gt;
+#### 막대 그래프 만들기
 
-&lt;!-- --- --&gt;
+##### 1. 변수의 항목별로 그래프만들기 - `facet_wrap()`
+- `~` 뒤에 그래프를 나누는 기준 변수 입력
 
-&lt;!-- ```{r echo=F} --&gt;
-&lt;!-- ggplot(top10, aes(x = reorder(word, n), --&gt;
-&lt;!--                   y = n, --&gt;
-&lt;!--                   fill = president)) + --&gt;
-&lt;!--   geom_col() + --&gt;
-&lt;!--   coord_flip() + --&gt;
-&lt;!--   facet_wrap(~ president,         # president별 그래프 생성 --&gt;
-&lt;!--               scales = "free_y")  # y축 통일하지 않음 --&gt;
-&lt;!-- ``` --&gt;
 
+```r
+library(ggplot2)
+ggplot(top10, aes(x = reorder(word, n),
+                  y = n,
+                  fill = president)) +
+  geom_col() +
+  coord_flip() +
+  facet_wrap(~ president)
+```
 
-&lt;!-- --- --&gt;
+---
 
+&lt;img src="03-comparing_files/figure-html/unnamed-chunk-30-1.png" width="100%" /&gt;
 
-&lt;!-- #### 3. 특정 단어 제외하고 막대 그래프 만들기 --&gt;
 
-&lt;!-- - 박근혜 전 대통령 `"국민"` 빈도 너무 높아 다른 단어들 차이 드러나지 않음 --&gt;
+---
 
-&lt;!-- ```{r echo=F, out.width="80%"} --&gt;
-&lt;!-- ggplot(top10, aes(x = reorder(word, n), --&gt;
-&lt;!--                   y = n, --&gt;
-&lt;!--                   fill = president)) + --&gt;
-&lt;!--   geom_col() + --&gt;
-&lt;!--   coord_flip() + --&gt;
-&lt;!--   facet_wrap(~ president,         # president별 그래프 생성 --&gt;
-&lt;!--               scales = "free_y")  # y축 통일하지 않음 --&gt;
-&lt;!-- ``` --&gt;
 
-&lt;!-- --- --&gt;
+##### 2. 그래프별 y축 설정하기
 
+- 축을 구성하는 단어가 한 범주에만 있으면 축은 있지만 막대는 없는 항목 생김
+  - ex) `"행복"`, `"나라"`
 
-&lt;!-- #### 3. 특정 단어 제외하고 막대 그래프 만들기 --&gt;
 
-&lt;!-- - 박근혜 전 대통령 `"국민"` 빈도 너무 높아 다른 단어들 차이 드러나지 않음 --&gt;
-&lt;!-- - 전반적인 단어 빈도가 잘 드러나도록 제거 --&gt;
+&lt;img src="03-comparing_files/figure-html/unnamed-chunk-31-1.png" width="90%" /&gt;
 
-&lt;!-- .scroll-box-20[ --&gt;
 
-&lt;!-- ```{r} --&gt;
-&lt;!-- top10 &lt;- frequency %&gt;% --&gt;
-&lt;!--   filter(word != "국민") %&gt;% --&gt;
-&lt;!--   group_by(president) %&gt;% --&gt;
-&lt;!--   slice_max(n, n = 10, with_ties = F) --&gt;
+---
 
-&lt;!-- top10 --&gt;
-&lt;!-- ``` --&gt;
-&lt;!-- ] --&gt;
+##### 2. 그래프별 y축 설정하기
 
-&lt;!-- --- --&gt;
+- 축을 구성하는 단어가 한 범주에만 있으면 축은 있지만 막대는 없는 항목 생김
+  - ex) `"행복"`, `"나라"`
 
-&lt;!-- ```{r eval=F} --&gt;
-&lt;!-- ggplot(top10, aes(x = reorder(word, n), --&gt;
-&lt;!--                   y = n, --&gt;
-&lt;!--                   fill = president)) + --&gt;
-&lt;!--   geom_col() + --&gt;
-&lt;!--   coord_flip() + --&gt;
-&lt;!--   facet_wrap(~ president, scales = "free_y") --&gt;
-&lt;!-- ``` --&gt;
 
-&lt;!-- --- --&gt;
+- `scales`: 그래프의 축 통일 또는 각각 생성 결정
+  - `"fixed"`: 축 통일(기본값)
+  - `"free_y"`: 범주별로 y축 만듦
 
-&lt;!-- ```{r echo=F} --&gt;
-&lt;!-- ggplot(top10, aes(x = reorder(word, n), --&gt;
-&lt;!--                   y = n, --&gt;
-&lt;!--                   fill = president)) + --&gt;
-&lt;!--   geom_col() + --&gt;
-&lt;!--   coord_flip() + --&gt;
-&lt;!--   facet_wrap(~ president, scales = "free_y") --&gt;
-&lt;!-- ``` --&gt;
 
+```r
+ggplot(top10, aes(x = reorder(word, n),
+                  y = n,
+                  fill = president)) +
+  geom_col() +
+  coord_flip() +
+  facet_wrap(~ president,         # president별 그래프 생성
+*             scales = "free_y")  # y축 통일하지 않음
+```
 
-&lt;!-- --- --&gt;
+---
 
+&lt;img src="03-comparing_files/figure-html/unnamed-chunk-33-1.png" width="100%" /&gt;
 
-&lt;!-- #### 4. 축 정렬하기 --&gt;
 
-&lt;!-- - x축을 지정할 때 `reorder()`를 사용했는데도 막대가 빈도 기준으로 완벽하게 정렬되지 않음 --&gt;
-&lt;!-- - 전체 빈도 기준으로 각 범주의 x축 순서를 정했기 때문 --&gt;
+---
 
-&lt;!-- ```{r echo=F, out.width="80%"} --&gt;
-&lt;!-- ggplot(top10, aes(x = reorder(word, n), --&gt;
-&lt;!--                   y = n, --&gt;
-&lt;!--                   fill = president)) + --&gt;
-&lt;!--   geom_col() + --&gt;
-&lt;!--   coord_flip() + --&gt;
-&lt;!--   facet_wrap(~ president, scales = "free_y") --&gt;
-&lt;!-- ``` --&gt;
 
-&lt;!-- --- --&gt;
+#### 3. 특정 단어 제외하고 막대 그래프 만들기
 
-&lt;!-- #### 4. 축 정렬하기 --&gt;
+- 박근혜 전 대통령 `"국민"` 빈도 너무 높아 다른 단어들 차이 드러나지 않음
 
-&lt;!-- - x축을 지정할 때 `reorder()`를 사용했는데도 막대가 빈도 기준으로 완벽하게 정렬되지 않음 --&gt;
-&lt;!-- - 전체 빈도 기준으로 각 범주의 x축 순서를 정했기 때문 --&gt;
+&lt;img src="03-comparing_files/figure-html/unnamed-chunk-34-1.png" width="80%" /&gt;
 
-&lt;!-- ##### 그래프별로 축 정렬하기 --&gt;
+---
 
-&lt;!-- - `tidytext::reorder_within()`: 변수의 항목별로 축 순서 따로 구하기 --&gt;
-&lt;!--   - `x` : 축 --&gt;
-&lt;!--   - `by` :정렬 기준 --&gt;
-&lt;!--   - `within` : 그래프를 나누는 기준 --&gt;
 
-&lt;!-- ```{r eval=F} --&gt;
-&lt;!-- ggplot(top10, aes(x = reorder_within(word, n, president), --&gt;
-&lt;!--                   y = n, --&gt;
-&lt;!--                   fill = president)) + --&gt;
-&lt;!--   geom_col() + --&gt;
-&lt;!--   coord_flip() + --&gt;
-&lt;!--   facet_wrap(~ president, scales = "free_y") --&gt;
-&lt;!-- ``` --&gt;
+#### 3. 특정 단어 제외하고 막대 그래프 만들기
 
-&lt;!-- --- --&gt;
+- 박근혜 전 대통령 `"국민"` 빈도 너무 높아 다른 단어들 차이 드러나지 않음
+- 전반적인 단어 빈도가 잘 드러나도록 제거
 
-&lt;!-- ```{r echo=F} --&gt;
-&lt;!-- ggplot(top10, aes(x = reorder_within(word, n, president), --&gt;
-&lt;!--                   y = n, --&gt;
-&lt;!--                   fill = president)) + --&gt;
-&lt;!--   geom_col() + --&gt;
-&lt;!--   coord_flip() + --&gt;
-&lt;!--   facet_wrap(~ president, scales = "free_y") --&gt;
-&lt;!-- ``` --&gt;
+.scroll-box-20[
 
-&lt;!-- --- --&gt;
 
-&lt;!-- #### 5. 변수 항목 제거하기 --&gt;
+```r
+top10 &lt;- frequency %&gt;%
+  filter(word != "국민") %&gt;%
+  group_by(president) %&gt;%
+  slice_max(n, n = 10, with_ties = F)
 
-&lt;!-- - `tidytext::scale_x_reordered()`: 각 단어 뒤의 범주 항목 제거 --&gt;
+top10
+```
 
-&lt;!-- ```{r eval=FALSE} --&gt;
-&lt;!-- ggplot(top10, aes(x = reorder_within(word, n, president), --&gt;
-&lt;!--                   y = n, --&gt;
-&lt;!--                   fill = president)) + --&gt;
-&lt;!--   geom_col() + --&gt;
-&lt;!--   coord_flip() + --&gt;
-&lt;!--   facet_wrap(~ president, scales = "free_y") + --&gt;
-&lt;!--   scale_x_reordered() + --&gt;
-&lt;!--   labs(x = NULL) +                                    # x축 삭제 --&gt;
-&lt;!--   theme(text = element_text(family = "nanumgothic"))  # 폰트 --&gt;
-&lt;!-- ``` --&gt;
+```
+## # A tibble: 20 x 3
+## # Groups:   president [2]
+##    president word         n
+##    &lt;chr&gt;     &lt;chr&gt;    &lt;int&gt;
+##  1 moon      일자리      21
+##  2 moon      나라        19
+##  3 moon      우리        17
+##  4 moon      경제        15
+##  5 moon      사회        14
+##  6 moon      성장        13
+##  7 moon      대통령      12
+##  8 moon      정치        12
+##  9 moon      하게        12
+## 10 moon      대한민국    11
+## 11 park      행복        23
+## 12 park      여러분      20
+## 13 park      정부        17
+## 14 park      경제        15
+## 15 park      신뢰        11
+## 16 park      국가        10
+## 17 park      우리        10
+## 18 park      교육         9
+## 19 park      사람         9
+## 20 park      사회         9
+```
+]
 
-&lt;!-- --- --&gt;
+---
 
-&lt;!-- ```{r echo=FALSE} --&gt;
-&lt;!-- ggplot(top10, aes(x = reorder_within(word, n, president), --&gt;
-&lt;!--                   y = n, --&gt;
-&lt;!--                   fill = president)) + --&gt;
-&lt;!--   geom_col() + --&gt;
-&lt;!--   coord_flip() + --&gt;
-&lt;!--   facet_wrap(~ president, scales = "free_y") + --&gt;
-&lt;!--   scale_x_reordered() + --&gt;
-&lt;!--   labs(x = NULL) +                                    # x축 삭제 --&gt;
-&lt;!--   theme(text = element_text(family = "nanumgothic"))  # 폰트 --&gt;
-&lt;!-- ``` --&gt;
 
-&lt;!-- --- --&gt;
+```r
+ggplot(top10, aes(x = reorder(word, n),
+                  y = n,
+                  fill = president)) +
+  geom_col() +
+  coord_flip() +
+  facet_wrap(~ president, scales = "free_y")
+```
+
+---
+
+&lt;img src="03-comparing_files/figure-html/unnamed-chunk-37-1.png" width="100%" /&gt;
+
+
+---
+
+
+#### 4. 축 정렬하기
+
+- x축을 지정할 때 `reorder()`를 사용했는데도 막대가 빈도 기준으로 완벽하게 정렬되지 않음
+- 전체 빈도 기준으로 각 범주의 x축 순서를 정했기 때문
+
+&lt;img src="03-comparing_files/figure-html/unnamed-chunk-38-1.png" width="80%" /&gt;
+
+---
+
+#### 4. 축 정렬하기
+
+- x축을 지정할 때 `reorder()`를 사용했는데도 막대가 빈도 기준으로 완벽하게 정렬되지 않음
+- 전체 빈도 기준으로 각 범주의 x축 순서를 정했기 때문
+
+##### 그래프별로 축 정렬하기
+
+- `tidytext::reorder_within()`: 변수의 항목별로 축 순서 따로 구하기
+  - `x` : 축
+  - `by` :정렬 기준
+  - `within` : 그래프를 나누는 기준
+
+
+```r
+ggplot(top10, aes(x = reorder_within(word, n, president),
+                  y = n,
+                  fill = president)) +
+  geom_col() +
+  coord_flip() +
+  facet_wrap(~ president, scales = "free_y")
+```
+
+---
+
+&lt;img src="03-comparing_files/figure-html/unnamed-chunk-40-1.png" width="100%" /&gt;
+
+---
+
+#### 5. 변수 항목 제거하기
+
+- `tidytext::scale_x_reordered()`: 각 단어 뒤의 범주 항목 제거
+
+
+```r
+ggplot(top10, aes(x = reorder_within(word, n, president),
+                  y = n,
+                  fill = president)) +
+  geom_col() +
+  coord_flip() +
+  facet_wrap(~ president, scales = "free_y") +
+  scale_x_reordered() +
+  labs(x = NULL) +                                    # x축 삭제
+  theme(text = element_text(family = "nanumgothic"))  # 폰트
+```
+
+---
+
+&lt;img src="03-comparing_files/figure-html/unnamed-chunk-42-1.png" width="100%" /&gt;
+
+---
 &lt;!-- name: 03-2 --&gt;
 &lt;!-- class: title1 --&gt;
 

@@ -138,571 +138,571 @@ class: title1
 
 ---
 
-<!-- ### 비교 분석 -->
-<!-- - 여러 텍스트를 비교해 차이를 알아보는 분석 방법 -->
-<!-- - 단어 빈도 분석을 응용해 자주 사용된 단어의 차이를 살펴봄 -->
+### 비교 분석
+- 여러 텍스트를 비교해 차이를 알아보는 분석 방법
+- 단어 빈도 분석을 응용해 자주 사용된 단어의 차이를 살펴봄
 
-<!-- --- -->
+---
 
-<!-- ### 텍스트 합치기 -->
+### 텍스트 합치기
 
-<!-- - 텍스트를 비교하기 위해 여러 개의 텍스트를 하나의 데이터셋으로 합치는 작업 -->
+- 텍스트를 비교하기 위해 여러 개의 텍스트를 하나의 데이터셋으로 합치는 작업
 
-<!-- ##### 데이터 불러오기 -->
+##### 데이터 불러오기
 
-<!-- - 문재인 대통령과 박근혜 전 대통령의 대선 출마 선언문 불러오기 -->
-<!-- - tibble 구조로 변환하고 연설문 구분 위해 대통령 이름 부여 -->
+- 문재인 대통령과 박근혜 전 대통령의 대선 출마 선언문 불러오기
+- tibble 구조로 변환하고 연설문 구분 위해 대통령 이름 부여
 
-<!-- ```{r eval=FALSE} -->
-<!-- library(dplyr) -->
+```{r eval=FALSE}
+library(dplyr)
 
-<!-- # 문재인 대통령 연설문 불러오기 -->
-<!-- raw_moon <- readLines("speech_moon.txt", encoding = "UTF-8") -->
-<!-- moon <- raw_moon %>% -->
-<!--   as_tibble() %>% -->
-<!--   mutate(president = "moon") -->
+# 문재인 대통령 연설문 불러오기
+raw_moon <- readLines("speech_moon.txt", encoding = "UTF-8")
+moon <- raw_moon %>%
+  as_tibble() %>%
+  mutate(president = "moon")
 
-<!-- # 박근혜 대통령 연설문 불러오기 -->
-<!-- raw_park <- readLines("speech_park.txt", encoding = "UTF-8") -->
-<!-- park <- raw_park %>% -->
-<!--   as_tibble() %>% -->
-<!--   mutate(president = "park") -->
-<!-- ``` -->
+# 박근혜 대통령 연설문 불러오기
+raw_park <- readLines("speech_park.txt", encoding = "UTF-8")
+park <- raw_park %>%
+  as_tibble() %>%
+  mutate(president = "park")
+```
 
-<!-- ```{r echo=F} -->
-<!-- library(dplyr) -->
+```{r echo=F}
+library(dplyr)
 
-<!-- # 문재인 대통령 연설문 불러오기 -->
-<!-- raw_moon <- readLines("../Data/speech_moon.txt", encoding = "UTF-8") -->
+# 문재인 대통령 연설문 불러오기
+raw_moon <- readLines("../Data/speech_moon.txt", encoding = "UTF-8")
 
-<!-- moon <- raw_moon %>% -->
-<!--   as_tibble() %>% -->
-<!--   mutate(president = "moon") -->
+moon <- raw_moon %>%
+  as_tibble() %>%
+  mutate(president = "moon")
 
-<!-- # 박근혜 대통령 연설문 불러오기 -->
-<!-- raw_park <- readLines("../Data/speech_park.txt", encoding = "UTF-8") -->
+# 박근혜 대통령 연설문 불러오기
+raw_park <- readLines("../Data/speech_park.txt", encoding = "UTF-8")
 
-<!-- park <- raw_park %>% -->
-<!--   as_tibble() %>% -->
-<!--   mutate(president = "park") -->
-<!-- ``` -->
+park <- raw_park %>%
+  as_tibble() %>%
+  mutate(president = "park")
+```
 
-<!-- --- -->
+---
 
-<!-- ##### 데이터 합치기 -->
+##### 데이터 합치기
 
-<!-- - 두 데이터를 행(세로) 방향으로 결합 -->
-<!-- - 출력 결과 보기 편하게 `select()`로 변수 순서 바꾸기 -->
-<!-- - 윗부분은 문재인 대통령, 아랫부분은 박근혜 전 대통령 연설문 -->
+- 두 데이터를 행(세로) 방향으로 결합
+- 출력 결과 보기 편하게 `select()`로 변수 순서 바꾸기
+- 윗부분은 문재인 대통령, 아랫부분은 박근혜 전 대통령 연설문
 
-<!-- ```{r} -->
-<!-- bind_speeches <- bind_rows(moon, park) %>% -->
-<!--   select(president, value) -->
-<!-- ``` -->
+```{r}
+bind_speeches <- bind_rows(moon, park) %>%
+  select(president, value)
+```
 
-<!-- -- -->
+--
 
-<!-- <br-back-30> -->
+<br-back-30>
 
-<!-- .pull-left[ -->
+.pull-left[
 
-<!-- ```{r, R.options = list(tibble.width = 25)} -->
-<!-- head(bind_speeches) -->
-<!-- ``` -->
-<!-- ] -->
+```{r, R.options = list(tibble.width = 25)}
+head(bind_speeches)
+```
+]
 
-<!-- .pull-right[ -->
+.pull-right[
 
-<!-- ```{r, R.options = list(tibble.width = 25)} -->
-<!-- tail(bind_speeches) -->
-<!-- ``` -->
-<!-- ] -->
+```{r, R.options = list(tibble.width = 25)}
+tail(bind_speeches)
+```
+]
 
 
 
 
-<!-- `r fontawesome("lightbulb")` 박근혜 전 대통령의 대선 출마 선언문 출처: [bit.ly/easytext_31](https://bit.ly/easytext_31) -->
+`r fontawesome("lightbulb")` 박근혜 전 대통령의 대선 출마 선언문 출처: [bit.ly/easytext_31](https://bit.ly/easytext_31)
 
 
-<!-- --- -->
+---
 
 
-<!-- #### 집단별 단어 빈도 구하기 -->
+#### 집단별 단어 빈도 구하기
 
-<!-- ##### 1. 기본적인 전처리 및 토큰화 -->
+##### 1. 기본적인 전처리 및 토큰화
 
-<!-- - 한글 이외의 문자, 연속된 공백 제거 -->
-<!-- - `bind_speeches`는 tibble 구조이므로 `mutate()` 활용 -->
+- 한글 이외의 문자, 연속된 공백 제거
+- `bind_speeches`는 tibble 구조이므로 `mutate()` 활용
 
-<!-- <br-back-20>   -->
-<!-- .scroll-box-20[ -->
+<br-back-20>
+.scroll-box-20[
 
-<!-- ```{r R.options=list(tibble.width = 50)} -->
-<!-- # 기본적인 전처리 -->
-<!-- library(stringr) -->
-<!-- speeches <- bind_speeches %>% -->
-<!--   mutate(value = str_replace_all(value, "[^가-힣]", " "), -->
-<!--          value = str_squish(value)) -->
+```{r R.options=list(tibble.width = 50)}
+# 기본적인 전처리
+library(stringr)
+speeches <- bind_speeches %>%
+  mutate(value = str_replace_all(value, "[^가-힣]", " "),
+         value = str_squish(value))
 
-<!-- speeches -->
-<!-- ``` -->
-<!-- ] -->
+speeches
+```
+]
 
-<!-- --- -->
+---
 
-<!-- - 형태소 분석기를 이용해 명사 기준 토큰화 -->
+- 형태소 분석기를 이용해 명사 기준 토큰화
 
 
-<!-- ```{r eval=F} -->
-<!-- # 토큰화 -->
-<!-- library(tidytext) -->
-<!-- library(KoNLP) -->
+```{r eval=F}
+# 토큰화
+library(tidytext)
+library(KoNLP)
 
-<!-- speeches <- speeches %>% -->
-<!--   unnest_tokens(input = value, -->
-<!--                 output = word, -->
-<!--                 token = extractNoun) -->
+speeches <- speeches %>%
+  unnest_tokens(input = value,
+                output = word,
+                token = extractNoun)
 
-<!-- speeches -->
-<!-- ``` -->
+speeches
+```
 
-<!-- <br-back-20>   -->
+<br-back-20>
 
-<!-- .scroll-box-14[ -->
+.scroll-box-14[
 
-<!-- ```{r echo=F} -->
-<!-- # 토큰화 -->
-<!-- library(tidytext) -->
-<!-- library(KoNLP) -->
+```{r echo=F}
+# 토큰화
+library(tidytext)
+library(KoNLP)
 
-<!-- speeches <- speeches %>% -->
-<!--   unnest_tokens(input = value, -->
-<!--                 output = word, -->
-<!--                 token = extractNoun) -->
+speeches <- speeches %>%
+  unnest_tokens(input = value,
+                output = word,
+                token = extractNoun)
 
-<!-- speeches -->
-<!-- ``` -->
+speeches
+```
 
-<!-- ] -->
+]
 
-<!-- --- -->
+---
 
 
 
-<!-- #### 하위 집단별 단어 빈도 구하기 - `count()` -->
+#### 하위 집단별 단어 빈도 구하기 - `count()`
 
-<!-- - `"moon"`과 `"park"`의 단어 빈도 각각 구하기 -->
+- `"moon"`과 `"park"`의 단어 빈도 각각 구하기
 
-<!-- ##### 샘플 텍스트로 작동 원리 알아보기 -->
+##### 샘플 텍스트로 작동 원리 알아보기
 
-<!-- - `count()`에 집단을 구성하는 두 변수를 순서대로 입력 -->
+- `count()`에 집단을 구성하는 두 변수를 순서대로 입력
 
-<!-- ```{r} -->
-<!-- df <- tibble(class = c("a", "a", "a", "b", "b", "b"), -->
-<!--              sex = c("female", "male", "female", "male", "male", "female")) -->
-<!-- ``` -->
+```{r}
+df <- tibble(class = c("a", "a", "a", "b", "b", "b"),
+             sex = c("female", "male", "female", "male", "male", "female"))
+```
 
-<!-- .pull-left[ -->
+.pull-left[
 
-<!-- ```{r} -->
-<!-- df -->
-<!-- ``` -->
-<!-- ] -->
+```{r}
+df
+```
+]
 
 
-<!-- .pull-right[ -->
+.pull-right[
 
-<!-- ```{r} -->
-<!-- df %>% count(class, sex) -->
-<!-- ``` -->
-<!-- ] -->
+```{r}
+df %>% count(class, sex)
+```
+]
 
-<!-- --- -->
+---
 
 
-<!-- ##### 두 연설문의 단어 빈도 구하기 -->
+##### 두 연설문의 단어 빈도 구하기
 
-<!-- ```{r} -->
-<!-- frequency <- speeches %>% -->
-<!--   count(president, word) %>%   # 연설문 및 단어별 빈도 -->
-<!--   filter(str_count(word) > 1)  # 두 글자 이상 추출 -->
+```{r}
+frequency <- speeches %>%
+  count(president, word) %>%   # 연설문 및 단어별 빈도
+  filter(str_count(word) > 1)  # 두 글자 이상 추출
 
-<!-- head(frequency) -->
-<!-- ``` -->
+head(frequency)
+```
 
-<!-- `r fontawesome("lightbulb")`  `count()`는 입력한 변수의 알파벳, 가나다순으로 행을 정렬함 -->
+`r fontawesome("lightbulb")`  `count()`는 입력한 변수의 알파벳, 가나다순으로 행을 정렬함
 
-<!-- --- -->
+---
 
 
-<!-- #### 자주 사용된 단어 추출하기 -->
+#### 자주 사용된 단어 추출하기
 
-<!-- - `dplyr::slice_max()`: 값이 큰 상위 n개의 행을 추출해 내림차순 정렬 -->
+- `dplyr::slice_max()`: 값이 큰 상위 n개의 행을 추출해 내림차순 정렬
 
-<!-- ##### 샘플 데이터로 작동 원리 알아보기 -->
+##### 샘플 데이터로 작동 원리 알아보기
 
 
-<!-- ```{r} -->
-<!-- df <- tibble(x = c(1:100)) -->
-<!-- ``` -->
+```{r}
+df <- tibble(x = c(1:100))
+```
 
-<!-- <br-back-20> -->
+<br-back-20>
 
-<!-- .pull-left[ -->
+.pull-left[
 
-<!-- ```{r} -->
-<!-- df -->
-<!-- ``` -->
-<!-- ] -->
+```{r}
+df
+```
+]
 
-<!-- .pull-right[ -->
-<!-- ```{r} -->
-<!-- df %>% slice_max(x, n = 3) -->
-<!-- ``` -->
+.pull-right[
+```{r}
+df %>% slice_max(x, n = 3)
+```
 
 
 
-<!-- ] -->
+]
 
-<!-- --- -->
+---
 
-<!-- .pull-left[ -->
+.pull-left[
 
-<!-- `r fontawesome("lightbulb")`  `slice_min()`: 값이 작은 하위 n개 추출 -->
-<!-- ```{r} -->
-<!-- df %>% slice_min(x, n = 3) -->
-<!-- ``` -->
-<!-- ] -->
+`r fontawesome("lightbulb")`  `slice_min()`: 값이 작은 하위 n개 추출
+```{r}
+df %>% slice_min(x, n = 3)
+```
+]
 
 
-<!-- --- -->
+---
 
-<!-- #### 연설문에 가장 많이 사용된 단어 추출하기 -->
+#### 연설문에 가장 많이 사용된 단어 추출하기
 
-<!-- - `president`별 고빈도 단어 상위 10개 추출 -->
+- `president`별 고빈도 단어 상위 10개 추출
 
-<!-- <br-back-20> -->
+<br-back-20>
 
-<!-- .scroll-box-24[ -->
+.scroll-box-24[
 
-<!-- ```{r} -->
-<!-- top10 <- frequency %>% -->
-<!--   group_by(president) %>%  # president별로 분리 -->
-<!--   slice_max(n, n = 10)     # 상위 10개 추출 -->
+```{r}
+top10 <- frequency %>%
+  group_by(president) %>%  # president별로 분리
+  slice_max(n, n = 10)     # 상위 10개 추출
 
-<!-- top10 -->
-<!-- ``` -->
+top10
+```
 
-<!-- ] -->
-<!-- --- -->
+]
+---
 
-<!-- #### 단어 빈도 동점 처리 -->
+#### 단어 빈도 동점 처리
 
-<!-- - 두 연설문에서 단어 10개씩 추출했는데 20행이 아니라 22행 -->
-<!-- - 단어 빈도 동점인 행이 전부 추출되었기 때문 -->
+- 두 연설문에서 단어 10개씩 추출했는데 20행이 아니라 22행
+- 단어 빈도 동점인 행이 전부 추출되었기 때문
 
-<!-- <br-back-20>   -->
-<!-- .scroll-box-22[ -->
+<br-back-20>
+.scroll-box-22[
 
-<!-- ```{r highlight.output = 1} -->
-<!-- top10 -->
-<!-- ``` -->
-<!-- ] -->
+```{r highlight.output = 1}
+top10
+```
+]
 
-<!-- --- -->
+---
 
-<!-- - 박근혜 전 대통령의 연설문 단어 12개 -->
-<!--   - `"교육"`, `"사람"`, `"사회"`, `"일자리"` 빈도 동점, 모두 추출되면서 행 늘어남 -->
+- 박근혜 전 대통령의 연설문 단어 12개
+  - `"교육"`, `"사람"`, `"사회"`, `"일자리"` 빈도 동점, 모두 추출되면서 행 늘어남
 
 
-<!-- ```{r, highlight.output = c(13:16)} -->
-<!-- top10 %>% -->
-<!--   filter(president == "park") -->
-<!-- ``` -->
+```{r, highlight.output = c(13:16)}
+top10 %>%
+  filter(president == "park")
+```
 
 
-<!-- --- -->
+---
 
 
-<!-- #### 빈도 동점 단어 제외하고 추출하기  -->
-<!-- - `slice_max(with_ties = F)`: 원본 데이터의 정렬 순서에 따라 행 추출 -->
+#### 빈도 동점 단어 제외하고 추출하기
+- `slice_max(with_ties = F)`: 원본 데이터의 정렬 순서에 따라 행 추출
 
-<!-- ##### 샘플 데이터로 작동 원리 알아보기 -->
+##### 샘플 데이터로 작동 원리 알아보기
 
-<!-- ```{r} -->
-<!-- df <- tibble(x = c("A", "B", "C", "D"), y = c(4, 3, 2, 2)) -->
-<!-- ``` -->
+```{r}
+df <- tibble(x = c("A", "B", "C", "D"), y = c(4, 3, 2, 2))
+```
 
-<!-- <br-back-20> -->
+<br-back-20>
 
-<!-- .pull-left[ -->
+.pull-left[
 
-<!-- ```{r} -->
-<!-- df %>% -->
-<!--   slice_max(y, n = 3) -->
-<!-- ``` -->
-<!-- ] -->
+```{r}
+df %>%
+  slice_max(y, n = 3)
+```
+]
 
-<!-- .pull-right[ -->
-<!-- ```{r} -->
-<!-- df %>% -->
-<!--   slice_max(y, n = 3, with_ties = F) -->
-<!-- ``` -->
-<!-- ] -->
-<!-- --- -->
+.pull-right[
+```{r}
+df %>%
+  slice_max(y, n = 3, with_ties = F)
+```
+]
+---
 
-<!-- #### 연설문에 적용하기 -->
+#### 연설문에 적용하기
 
-<!-- ```{r eval=F} -->
-<!-- top10 <- frequency %>% -->
-<!--   group_by(president) %>% -->
-<!--   slice_max(n, n = 10, with_ties = F) -->
+```{r eval=F}
+top10 <- frequency %>%
+  group_by(president) %>%
+  slice_max(n, n = 10, with_ties = F)
 
-<!-- top10 -->
+top10
 
-<!-- ``` -->
+```
 
-<!-- <br-back-20> -->
-<!-- .scroll-box-18[ -->
-<!-- ```{r, echo=FALSE, highlight.output=1} -->
-<!-- top10 <- frequency %>% -->
-<!--   group_by(president) %>% -->
-<!--   slice_max(n, n = 10, with_ties = F) -->
+<br-back-20>
+.scroll-box-18[
+```{r, echo=FALSE, highlight.output=1}
+top10 <- frequency %>%
+  group_by(president) %>%
+  slice_max(n, n = 10, with_ties = F)
 
-<!-- top10 -->
+top10
 
-<!-- ``` -->
-<!-- ] -->
+```
+]
 
-<!-- --- -->
+---
 
-<!-- #### 막대 그래프 만들기 -->
+#### 막대 그래프 만들기
 
-<!-- ##### 1. 변수의 항목별로 그래프만들기 - `facet_wrap()` -->
-<!-- - `~` 뒤에 그래프를 나누는 기준 변수 입력 -->
+##### 1. 변수의 항목별로 그래프만들기 - `facet_wrap()`
+- `~` 뒤에 그래프를 나누는 기준 변수 입력
 
-<!-- ```{r eval=F} -->
-<!-- library(ggplot2) -->
-<!-- ggplot(top10, aes(x = reorder(word, n), -->
-<!--                   y = n, -->
-<!--                   fill = president)) + -->
-<!--   geom_col() + -->
-<!--   coord_flip() + -->
-<!--   facet_wrap(~ president) -->
-<!-- ``` -->
+```{r eval=F}
+library(ggplot2)
+ggplot(top10, aes(x = reorder(word, n),
+                  y = n,
+                  fill = president)) +
+  geom_col() +
+  coord_flip() +
+  facet_wrap(~ president)
+```
 
-<!-- --- -->
+---
 
-<!-- ```{r echo=F} -->
-<!-- library(ggplot2) -->
-<!-- ggplot(top10, aes(x = reorder(word, n), -->
-<!--                   y = n, -->
-<!--                   fill = president)) + -->
-<!--   geom_col() + -->
-<!--   coord_flip() + -->
-<!--   facet_wrap(~ president) -->
-<!-- ``` -->
+```{r echo=F}
+library(ggplot2)
+ggplot(top10, aes(x = reorder(word, n),
+                  y = n,
+                  fill = president)) +
+  geom_col() +
+  coord_flip() +
+  facet_wrap(~ president)
+```
 
 
-<!-- --- -->
+---
 
 
-<!-- ##### 2. 그래프별 y축 설정하기 -->
+##### 2. 그래프별 y축 설정하기
 
-<!-- - 축을 구성하는 단어가 한 범주에만 있으면 축은 있지만 막대는 없는 항목 생김 -->
-<!--   - ex) `"행복"`, `"나라"` -->
+- 축을 구성하는 단어가 한 범주에만 있으면 축은 있지만 막대는 없는 항목 생김
+  - ex) `"행복"`, `"나라"`
 
 
-<!-- ```{r echo=F, out.width="90%"} -->
-<!-- library(ggplot2) -->
-<!-- ggplot(top10, aes(x = reorder(word, n), -->
-<!--                   y = n, -->
-<!--                   fill = president)) + -->
-<!--   geom_col() + -->
-<!--   coord_flip() + -->
-<!--   facet_wrap(~ president) -->
-<!-- ``` -->
+```{r echo=F, out.width="90%"}
+library(ggplot2)
+ggplot(top10, aes(x = reorder(word, n),
+                  y = n,
+                  fill = president)) +
+  geom_col() +
+  coord_flip() +
+  facet_wrap(~ president)
+```
 
 
-<!-- --- -->
+---
 
-<!-- ##### 2. 그래프별 y축 설정하기 -->
+##### 2. 그래프별 y축 설정하기
 
-<!-- - 축을 구성하는 단어가 한 범주에만 있으면 축은 있지만 막대는 없는 항목 생김 -->
-<!--   - ex) `"행복"`, `"나라"` -->
+- 축을 구성하는 단어가 한 범주에만 있으면 축은 있지만 막대는 없는 항목 생김
+  - ex) `"행복"`, `"나라"`
 
 
-<!-- - `scales`: 그래프의 축 통일 또는 각각 생성 결정 -->
-<!--   - `"fixed"`: 축 통일(기본값) -->
-<!--   - `"free_y"`: 범주별로 y축 만듦 -->
+- `scales`: 그래프의 축 통일 또는 각각 생성 결정
+  - `"fixed"`: 축 통일(기본값)
+  - `"free_y"`: 범주별로 y축 만듦
 
-<!-- ```{r eval=F} -->
-<!-- ggplot(top10, aes(x = reorder(word, n), -->
-<!--                   y = n, -->
-<!--                   fill = president)) + -->
-<!--   geom_col() + -->
-<!--   coord_flip() + -->
-<!--   facet_wrap(~ president,         # president별 그래프 생성 -->
-<!--               scales = "free_y")  # y축 통일하지 않음 #<< -->
-<!-- ``` -->
+```{r eval=F}
+ggplot(top10, aes(x = reorder(word, n),
+                  y = n,
+                  fill = president)) +
+  geom_col() +
+  coord_flip() +
+  facet_wrap(~ president,         # president별 그래프 생성
+              scales = "free_y")  # y축 통일하지 않음 #<<
+```
 
-<!-- --- -->
+---
 
-<!-- ```{r echo=F} -->
-<!-- ggplot(top10, aes(x = reorder(word, n), -->
-<!--                   y = n, -->
-<!--                   fill = president)) + -->
-<!--   geom_col() + -->
-<!--   coord_flip() + -->
-<!--   facet_wrap(~ president,         # president별 그래프 생성 -->
-<!--               scales = "free_y")  # y축 통일하지 않음 -->
-<!-- ``` -->
+```{r echo=F}
+ggplot(top10, aes(x = reorder(word, n),
+                  y = n,
+                  fill = president)) +
+  geom_col() +
+  coord_flip() +
+  facet_wrap(~ president,         # president별 그래프 생성
+              scales = "free_y")  # y축 통일하지 않음
+```
 
 
-<!-- --- -->
+---
 
 
-<!-- #### 3. 특정 단어 제외하고 막대 그래프 만들기 -->
+#### 3. 특정 단어 제외하고 막대 그래프 만들기
 
-<!-- - 박근혜 전 대통령 `"국민"` 빈도 너무 높아 다른 단어들 차이 드러나지 않음 -->
+- 박근혜 전 대통령 `"국민"` 빈도 너무 높아 다른 단어들 차이 드러나지 않음
 
-<!-- ```{r echo=F, out.width="80%"} -->
-<!-- ggplot(top10, aes(x = reorder(word, n), -->
-<!--                   y = n, -->
-<!--                   fill = president)) + -->
-<!--   geom_col() + -->
-<!--   coord_flip() + -->
-<!--   facet_wrap(~ president,         # president별 그래프 생성 -->
-<!--               scales = "free_y")  # y축 통일하지 않음 -->
-<!-- ``` -->
+```{r echo=F, out.width="80%"}
+ggplot(top10, aes(x = reorder(word, n),
+                  y = n,
+                  fill = president)) +
+  geom_col() +
+  coord_flip() +
+  facet_wrap(~ president,         # president별 그래프 생성
+              scales = "free_y")  # y축 통일하지 않음
+```
 
-<!-- --- -->
+---
 
 
-<!-- #### 3. 특정 단어 제외하고 막대 그래프 만들기 -->
+#### 3. 특정 단어 제외하고 막대 그래프 만들기
 
-<!-- - 박근혜 전 대통령 `"국민"` 빈도 너무 높아 다른 단어들 차이 드러나지 않음 -->
-<!-- - 전반적인 단어 빈도가 잘 드러나도록 제거 -->
+- 박근혜 전 대통령 `"국민"` 빈도 너무 높아 다른 단어들 차이 드러나지 않음
+- 전반적인 단어 빈도가 잘 드러나도록 제거
 
-<!-- .scroll-box-20[ -->
+.scroll-box-20[
 
-<!-- ```{r} -->
-<!-- top10 <- frequency %>% -->
-<!--   filter(word != "국민") %>% -->
-<!--   group_by(president) %>% -->
-<!--   slice_max(n, n = 10, with_ties = F) -->
+```{r}
+top10 <- frequency %>%
+  filter(word != "국민") %>%
+  group_by(president) %>%
+  slice_max(n, n = 10, with_ties = F)
 
-<!-- top10 -->
-<!-- ``` -->
-<!-- ] -->
+top10
+```
+]
 
-<!-- --- -->
+---
 
-<!-- ```{r eval=F} -->
-<!-- ggplot(top10, aes(x = reorder(word, n), -->
-<!--                   y = n, -->
-<!--                   fill = president)) + -->
-<!--   geom_col() + -->
-<!--   coord_flip() + -->
-<!--   facet_wrap(~ president, scales = "free_y") -->
-<!-- ``` -->
+```{r eval=F}
+ggplot(top10, aes(x = reorder(word, n),
+                  y = n,
+                  fill = president)) +
+  geom_col() +
+  coord_flip() +
+  facet_wrap(~ president, scales = "free_y")
+```
 
-<!-- --- -->
+---
 
-<!-- ```{r echo=F} -->
-<!-- ggplot(top10, aes(x = reorder(word, n), -->
-<!--                   y = n, -->
-<!--                   fill = president)) + -->
-<!--   geom_col() + -->
-<!--   coord_flip() + -->
-<!--   facet_wrap(~ president, scales = "free_y") -->
-<!-- ``` -->
+```{r echo=F}
+ggplot(top10, aes(x = reorder(word, n),
+                  y = n,
+                  fill = president)) +
+  geom_col() +
+  coord_flip() +
+  facet_wrap(~ president, scales = "free_y")
+```
 
 
-<!-- --- -->
+---
 
 
-<!-- #### 4. 축 정렬하기 -->
+#### 4. 축 정렬하기
 
-<!-- - x축을 지정할 때 `reorder()`를 사용했는데도 막대가 빈도 기준으로 완벽하게 정렬되지 않음 -->
-<!-- - 전체 빈도 기준으로 각 범주의 x축 순서를 정했기 때문 -->
+- x축을 지정할 때 `reorder()`를 사용했는데도 막대가 빈도 기준으로 완벽하게 정렬되지 않음
+- 전체 빈도 기준으로 각 범주의 x축 순서를 정했기 때문
 
-<!-- ```{r echo=F, out.width="80%"} -->
-<!-- ggplot(top10, aes(x = reorder(word, n), -->
-<!--                   y = n, -->
-<!--                   fill = president)) + -->
-<!--   geom_col() + -->
-<!--   coord_flip() + -->
-<!--   facet_wrap(~ president, scales = "free_y") -->
-<!-- ``` -->
+```{r echo=F, out.width="80%"}
+ggplot(top10, aes(x = reorder(word, n),
+                  y = n,
+                  fill = president)) +
+  geom_col() +
+  coord_flip() +
+  facet_wrap(~ president, scales = "free_y")
+```
 
-<!-- --- -->
+---
 
-<!-- #### 4. 축 정렬하기 -->
+#### 4. 축 정렬하기
 
-<!-- - x축을 지정할 때 `reorder()`를 사용했는데도 막대가 빈도 기준으로 완벽하게 정렬되지 않음 -->
-<!-- - 전체 빈도 기준으로 각 범주의 x축 순서를 정했기 때문 -->
+- x축을 지정할 때 `reorder()`를 사용했는데도 막대가 빈도 기준으로 완벽하게 정렬되지 않음
+- 전체 빈도 기준으로 각 범주의 x축 순서를 정했기 때문
 
-<!-- ##### 그래프별로 축 정렬하기 -->
+##### 그래프별로 축 정렬하기
 
-<!-- - `tidytext::reorder_within()`: 변수의 항목별로 축 순서 따로 구하기 -->
-<!--   - `x` : 축 -->
-<!--   - `by` :정렬 기준 -->
-<!--   - `within` : 그래프를 나누는 기준 -->
+- `tidytext::reorder_within()`: 변수의 항목별로 축 순서 따로 구하기
+  - `x` : 축
+  - `by` :정렬 기준
+  - `within` : 그래프를 나누는 기준
 
-<!-- ```{r eval=F} -->
-<!-- ggplot(top10, aes(x = reorder_within(word, n, president), -->
-<!--                   y = n, -->
-<!--                   fill = president)) + -->
-<!--   geom_col() + -->
-<!--   coord_flip() + -->
-<!--   facet_wrap(~ president, scales = "free_y") -->
-<!-- ``` -->
+```{r eval=F}
+ggplot(top10, aes(x = reorder_within(word, n, president),
+                  y = n,
+                  fill = president)) +
+  geom_col() +
+  coord_flip() +
+  facet_wrap(~ president, scales = "free_y")
+```
 
-<!-- --- -->
+---
 
-<!-- ```{r echo=F} -->
-<!-- ggplot(top10, aes(x = reorder_within(word, n, president), -->
-<!--                   y = n, -->
-<!--                   fill = president)) + -->
-<!--   geom_col() + -->
-<!--   coord_flip() + -->
-<!--   facet_wrap(~ president, scales = "free_y") -->
-<!-- ``` -->
+```{r echo=F}
+ggplot(top10, aes(x = reorder_within(word, n, president),
+                  y = n,
+                  fill = president)) +
+  geom_col() +
+  coord_flip() +
+  facet_wrap(~ president, scales = "free_y")
+```
 
-<!-- --- -->
+---
 
-<!-- #### 5. 변수 항목 제거하기 -->
+#### 5. 변수 항목 제거하기
 
-<!-- - `tidytext::scale_x_reordered()`: 각 단어 뒤의 범주 항목 제거 -->
+- `tidytext::scale_x_reordered()`: 각 단어 뒤의 범주 항목 제거
 
-<!-- ```{r eval=FALSE} -->
-<!-- ggplot(top10, aes(x = reorder_within(word, n, president), -->
-<!--                   y = n, -->
-<!--                   fill = president)) + -->
-<!--   geom_col() + -->
-<!--   coord_flip() + -->
-<!--   facet_wrap(~ president, scales = "free_y") + -->
-<!--   scale_x_reordered() + -->
-<!--   labs(x = NULL) +                                    # x축 삭제 -->
-<!--   theme(text = element_text(family = "nanumgothic"))  # 폰트 -->
-<!-- ``` -->
+```{r eval=FALSE}
+ggplot(top10, aes(x = reorder_within(word, n, president),
+                  y = n,
+                  fill = president)) +
+  geom_col() +
+  coord_flip() +
+  facet_wrap(~ president, scales = "free_y") +
+  scale_x_reordered() +
+  labs(x = NULL) +                                    # x축 삭제
+  theme(text = element_text(family = "nanumgothic"))  # 폰트
+```
 
-<!-- --- -->
+---
 
-<!-- ```{r echo=FALSE} -->
-<!-- ggplot(top10, aes(x = reorder_within(word, n, president), -->
-<!--                   y = n, -->
-<!--                   fill = president)) + -->
-<!--   geom_col() + -->
-<!--   coord_flip() + -->
-<!--   facet_wrap(~ president, scales = "free_y") + -->
-<!--   scale_x_reordered() + -->
-<!--   labs(x = NULL) +                                    # x축 삭제 -->
-<!--   theme(text = element_text(family = "nanumgothic"))  # 폰트 -->
-<!-- ``` -->
+```{r echo=FALSE}
+ggplot(top10, aes(x = reorder_within(word, n, president),
+                  y = n,
+                  fill = president)) +
+  geom_col() +
+  coord_flip() +
+  facet_wrap(~ president, scales = "free_y") +
+  scale_x_reordered() +
+  labs(x = NULL) +                                    # x축 삭제
+  theme(text = element_text(family = "nanumgothic"))  # 폰트
+```
 
-<!-- --- -->
+---
 <!-- name: 03-2 -->
 <!-- class: title1 -->
 
