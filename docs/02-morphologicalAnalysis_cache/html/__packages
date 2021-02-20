@@ -1,0 +1,13 @@
+base
+knitr
+icon
+here
+sysfonts
+showtextdb
+showtext
+KoNLP
+dplyr
+tidytext
+stringr
+textclean
+ggplot2
