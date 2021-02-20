@@ -1039,9 +1039,7 @@ top10 %>%
 <br-back-20>
 
 .scroll-box-22[
-<!-- # ```{r R.options=list(tibble.width = Inf, width = 80, pillar.min_chars = Inf)} -->
-
-```{r}
+```{r R.options=list(tibble.width = 80, width = 80, pillar.min_chars = Inf)}
 top10 <- top10 %>%
   mutate(president = ifelse(odds_ratio > 1, "moon", "park"),
          n = ifelse(odds_ratio > 1, moon, park))
@@ -1054,8 +1052,7 @@ top10
 
 
 <!-- 문자 길이 무제한 설정 -->
-<!-- # ```{r echo=F, R.options=list(tibble.width = Inf, width = 80, pillar.min_chars = Inf)} -->
-```{r}
+```{r echo=F, R.options=list(tibble.width = Inf, width = 80, pillar.min_chars = Inf)}
 top10
 ```
 ---
