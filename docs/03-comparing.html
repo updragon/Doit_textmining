@@ -1883,6 +1883,7 @@ class: title1
 
 
 ```r
+# R.options=list(tibble.width = 70, width = 80, pillar.min_chars = Inf
 frequency_wide &lt;- frequency_wide %&gt;%
   mutate(log_odds_ratio = log(odds_ratio))
 
@@ -1891,23 +1892,32 @@ frequency_wide
 
 ```
 ## # A tibble: 955 x 7
-##    word      moon  park ratio_moon ratio_park odds_ratio log_odds_ratio
-##    &lt;chr&gt;    &lt;int&gt; &lt;int&gt;      &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;          &lt;dbl&gt;
-##  1 가동         1     0   0.000873   0.000552      1.58           0.459
-##  2 가사         1     0   0.000873   0.000552      1.58           0.459
-##  3 가슴         2     0   0.00131    0.000552      2.37           0.865
-##  4 가족         1     1   0.000873   0.00110       0.791         -0.234
-##  5 가족구조     1     0   0.000873   0.000552      1.58           0.459
-##  6 가지         4     0   0.00218    0.000552      3.96           1.38 
-##  7 가치         3     1   0.00175    0.00110       1.58           0.459
-##  8 각종         1     0   0.000873   0.000552      1.58           0.459
-##  9 감당         1     0   0.000873   0.000552      1.58           0.459
-## 10 강력         3     0   0.00175    0.000552      3.17           1.15 
-## # ... with 945 more rows
+##    word      moon  park ratio_moon ratio_park odds_ratio
+##    &lt;chr&gt;    &lt;int&gt; &lt;int&gt;      &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;
+##  1 가동         1     0   0.000873   0.000552      1.58 
+##  2 가사         1     0   0.000873   0.000552      1.58 
+##  3 가슴         2     0   0.00131    0.000552      2.37 
+##  4 가족         1     1   0.000873   0.00110       0.791
+##  5 가족구조     1     0   0.000873   0.000552      1.58 
+##  6 가지         4     0   0.00218    0.000552      3.96 
+##  7 가치         3     1   0.00175    0.00110       1.58 
+##  8 각종         1     0   0.000873   0.000552      1.58 
+##  9 감당         1     0   0.000873   0.000552      1.58 
+## 10 강력         3     0   0.00175    0.000552      3.17 
+## # ... with 945 more rows, and 1 more variable: log_odds_ratio &lt;dbl&gt;
 ```
 
-
 ---
+
+&lt;!-- ```{r R.options=list(tibble.width = 80, width = 80, pillar.min_chars = Inf)} --&gt;
+&lt;!-- frequency_wide &lt;- frequency_wide %&gt;% --&gt;
+&lt;!--   mutate(log_odds_ratio = log(odds_ratio)) --&gt;
+
+&lt;!-- frequency_wide --&gt;
+&lt;!-- ``` --&gt;
+
+
+&lt;!-- --- --&gt;
 
 &lt;!-- - **부호**와 **크기**를 보면 단어가 어느 연설문에서 더 중요한지 알 수 있음 --&gt;
 &lt;!--   - 0보다 큰 양수일수록 `"moon`"에서 비중이 큼 --&gt;
