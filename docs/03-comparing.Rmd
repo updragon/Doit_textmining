@@ -1290,66 +1290,66 @@ frequency_wide
 
 ---
 
-- **부호**와 **크기**를 보면 단어가 어느 연설문에서 더 중요한지 알 수 있음
-  - 0보다 큰 양수일수록 `"moon`"에서 비중이 큼
-  - 0보다 작은 음수일수록 `"park"`에서 비중이 큼
-  - 0에 가까우면 두 연설문에서 비중 비슷함
+<!-- - **부호**와 **크기**를 보면 단어가 어느 연설문에서 더 중요한지 알 수 있음 -->
+<!--   - 0보다 큰 양수일수록 `"moon`"에서 비중이 큼 -->
+<!--   - 0보다 작은 음수일수록 `"park"`에서 비중이 큼 -->
+<!--   - 0에 가까우면 두 연설문에서 비중 비슷함 -->
 
----
+<!-- --- -->
 
-- 부호와 크기를 보면 단어가 어느 연설문에서 더 중요한지 알 수 있음
-  - **0보다 큰 양수일수록 `"moon`"에서 비중이 큼**
-  - 0보다 작은 음수일수록 `"park"`에서 비중이 큼
-  - 0에 가까우면 두 연설문에서 비중 비슷함
+<!-- - 부호와 크기를 보면 단어가 어느 연설문에서 더 중요한지 알 수 있음 -->
+<!--   - **0보다 큰 양수일수록 `"moon`"에서 비중이 큼** -->
+<!--   - 0보다 작은 음수일수록 `"park"`에서 비중이 큼 -->
+<!--   - 0에 가까우면 두 연설문에서 비중 비슷함 -->
 
-```{r R.options=list(tibble.width = Inf, width = 80, pillar.min_chars = Inf)}
-# moon에서 비중이 큰 단어
-frequency_wide %>%
-  arrange(-log_odds_ratio) #<<
-```
+<!-- ```{r R.options=list(tibble.width = Inf, width = 80, pillar.min_chars = Inf)} -->
+<!-- # moon에서 비중이 큰 단어 -->
+<!-- frequency_wide %>% -->
+<!--   arrange(-log_odds_ratio) #<< -->
+<!-- ``` -->
 
----
+<!-- --- -->
 
-- 부호와 크기를 보면 단어가 어느 연설문에서 더 중요한지 알 수 있음
-  - 0보다 큰 양수일수록 `"moon`"에서 비중이 큼
-  - **0보다 작은 음수일수록 `"park"`에서 비중이 큼**
-  - 0에 가까우면 두 연설문에서 비중 비슷함
+<!-- - 부호와 크기를 보면 단어가 어느 연설문에서 더 중요한지 알 수 있음 -->
+<!--   - 0보다 큰 양수일수록 `"moon`"에서 비중이 큼 -->
+<!--   - **0보다 작은 음수일수록 `"park"`에서 비중이 큼** -->
+<!--   - 0에 가까우면 두 연설문에서 비중 비슷함 -->
 
-```{r R.options=list(tibble.width = Inf, width = 80, pillar.min_chars = Inf)}
-# park에서 비중이 큰 단어
-frequency_wide %>%
-  arrange(log_odds_ratio) #<<
-```
+<!-- ```{r R.options=list(tibble.width = Inf, width = 80, pillar.min_chars = Inf)} -->
+<!-- # park에서 비중이 큰 단어 -->
+<!-- frequency_wide %>% -->
+<!--   arrange(log_odds_ratio) #<< -->
+<!-- ``` -->
 
----
+<!-- --- -->
 
-- 부호와 크기를 보면 단어가 어느 연설문에서 더 중요한지 알 수 있음
-  - 0보다 큰 양수일수록 `"moon`"에서 비중이 큼
-  - 0보다 작은 음수일수록 `"park"`에서 비중이 큼
-  - **0에 가까우면 두 연설문에서 비중 비슷함**
+<!-- - 부호와 크기를 보면 단어가 어느 연설문에서 더 중요한지 알 수 있음 -->
+<!--   - 0보다 큰 양수일수록 `"moon`"에서 비중이 큼 -->
+<!--   - 0보다 작은 음수일수록 `"park"`에서 비중이 큼 -->
+<!--   - **0에 가까우면 두 연설문에서 비중 비슷함** -->
 
-```{r R.options=list(tibble.width = Inf, width = 80, pillar.min_chars = Inf)}
-# 비중이 비슷한 단어
-frequency_wide %>%
-  arrange(abs(log_odds_ratio)) #<<
-```
----
+<!-- ```{r R.options=list(tibble.width = Inf, width = 80, pillar.min_chars = Inf)} -->
+<!-- # 비중이 비슷한 단어 -->
+<!-- frequency_wide %>% -->
+<!--   arrange(abs(log_odds_ratio)) #<< -->
+<!-- ``` -->
+<!-- --- -->
 
-.box[
+<!-- .box[ -->
 
-  .info[`r icon_style(fontawesome("rocket"), fill = "#FF7333")` 로그 오즈비 간단히 구하기]
-
-
-```{r, eval = F}
-frequency_wide <- frequency_wide %>%
-  mutate(log_odds_ratio = log(((moon + 1) / (sum(moon + 1))) /
-                              ((park + 1) / (sum(park + 1)))))
-```
+<!--   .info[`r icon_style(fontawesome("rocket"), fill = "#FF7333")` 로그 오즈비 간단히 구하기] -->
 
 
-]
+<!-- ```{r, eval = F} -->
+<!-- frequency_wide <- frequency_wide %>% -->
+<!--   mutate(log_odds_ratio = log(((moon + 1) / (sum(moon + 1))) / -->
+<!--                               ((park + 1) / (sum(park + 1))))) -->
+<!-- ``` -->
 
----
+
+<!-- ] -->
+
+<!-- --- -->
 
 
 
