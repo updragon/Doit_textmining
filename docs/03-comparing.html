@@ -867,514 +867,955 @@ ggplot(top10, aes(x = reorder_within(word, n, president),
 &lt;img src="03-comparing_files/figure-html/unnamed-chunk-42-1.png" width="100%" /&gt;
 
 ---
-&lt;!-- name: 03-2 --&gt;
-&lt;!-- class: title1 --&gt;
+name: 03-2
+class: title1
 
-&lt;!-- 03-2 오즈비:  --&gt;
-&lt;!-- &lt;br&gt; --&gt;
-&lt;!-- 상대적으로  중요한 단어 비교하기 --&gt;
+03-2 오즈비:
+&lt;br&gt;
+상대적으로  중요한 단어 비교하기
 
-&lt;!-- --- --&gt;
+---
 
-&lt;!-- - 빈도 높은 단어를 비교하면 --&gt;
-&lt;!--   - 어떤 텍스트든 일반적인 단어 빈도 높아 텍스트 차이 잘 드러나지 않음 --&gt;
-&lt;!--      - ex) 연설문: `"우리"`, `"사회"`, `"경제"`, `"일자리"` --&gt;
+- 빈도 높은 단어를 비교하면
+  - 어떤 텍스트든 일반적인 단어 빈도 높아 텍스트 차이 잘 드러나지 않음
+     - ex) 연설문: `"우리"`, `"사회"`, `"경제"`, `"일자리"`
 
 
-&lt;!-- -- --&gt;
+--
 
 
-&lt;!-- - 텍스트의 차이를 알아보려면 --&gt;
-&lt;!--   - 특정 텍스트에는 많이 사용되었지만 다른 텍스트에는 적게 사용된 단어를 살펴봐야함 --&gt;
+- 텍스트의 차이를 알아보려면
+  - 특정 텍스트에는 많이 사용되었지만 다른 텍스트에는 적게 사용된 단어를 살펴봐야함
 
-&lt;!-- --- --&gt;
+---
 
 
-&lt;!-- #### Long form을 Wide form으로 변환하기 --&gt;
+#### Long form을 Wide form으로 변환하기
 
-&lt;!-- - 여러 텍스트 비교하기 편하게 데이터 구조 바꾸기 --&gt;
+- 여러 텍스트 비교하기 편하게 데이터 구조 바꾸기
 
-&lt;!-- - `frequency`: `president`가 `"moon"`인 행과 `"park"`인 행이 세로로 길게 나열된 **long form** --&gt;
+- `frequency`: `president`가 `"moon"`인 행과 `"park"`인 행이 세로로 길게 나열된 **long form**
 
 
-&lt;!-- ##### Long form 데이터 살펴보기 --&gt;
+##### Long form 데이터 살펴보기
 
-&lt;!-- &lt;br-back-20&gt;   --&gt;
-&lt;!-- .scroll-box-18[ --&gt;
-&lt;!-- ```{r} --&gt;
-&lt;!-- df_long &lt;- frequency %&gt;% --&gt;
-&lt;!--   group_by(president) %&gt;% --&gt;
-&lt;!--   slice_max(n, n = 10) %&gt;% --&gt;
-&lt;!--   filter(word %in% c("국민", "우리", "정치", "행복")) --&gt;
+&lt;br-back-20&gt;
+.scroll-box-18[
 
-&lt;!-- df_long --&gt;
-&lt;!-- ``` --&gt;
+```r
+df_long &lt;- frequency %&gt;%
+  group_by(president) %&gt;%
+  slice_max(n, n = 10) %&gt;%
+  filter(word %in% c("국민", "우리", "정치", "행복"))
 
-&lt;!-- ] --&gt;
+df_long
+```
 
-&lt;!-- --- --&gt;
+```
+## # A tibble: 6 x 3
+## # Groups:   president [2]
+##   president word      n
+##   &lt;chr&gt;     &lt;chr&gt; &lt;int&gt;
+## 1 moon      국민     21
+## 2 moon      우리     17
+## 3 moon      정치     12
+## 4 park      국민     72
+## 5 park      행복     23
+## 6 park      우리     10
+```
 
-&lt;!-- ##### Long form 데이터  --&gt;
+]
 
-&lt;!-- - 같은 단어가 범주별로 다른 행을 구성 --&gt;
-&lt;!-- - 범주별 빈도 비교 어려움 --&gt;
-&lt;!-- - 빈도를 활용해 연산하기 불편 --&gt;
+---
 
-&lt;!-- ```{r echo=F} --&gt;
-&lt;!-- df_long --&gt;
-&lt;!-- ``` --&gt;
+##### Long form 데이터
 
+- 같은 단어가 범주별로 다른 행을 구성
+- 범주별 빈도 비교 어려움
+- 빈도를 활용해 연산하기 불편
 
 
-&lt;!-- --- --&gt;
+```
+## # A tibble: 6 x 3
+## # Groups:   president [2]
+##   president word      n
+##   &lt;chr&gt;     &lt;chr&gt; &lt;int&gt;
+## 1 moon      국민     21
+## 2 moon      우리     17
+## 3 moon      정치     12
+## 4 park      국민     72
+## 5 park      행복     23
+## 6 park      우리     10
+```
 
 
-&lt;!-- #### Long form을 Wide form으로 변형하기 --&gt;
 
-&lt;!-- - **wide form**: 가로로 넓은 형태의 데이터 --&gt;
-&lt;!--   - 범주별로 단어 빈도 비교하기 편함 --&gt;
-&lt;!--   - 변수간 연산하기 편함 --&gt;
+---
 
 
-&lt;!-- -- --&gt;
+#### Long form을 Wide form으로 변형하기
 
+- **wide form**: 가로로 넓은 형태의 데이터
+  - 범주별로 단어 빈도 비교하기 편함
+  - 변수간 연산하기 편함
 
-&lt;!-- - `tidyr::pivot_wider()`: long form을 wide form으로 변환 --&gt;
-&lt;!--   - `names_from`: 변수명으로 만들 값이 들어 있는 변수 --&gt;
-&lt;!--   - `values_from`: 변수에 채워넣을 값이 들어 있는 변수 --&gt;
 
-&lt;!-- ```{r eval=F} --&gt;
-&lt;!-- install.packages("tidyr") --&gt;
-&lt;!-- library(tidyr) --&gt;
+--
 
-&lt;!-- df_wide &lt;- df_long %&gt;% --&gt;
-&lt;!--   pivot_wider(names_from = president, --&gt;
-&lt;!--               values_from = n) --&gt;
 
-&lt;!-- df_wide --&gt;
-&lt;!-- ``` --&gt;
+- `tidyr::pivot_wider()`: long form을 wide form으로 변환
+  - `names_from`: 변수명으로 만들 값이 들어 있는 변수
+  - `values_from`: 변수에 채워넣을 값이 들어 있는 변수
 
-&lt;!-- ```{r echo=F} --&gt;
-&lt;!-- # install.packages("tidyr") --&gt;
-&lt;!-- library(tidyr) --&gt;
 
-&lt;!-- df_wide &lt;- df_long %&gt;% --&gt;
-&lt;!--   pivot_wider(names_from = president, --&gt;
-&lt;!--               values_from = n) --&gt;
-&lt;!-- ``` --&gt;
+```r
+install.packages("tidyr")
+library(tidyr)
 
-&lt;!-- --- --&gt;
+df_wide &lt;- df_long %&gt;%
+  pivot_wider(names_from = president,
+              values_from = n)
 
-&lt;!-- ##### Wide form --&gt;
-&lt;!-- - 한 단어가 한 행으로 구성됨 --&gt;
-&lt;!-- - 범주별 단어 빈도 비교하기 쉬움   --&gt;
+df_wide
+```
 
-&lt;!-- ```{r} --&gt;
-&lt;!-- df_wide --&gt;
-&lt;!-- ``` --&gt;
 
 
-&lt;!-- --- --&gt;
+---
 
-&lt;!-- .pull-left[ --&gt;
-&lt;!-- ```{r} --&gt;
-&lt;!-- df_long --&gt;
-&lt;!-- ``` --&gt;
-&lt;!-- ] --&gt;
+##### Wide form
+- 한 단어가 한 행으로 구성됨
+- 범주별 단어 빈도 비교하기 쉬움
 
-&lt;!-- .pull-right[ --&gt;
-&lt;!-- ```{r} --&gt;
-&lt;!-- df_wide --&gt;
-&lt;!-- ``` --&gt;
-&lt;!-- ] --&gt;
 
+```r
+df_wide
+```
 
-&lt;!-- --- --&gt;
+```
+## # A tibble: 4 x 3
+##   word   moon  park
+##   &lt;chr&gt; &lt;int&gt; &lt;int&gt;
+## 1 국민     21    72
+## 2 우리     17    10
+## 3 정치     12    NA
+## 4 행복     NA    23
+```
 
 
+---
 
+.pull-left[
 
-&lt;!-- ##### `NA`를 `0`으로 바꾸기 --&gt;
+```r
+df_long
+```
 
-&lt;!-- - 어떤 단어가 둘 중 한 범주에만 있으면 `NA` --&gt;
-&lt;!-- - 오즈비 계산하기 위해 `0`으로 변환해야 함 --&gt;
+```
+## # A tibble: 6 x 3
+## # Groups:   president [2]
+##   president word      n
+##   &lt;chr&gt;     &lt;chr&gt; &lt;int&gt;
+## 1 moon      국민     21
+## 2 moon      우리     17
+## 3 moon      정치     12
+## 4 park      국민     72
+## 5 park      행복     23
+## 6 park      우리     10
+```
+]
 
-&lt;!-- ```{r} --&gt;
-&lt;!-- df_wide &lt;- df_long %&gt;% --&gt;
-&lt;!--   pivot_wider(names_from = president, --&gt;
-&lt;!--               values_from = n, --&gt;
-&lt;!--               values_fill = list(n = 0)) #&lt;&lt; --&gt;
+.pull-right[
 
-&lt;!-- df_wide --&gt;
-&lt;!-- ``` --&gt;
+```r
+df_wide
+```
 
+```
+## # A tibble: 4 x 3
+##   word   moon  park
+##   &lt;chr&gt; &lt;int&gt; &lt;int&gt;
+## 1 국민     21    72
+## 2 우리     17    10
+## 3 정치     12    NA
+## 4 행복     NA    23
+```
+]
 
-&lt;!-- --- --&gt;
 
-&lt;!-- .pull-left[ --&gt;
+---
 
-&lt;!-- ```{r} --&gt;
-&lt;!-- df_long --&gt;
-&lt;!-- ``` --&gt;
-&lt;!-- ] --&gt;
 
-&lt;!-- .pull-right[ --&gt;
 
-&lt;!-- ```{r} --&gt;
-&lt;!-- df_wide --&gt;
-&lt;!-- ``` --&gt;
-&lt;!-- ] --&gt;
 
-&lt;!-- --- --&gt;
+##### `NA`를 `0`으로 바꾸기
 
-&lt;!-- ##### 연설문 단어 빈도를 Wide form으로 변환하기 --&gt;
+- 어떤 단어가 둘 중 한 범주에만 있으면 `NA`
+- 오즈비 계산하기 위해 `0`으로 변환해야 함
 
 
-&lt;!-- ```{r} --&gt;
-&lt;!-- frequency_wide &lt;- frequency %&gt;% --&gt;
-&lt;!--   pivot_wider(names_from = president, --&gt;
-&lt;!--               values_from = n, --&gt;
-&lt;!--               values_fill = list(n = 0)) --&gt;
+```r
+df_wide &lt;- df_long %&gt;%
+  pivot_wider(names_from = president,
+              values_from = n,
+*             values_fill = list(n = 0))
 
-&lt;!-- frequency_wide --&gt;
-&lt;!-- ``` --&gt;
+df_wide
+```
 
+```
+## # A tibble: 4 x 3
+##   word   moon  park
+##   &lt;chr&gt; &lt;int&gt; &lt;int&gt;
+## 1 국민     21    72
+## 2 우리     17    10
+## 3 정치     12     0
+## 4 행복      0    23
+```
 
-&lt;!-- --- --&gt;
 
+---
 
-&lt;!-- #### 오즈비 구하기 --&gt;
+.pull-left[
 
-&lt;!-- - **오즈비(odds ratio)** --&gt;
-&lt;!--   - 어떤 사건이 A 조건에서 발생할 확률이 B 조건에서 발생할 확률에 비해 얼마나 더 큰지를 나타냄 --&gt;
-&lt;!--   - 단어가 두 텍스트 중 어디에 등장할 확률이 높은지, 상대적인 중요도를 알 수 있음 --&gt;
 
-&lt;!-- -- --&gt;
+```r
+df_long
+```
 
-&lt;!-- &lt;br&gt; --&gt;
+```
+## # A tibble: 6 x 3
+## # Groups:   president [2]
+##   president word      n
+##   &lt;chr&gt;     &lt;chr&gt; &lt;int&gt;
+## 1 moon      국민     21
+## 2 moon      우리     17
+## 3 moon      정치     12
+## 4 park      국민     72
+## 5 park      행복     23
+## 6 park      우리     10
+```
+]
 
-&lt;!-- .pull-left[ --&gt;
+.pull-right[
 
-&lt;!-- $${\large\text{odds ratio} = \frac{\left(\frac{n+1}{\text{total}+1}\right)_\text{Text A}} --&gt;
-&lt;!--                            {\left(\frac{n+1}{\text{total}+1}\right)_\text{Text B}}}$$ --&gt;
 
-&lt;!-- - `\(n\)`: 각 단어의 빈도 --&gt;
-&lt;!-- - `\(\text{total}\)`: 전체 단어 빈도 --&gt;
+```r
+df_wide
+```
 
-&lt;!-- ] --&gt;
+```
+## # A tibble: 4 x 3
+##   word   moon  park
+##   &lt;chr&gt; &lt;int&gt; &lt;int&gt;
+## 1 국민     21    72
+## 2 우리     17    10
+## 3 정치     12     0
+## 4 행복      0    23
+```
+]
 
-&lt;!-- --- --&gt;
+---
 
+##### 연설문 단어 빈도를 Wide form으로 변환하기
 
-&lt;!-- ##### 1. 단어의 비중을 나타낸 변수 추가하기 --&gt;
 
-&lt;!-- - 각 단어가 두 연설문에서 차지하는 비중을 나타낸 변수 --&gt;
-&lt;!-- - 연설문별로 '각 단어의 빈도'를 '모든 단어 빈도의 합'으로 나눔 --&gt;
 
-&lt;!-- ```{r} --&gt;
-&lt;!-- frequency_wide &lt;- frequency_wide %&gt;%  --&gt;
-&lt;!--   mutate(ratio_moon = ((moon)/(sum(moon))),  # moon 에서 단어의 비중 --&gt;
-&lt;!--          ratio_park = ((park)/(sum(park))))  # park 에서 단어의 비중 --&gt;
+```r
+frequency_wide &lt;- frequency %&gt;%
+  pivot_wider(names_from = president,
+              values_from = n,
+              values_fill = list(n = 0))
 
-&lt;!-- frequency_wide --&gt;
+frequency_wide
+```
 
-&lt;!-- ``` --&gt;
+```
+## # A tibble: 955 x 3
+##    word      moon  park
+##    &lt;chr&gt;    &lt;int&gt; &lt;int&gt;
+##  1 가동         1     0
+##  2 가사         1     0
+##  3 가슴         2     0
+##  4 가족         1     1
+##  5 가족구조     1     0
+##  6 가지         4     0
+##  7 가치         3     1
+##  8 각종         1     0
+##  9 감당         1     0
+## 10 강력         3     0
+## # ... with 945 more rows
+```
 
-&lt;!-- --- --&gt;
-&lt;!-- ##### 1. 단어의 비중을 나타낸 변수 추가하기 --&gt;
 
-&lt;!-- - 어떤 단어가 한 연설문에 전혀 사용되지 않으면 빈도 0, 오즈비 0, 단어 비중 비교 불가 --&gt;
-&lt;!--   - 빈도가 0보다 큰 값이 되도록 모든 값에 `+1` --&gt;
+---
 
-&lt;!-- ```{r} --&gt;
-&lt;!-- frequency_wide &lt;- frequency_wide %&gt;% --&gt;
-&lt;!--   mutate(ratio_moon  = ((moon + 1)/(sum(moon + 1))),  # moon에서 단어의 비중 --&gt;
-&lt;!--          ratio_park  = ((park + 1)/(sum(park + 1))))  # park에서 단어의 비중 --&gt;
 
-&lt;!-- frequency_wide --&gt;
-&lt;!-- ``` --&gt;
+#### 오즈비 구하기
 
-&lt;!-- --- --&gt;
+- **오즈비(odds ratio)**
+  - 어떤 사건이 A 조건에서 발생할 확률이 B 조건에서 발생할 확률에 비해 얼마나 더 큰지를 나타냄
+  - 단어가 두 텍스트 중 어디에 등장할 확률이 높은지, 상대적인 중요도를 알 수 있음
 
-&lt;!-- #### 2. 오즈비 변수 추가하기 --&gt;
+--
 
-&lt;!-- - 한 텍스트의 단어 비중을 다른 텍스트의 단어 비중으로 나눔 --&gt;
+&lt;br&gt;
 
-&lt;!-- ```{r} --&gt;
-&lt;!-- frequency_wide &lt;- frequency_wide %&gt;% --&gt;
-&lt;!--   mutate(odds_ratio = ratio_moon/ratio_park) --&gt;
+.pull-left[
 
-&lt;!-- frequency_wide --&gt;
-&lt;!-- ``` --&gt;
+`$${\large\text{odds ratio} = \frac{\left(\frac{n+1}{\text{total}+1}\right)_\text{Text A}}
+                           {\left(\frac{n+1}{\text{total}+1}\right)_\text{Text B}}}$$`
 
-&lt;!-- --- --&gt;
+- `\(n\)`: 각 단어의 빈도
+- `\(\text{total}\)`: 전체 단어 빈도
 
-&lt;!-- - 오즈비를 보면 단어가 어떤 텍스트에서 상대적으로 더 많이 사용됐는지 알 수 있음 --&gt;
-&lt;!--   - **`"moon"`에서 상대적인 비중 클수록 1보다 큰 값** --&gt;
-&lt;!--   - `"park"`에서 상대적인 비중 클수록 1보다 작은 값 --&gt;
-&lt;!--   - 두 연설문에서 단어 비중 같으면 1 --&gt;
+]
 
-&lt;!-- ```{r} --&gt;
-&lt;!-- frequency_wide %&gt;% --&gt;
-&lt;!--   arrange(-odds_ratio) #&lt;&lt; --&gt;
-&lt;!-- ``` --&gt;
+---
 
-&lt;!-- --- --&gt;
 
-&lt;!-- - 오즈비를 보면 단어가 어떤 텍스트에서 상대적으로 더 많이 사용됐는지 알 수 있음 --&gt;
-&lt;!--   - `"moon"`에서 상대적인 비중 클수록 1보다 큰 값 --&gt;
-&lt;!--   - **`"park"`에서 상대적인 비중 클수록 1보다 작은 값** --&gt;
-&lt;!--   - 두 연설문에서 단어 비중 같으면 1 --&gt;
+##### 1. 단어의 비중을 나타낸 변수 추가하기
 
-&lt;!-- ```{r} --&gt;
-&lt;!-- frequency_wide %&gt;% --&gt;
-&lt;!--   arrange(odds_ratio) #&lt;&lt; --&gt;
-&lt;!-- ``` --&gt;
+- 각 단어가 두 연설문에서 차지하는 비중을 나타낸 변수
+- 연설문별로 '각 단어의 빈도'를 '모든 단어 빈도의 합'으로 나눔
 
-&lt;!-- --- --&gt;
 
-&lt;!-- - 오즈비를 보면 단어가 어떤 텍스트에서 상대적으로 더 많이 사용됐는지 알 수 있음 --&gt;
-&lt;!--   - `"moon"`에서 상대적인 비중 클수록 1보다 큰 값 --&gt;
-&lt;!--   - `"park"`에서 상대적인 비중 클수록 1보다 작은 값 --&gt;
-&lt;!--   - **두 연설문에서 단어 비중 같으면 1** --&gt;
+```r
+frequency_wide &lt;- frequency_wide %&gt;%
+  mutate(ratio_moon = ((moon)/(sum(moon))),  # moon 에서 단어의 비중
+         ratio_park = ((park)/(sum(park))))  # park 에서 단어의 비중
 
-&lt;!-- ```{r} --&gt;
-&lt;!-- frequency_wide %&gt;% --&gt;
-&lt;!--   arrange(abs(1 - odds_ratio)) #&lt;&lt; --&gt;
-&lt;!-- ``` --&gt;
+frequency_wide
+```
 
-&lt;!-- --- --&gt;
+```
+## # A tibble: 955 x 5
+##    word      moon  park ratio_moon ratio_park
+##    &lt;chr&gt;    &lt;int&gt; &lt;int&gt;      &lt;dbl&gt;      &lt;dbl&gt;
+##  1 가동         1     0   0.000749    0      
+##  2 가사         1     0   0.000749    0      
+##  3 가슴         2     0   0.00150     0      
+##  4 가족         1     1   0.000749    0.00117
+##  5 가족구조     1     0   0.000749    0      
+##  6 가지         4     0   0.00299     0      
+##  7 가치         3     1   0.00225     0.00117
+##  8 각종         1     0   0.000749    0      
+##  9 감당         1     0   0.000749    0      
+## 10 강력         3     0   0.00225     0      
+## # ... with 945 more rows
+```
 
-&lt;!-- .box[ --&gt;
+---
+##### 1. 단어의 비중을 나타낸 변수 추가하기
 
-&lt;!--   .info[&lt;svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" style="height:1em;position:relative;display:inline-block;top:.1em;fill:#FF7333;"&gt;  [ comment ]  &lt;path d="M505.12019,19.09375c-1.18945-5.53125-6.65819-11-12.207-12.1875C460.716,0,435.507,0,410.40747,0,307.17523,0,245.26909,55.20312,199.05238,128H94.83772c-16.34763.01562-35.55658,11.875-42.88664,26.48438L2.51562,253.29688A28.4,28.4,0,0,0,0,264a24.00867,24.00867,0,0,0,24.00582,24H127.81618l-22.47457,22.46875c-11.36521,11.36133-12.99607,32.25781,0,45.25L156.24582,406.625c11.15623,11.1875,32.15619,13.15625,45.27726,0l22.47457-22.46875V488a24.00867,24.00867,0,0,0,24.00581,24,28.55934,28.55934,0,0,0,10.707-2.51562l98.72834-49.39063c14.62888-7.29687,26.50776-26.5,26.50776-42.85937V312.79688c72.59753-46.3125,128.03493-108.40626,128.03493-211.09376C512.07526,76.5,512.07526,51.29688,505.12019,19.09375ZM384.04033,168A40,40,0,1,1,424.05,128,40.02322,40.02322,0,0,1,384.04033,168Z"&gt;&lt;/path&gt;&lt;/svg&gt; 오즈비 간단히 구하기] --&gt;
+- 어떤 단어가 한 연설문에 전혀 사용되지 않으면 빈도 0, 오즈비 0, 단어 비중 비교 불가
+  - 빈도가 0보다 큰 값이 되도록 모든 값에 `+1`
 
-&lt;!-- ```{r} --&gt;
-&lt;!-- frequency_wide &lt;- frequency_wide %&gt;% --&gt;
-&lt;!--   mutate(odds_ratio = ((moon + 1)/(sum(moon + 1)))/ --&gt;
-&lt;!--                       ((park + 1)/(sum(park + 1)))) --&gt;
-&lt;!-- ``` --&gt;
-&lt;!-- ] --&gt;
 
-&lt;!-- --- --&gt;
+```r
+frequency_wide &lt;- frequency_wide %&gt;%
+  mutate(ratio_moon  = ((moon + 1)/(sum(moon + 1))),  # moon에서 단어의 비중
+         ratio_park  = ((park + 1)/(sum(park + 1))))  # park에서 단어의 비중
 
-&lt;!-- #### 상대적으로 중요한 단어 추출하기 --&gt;
+frequency_wide
+```
 
-&lt;!-- ##### 오즈비가 가장 높거나 가장 낮은 단어 추출하기 --&gt;
-
-&lt;!-- ```{r} --&gt;
-&lt;!-- top10 &lt;- frequency_wide %&gt;% --&gt;
-&lt;!--   filter(rank(odds_ratio) &lt;= 10 | rank(-odds_ratio) &lt;= 10) --&gt;
-&lt;!-- ``` --&gt;
-
-&lt;!-- &lt;br-back-20&gt;   --&gt;
-&lt;!-- .scroll-box-18[ --&gt;
-
-&lt;!-- ```{r} --&gt;
-&lt;!-- top10 %&gt;% --&gt;
-&lt;!--   arrange(-odds_ratio) --&gt;
-&lt;!-- ``` --&gt;
-&lt;!-- ] --&gt;
-
-&lt;!-- --- --&gt;
-
-&lt;!-- - 상위 10개: `"moon"`에서 더 자주 사용되어 `odds_ratio`가 높은 단어 --&gt;
-
-&lt;!-- ```{r echo=F, highlight.output=c(4:13)} --&gt;
-&lt;!-- top10 %&gt;% --&gt;
-&lt;!--   arrange(-odds_ratio) --&gt;
-&lt;!-- ``` --&gt;
-
-&lt;!-- --- --&gt;
-
-&lt;!-- - 하위 10개: `"park"`에서 더 자주 사용되어 `odds_ratio`가 낮은 단어 --&gt;
-
-&lt;!-- ```{r echo=F, highlight.output=c(14:23)} --&gt;
-&lt;!-- top10 %&gt;% --&gt;
-&lt;!--   arrange(-odds_ratio) --&gt;
-&lt;!-- ``` --&gt;
-
-&lt;!-- --- --&gt;
-
-&lt;!-- #### 막대 그래프 만들기 --&gt;
-
-&lt;!-- ##### 1. 비중이 큰 연설문을 나타낸 변수 추가하기 --&gt;
-
-&lt;!-- &lt;br-back-20&gt;   --&gt;
-
-&lt;!-- .scroll-box-22[ --&gt;
-&lt;!-- ```{r R.options=list(tibble.width = Inf, width = 80, pillar.min_chars = Inf)} --&gt;
-&lt;!-- top10 &lt;- top10 %&gt;% --&gt;
-&lt;!--   mutate(president = ifelse(odds_ratio &gt; 1, "moon", "park"), --&gt;
-&lt;!--          n = ifelse(odds_ratio &gt; 1, moon, park)) --&gt;
-
-&lt;!-- top10 --&gt;
-&lt;!-- ``` --&gt;
-&lt;!-- ] --&gt;
-
-&lt;!-- --- --&gt;
-
-
-&lt;!-- &lt;!-- 문자 길이 무제한 설정 --&gt; --&gt;
-&lt;!-- ```{r echo=F, R.options=list(tibble.width = Inf, width = 80, pillar.min_chars = Inf)} --&gt;
-&lt;!-- top10 --&gt;
-&lt;!-- ``` --&gt;
-&lt;!-- --- --&gt;
-
-
-&lt;!-- ##### 2. 막대 그래프 만들기 --&gt;
-
-&lt;!-- ```{r out.width="60%"} --&gt;
-&lt;!-- ggplot(top10, aes(x = reorder_within(word, n, president), --&gt;
-&lt;!--                   y = n, --&gt;
-&lt;!--                   fill = president)) + --&gt;
-&lt;!--   geom_col() + --&gt;
-&lt;!--   coord_flip() + --&gt;
-&lt;!--   facet_wrap(~ president, scales = "free_y") + --&gt;
-&lt;!--   scale_x_reordered() --&gt;
-&lt;!-- ``` --&gt;
-
-
-&lt;!-- --- --&gt;
-
-&lt;!-- - 전반적으로 "park"의 단어 빈도가 높아보임 --&gt;
-&lt;!-- - `"park"`의 `"행복"` 빈도 기준으로 두 그래프의 x축 크기를 똑같이 고정했기 때문 --&gt;
-
-
-&lt;!-- ```{r echo=F, out.width="80%"} --&gt;
-&lt;!-- ggplot(top10, aes(x = reorder_within(word, n, president), --&gt;
-&lt;!--                   y = n, --&gt;
-&lt;!--                   fill = president)) + --&gt;
-&lt;!--   geom_col() + --&gt;
-&lt;!--   coord_flip() + --&gt;
-&lt;!--   facet_wrap(~ president, scales = "free_y") + --&gt;
-&lt;!--   scale_x_reordered() --&gt;
-&lt;!-- ``` --&gt;
-
-&lt;!-- --- --&gt;
-
-&lt;!-- ##### 3. 그래프별로 축 설정하기 --&gt;
-
-&lt;!-- - 범주별로 단어 비중 알 수 있도록 x축 크기 각각 정하기 --&gt;
-
-&lt;!-- ```{r out.width="40%"} --&gt;
-&lt;!-- ggplot(top10, aes(x = reorder_within(word, n, president), --&gt;
-&lt;!--                   y = n, --&gt;
-&lt;!--                   fill = president)) + --&gt;
-&lt;!--   geom_col() + --&gt;
-&lt;!--   coord_flip() + --&gt;
-&lt;!--   facet_wrap(~ president, scales = "free") + #&lt;&lt; --&gt;
-&lt;!--   scale_x_reordered() + --&gt;
-&lt;!--   labs(x = NULL) +                                    # x축 삭제 --&gt;
-&lt;!--   theme(text = element_text(family = "nanumgothic"))  # 폰트 --&gt;
-&lt;!-- ``` --&gt;
-
-&lt;!-- --- --&gt;
-&lt;!-- &lt;svg viewBox="0 0 576 512" xmlns="http://www.w3.org/2000/svg" style="height:1em;position:relative;display:inline-block;top:.1em;fill:#FF7333;"&gt;  [ comment ]  &lt;path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"&gt;&lt;/path&gt;&lt;/svg&gt;  **x축 크기가 그래프마다 다르므로 해석 조심** --&gt;
-&lt;!-- &lt;br-back-10&gt; --&gt;
-&lt;!-- - 막대 길이 같아도 단어 빈도 다름 --&gt;
-&lt;!-- - 두 텍스트 단어 빈도 비교 X --&gt;
-&lt;!-- - 각 텍스트에서 상대적으로 중요한 단어가 무엇인지 중심으로 해석 --&gt;
-
-&lt;!-- ```{r echo=FALSE, out.width="80%"} --&gt;
-&lt;!-- ggplot(top10, aes(x = reorder_within(word, n, president), --&gt;
-&lt;!--                   y = n, --&gt;
-&lt;!--                   fill = president)) + --&gt;
-&lt;!--   geom_col() + --&gt;
-&lt;!--   coord_flip() + --&gt;
-&lt;!--   facet_wrap(~ president, scales = "free") + #&lt;&lt; --&gt;
-&lt;!--   scale_x_reordered() + --&gt;
-&lt;!--   labs(x = NULL) +                                    # x축 삭제 --&gt;
-&lt;!--   theme(text = element_text(family = "nanumgothic"))  # 폰트 --&gt;
-&lt;!-- ``` --&gt;
-
-&lt;!-- --- --&gt;
-
-&lt;!-- #### 주요 단어가 사용된 문장 살펴보기 --&gt;
-
-&lt;!-- ##### 1. 원문을 문장 기준으로 토큰화하기 --&gt;
-
-&lt;!-- &lt;br-back-20&gt;   --&gt;
-&lt;!-- .scroll-box-22[ --&gt;
-
-&lt;!-- ```{r} --&gt;
-&lt;!-- speeches_sentence &lt;- bind_speeches %&gt;% --&gt;
-&lt;!--   as_tibble() %&gt;% --&gt;
-&lt;!--   unnest_tokens(input = value, --&gt;
-&lt;!--                 output = sentence, --&gt;
-&lt;!--                 token = "sentences") --&gt;
-
-&lt;!-- speeches_sentence --&gt;
-&lt;!-- ``` --&gt;
-
-&lt;!-- ] --&gt;
-&lt;!-- --- --&gt;
-
-&lt;!-- ```{r, R.options = list(tibble.width = 50)} --&gt;
-&lt;!-- head(speeches_sentence) --&gt;
-&lt;!-- ``` --&gt;
-
-
-&lt;!-- ```{r, R.options = list(tibble.width = 50)} --&gt;
-&lt;!-- tail(speeches_sentence) --&gt;
-&lt;!-- ``` --&gt;
-
-&lt;!-- --- --&gt;
-
-
-&lt;!-- #### 2. 주요 단어가 사용된 문장 추출하기 - `str_detect()` --&gt;
-
-
-&lt;!-- ```{r, R.options = list(tibble.width = 50)} --&gt;
-&lt;!-- speeches_sentence %&gt;% --&gt;
-&lt;!--   filter(president == "moon" &amp; str_detect(sentence, "복지국가")) --&gt;
-&lt;!-- ``` --&gt;
-
-&lt;!-- --- --&gt;
-
-&lt;!-- #### 2. 주요 단어가 사용된 문장 추출하기 - `str_detect()` --&gt;
-
-&lt;!-- ```{r eval=FALSE} --&gt;
-&lt;!-- speeches_sentence %&gt;% --&gt;
-&lt;!--   filter(president == "park" &amp; str_detect(sentence, "행복")) --&gt;
-&lt;!-- ``` --&gt;
-
-&lt;!-- &lt;br-back-20&gt; --&gt;
-&lt;!-- .scroll-box-20[ --&gt;
-
-&lt;!-- ```{r, echo=FALSE, R.options = list(tibble.width = 50)} --&gt;
-&lt;!-- speeches_sentence %&gt;% --&gt;
-&lt;!--   filter(president == "park" &amp; str_detect(sentence, "행복")) --&gt;
-&lt;!-- ``` --&gt;
-&lt;!-- ] --&gt;
-
-&lt;!-- --- --&gt;
-
-&lt;!-- #### 중요도가 비슷한 단어 살펴보기 --&gt;
-
-&lt;!-- - `odds_ratio`가 1에 가까운 단어 추출 --&gt;
-&lt;!-- - 대부분 보편적인 의미를 지니는 단어 --&gt;
-
-&lt;!-- ```{r} --&gt;
-&lt;!-- frequency_wide %&gt;% --&gt;
-&lt;!--   arrange(abs(1 - odds_ratio)) %&gt;% --&gt;
-&lt;!--   head(10) --&gt;
-&lt;!-- ``` --&gt;
-
-&lt;!-- --- --&gt;
-
-&lt;!-- #### 중요도가 비슷한 단어 살펴보기 --&gt;
-
-&lt;!-- - 중요도가 비슷하면서 빈도가 높은 단어: 두 텍스트에서 모두 강조한 단어 --&gt;
-
-&lt;!-- ```{r} --&gt;
-&lt;!-- frequency_wide %&gt;% --&gt;
-&lt;!--   filter(moon &gt;= 5 &amp; park &gt;= 5) %&gt;% --&gt;
-&lt;!--   arrange(abs(1 - odds_ratio)) %&gt;% --&gt;
-&lt;!--   head(10) --&gt;
-&lt;!-- ``` --&gt;
-
-&lt;!-- --- --&gt;
+```
+## # A tibble: 955 x 5
+##    word      moon  park ratio_moon ratio_park
+##    &lt;chr&gt;    &lt;int&gt; &lt;int&gt;      &lt;dbl&gt;      &lt;dbl&gt;
+##  1 가동         1     0   0.000873   0.000552
+##  2 가사         1     0   0.000873   0.000552
+##  3 가슴         2     0   0.00131    0.000552
+##  4 가족         1     1   0.000873   0.00110 
+##  5 가족구조     1     0   0.000873   0.000552
+##  6 가지         4     0   0.00218    0.000552
+##  7 가치         3     1   0.00175    0.00110 
+##  8 각종         1     0   0.000873   0.000552
+##  9 감당         1     0   0.000873   0.000552
+## 10 강력         3     0   0.00175    0.000552
+## # ... with 945 more rows
+```
+
+---
+
+#### 2. 오즈비 변수 추가하기
+
+- 한 텍스트의 단어 비중을 다른 텍스트의 단어 비중으로 나눔
+
+
+```r
+frequency_wide &lt;- frequency_wide %&gt;%
+  mutate(odds_ratio = ratio_moon/ratio_park)
+
+frequency_wide
+```
+
+```
+## # A tibble: 955 x 6
+##    word      moon  park ratio_moon ratio_park odds_ratio
+##    &lt;chr&gt;    &lt;int&gt; &lt;int&gt;      &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;
+##  1 가동         1     0   0.000873   0.000552      1.58 
+##  2 가사         1     0   0.000873   0.000552      1.58 
+##  3 가슴         2     0   0.00131    0.000552      2.37 
+##  4 가족         1     1   0.000873   0.00110       0.791
+##  5 가족구조     1     0   0.000873   0.000552      1.58 
+##  6 가지         4     0   0.00218    0.000552      3.96 
+##  7 가치         3     1   0.00175    0.00110       1.58 
+##  8 각종         1     0   0.000873   0.000552      1.58 
+##  9 감당         1     0   0.000873   0.000552      1.58 
+## 10 강력         3     0   0.00175    0.000552      3.17 
+## # ... with 945 more rows
+```
+
+---
+
+- 오즈비를 보면 단어가 어떤 텍스트에서 상대적으로 더 많이 사용됐는지 알 수 있음
+  - **`"moon"`에서 상대적인 비중 클수록 1보다 큰 값**
+  - `"park"`에서 상대적인 비중 클수록 1보다 작은 값
+  - 두 연설문에서 단어 비중 같으면 1
+
+
+```r
+frequency_wide %&gt;%
+* arrange(-odds_ratio)
+```
+
+```
+## # A tibble: 955 x 6
+##    word      moon  park ratio_moon ratio_park odds_ratio
+##    &lt;chr&gt;    &lt;int&gt; &lt;int&gt;      &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;
+##  1 복지국가     8     0    0.00393   0.000552       7.12
+##  2 세상         6     0    0.00306   0.000552       5.54
+##  3 여성         6     0    0.00306   0.000552       5.54
+##  4 정의         6     0    0.00306   0.000552       5.54
+##  5 강자         5     0    0.00262   0.000552       4.75
+##  6 공평         5     0    0.00262   0.000552       4.75
+##  7 대통령의     5     0    0.00262   0.000552       4.75
+##  8 보통         5     0    0.00262   0.000552       4.75
+##  9 상생         5     0    0.00262   0.000552       4.75
+## 10 지방         5     0    0.00262   0.000552       4.75
+## # ... with 945 more rows
+```
+
+---
+
+- 오즈비를 보면 단어가 어떤 텍스트에서 상대적으로 더 많이 사용됐는지 알 수 있음
+  - `"moon"`에서 상대적인 비중 클수록 1보다 큰 값
+  - **`"park"`에서 상대적인 비중 클수록 1보다 작은 값**
+  - 두 연설문에서 단어 비중 같으면 1
+
+
+```r
+frequency_wide %&gt;%
+* arrange(odds_ratio)
+```
+
+```
+## # A tibble: 955 x 6
+##    word      moon  park ratio_moon ratio_park odds_ratio
+##    &lt;chr&gt;    &lt;int&gt; &lt;int&gt;      &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;
+##  1 박근혜       0     8   0.000436    0.00496     0.0879
+##  2 여러분       2    20   0.00131     0.0116      0.113 
+##  3 행복         3    23   0.00175     0.0132      0.132 
+##  4 실천         0     5   0.000436    0.00331     0.132 
+##  5 정보         0     5   0.000436    0.00331     0.132 
+##  6 투명         0     5   0.000436    0.00331     0.132 
+##  7 과제         0     4   0.000436    0.00276     0.158 
+##  8 국정운영     0     4   0.000436    0.00276     0.158 
+##  9 시작         0     4   0.000436    0.00276     0.158 
+## 10 지식         0     4   0.000436    0.00276     0.158 
+## # ... with 945 more rows
+```
+
+---
+
+- 오즈비를 보면 단어가 어떤 텍스트에서 상대적으로 더 많이 사용됐는지 알 수 있음
+  - `"moon"`에서 상대적인 비중 클수록 1보다 큰 값
+  - `"park"`에서 상대적인 비중 클수록 1보다 작은 값
+  - **두 연설문에서 단어 비중 같으면 1**
+
+
+```r
+frequency_wide %&gt;%
+* arrange(abs(1 - odds_ratio))
+```
+
+```
+## # A tibble: 955 x 6
+##    word    moon  park ratio_moon ratio_park odds_ratio
+##    &lt;chr&gt;  &lt;int&gt; &lt;int&gt;      &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;
+##  1 때문       4     3    0.00218    0.00221      0.989
+##  2 강화       3     2    0.00175    0.00165      1.06 
+##  3 부담       3     2    0.00175    0.00165      1.06 
+##  4 세계       3     2    0.00175    0.00165      1.06 
+##  5 책임       3     2    0.00175    0.00165      1.06 
+##  6 협력       3     2    0.00175    0.00165      1.06 
+##  7 거대       2     1    0.00131    0.00110      1.19 
+##  8 교체       2     1    0.00131    0.00110      1.19 
+##  9 근본적     2     1    0.00131    0.00110      1.19 
+## 10 기반       2     1    0.00131    0.00110      1.19 
+## # ... with 945 more rows
+```
+
+---
+
+.box[
+
+  .info[&lt;svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" style="height:1em;position:relative;display:inline-block;top:.1em;fill:#FF7333;"&gt;  [ comment ]  &lt;path d="M505.12019,19.09375c-1.18945-5.53125-6.65819-11-12.207-12.1875C460.716,0,435.507,0,410.40747,0,307.17523,0,245.26909,55.20312,199.05238,128H94.83772c-16.34763.01562-35.55658,11.875-42.88664,26.48438L2.51562,253.29688A28.4,28.4,0,0,0,0,264a24.00867,24.00867,0,0,0,24.00582,24H127.81618l-22.47457,22.46875c-11.36521,11.36133-12.99607,32.25781,0,45.25L156.24582,406.625c11.15623,11.1875,32.15619,13.15625,45.27726,0l22.47457-22.46875V488a24.00867,24.00867,0,0,0,24.00581,24,28.55934,28.55934,0,0,0,10.707-2.51562l98.72834-49.39063c14.62888-7.29687,26.50776-26.5,26.50776-42.85937V312.79688c72.59753-46.3125,128.03493-108.40626,128.03493-211.09376C512.07526,76.5,512.07526,51.29688,505.12019,19.09375ZM384.04033,168A40,40,0,1,1,424.05,128,40.02322,40.02322,0,0,1,384.04033,168Z"&gt;&lt;/path&gt;&lt;/svg&gt; 오즈비 간단히 구하기]
+
+
+```r
+frequency_wide &lt;- frequency_wide %&gt;%
+  mutate(odds_ratio = ((moon + 1)/(sum(moon + 1)))/
+                      ((park + 1)/(sum(park + 1))))
+```
+]
+
+---
+
+#### 상대적으로 중요한 단어 추출하기
+
+##### 오즈비가 가장 높거나 가장 낮은 단어 추출하기
+
+
+```r
+top10 &lt;- frequency_wide %&gt;%
+  filter(rank(odds_ratio) &lt;= 10 | rank(-odds_ratio) &lt;= 10)
+```
+
+&lt;br-back-20&gt;
+.scroll-box-18[
+
+
+```r
+top10 %&gt;%
+  arrange(-odds_ratio)
+```
+
+```
+## # A tibble: 20 x 6
+##    word      moon  park ratio_moon ratio_park odds_ratio
+##    &lt;chr&gt;    &lt;int&gt; &lt;int&gt;      &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;
+##  1 복지국가     8     0   0.00393    0.000552     7.12  
+##  2 세상         6     0   0.00306    0.000552     5.54  
+##  3 여성         6     0   0.00306    0.000552     5.54  
+##  4 정의         6     0   0.00306    0.000552     5.54  
+##  5 강자         5     0   0.00262    0.000552     4.75  
+##  6 공평         5     0   0.00262    0.000552     4.75  
+##  7 대통령의     5     0   0.00262    0.000552     4.75  
+##  8 보통         5     0   0.00262    0.000552     4.75  
+##  9 상생         5     0   0.00262    0.000552     4.75  
+## 10 지방         5     0   0.00262    0.000552     4.75  
+## 11 과제         0     4   0.000436   0.00276      0.158 
+## 12 국정운영     0     4   0.000436   0.00276      0.158 
+## 13 시작         0     4   0.000436   0.00276      0.158 
+## 14 지식         0     4   0.000436   0.00276      0.158 
+## 15 행복         3    23   0.00175    0.0132       0.132 
+## 16 실천         0     5   0.000436   0.00331      0.132 
+## 17 정보         0     5   0.000436   0.00331      0.132 
+## 18 투명         0     5   0.000436   0.00331      0.132 
+## 19 여러분       2    20   0.00131    0.0116       0.113 
+## 20 박근혜       0     8   0.000436   0.00496      0.0879
+```
+]
+
+---
+
+- 상위 10개: `"moon"`에서 더 자주 사용되어 `odds_ratio`가 높은 단어
+
+
+```
+## # A tibble: 20 x 6
+##    word      moon  park ratio_moon ratio_park odds_ratio
+##    &lt;chr&gt;    &lt;int&gt; &lt;int&gt;      &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;
+*##  1 복지국가     8     0   0.00393    0.000552     7.12  
+*##  2 세상         6     0   0.00306    0.000552     5.54  
+*##  3 여성         6     0   0.00306    0.000552     5.54  
+*##  4 정의         6     0   0.00306    0.000552     5.54  
+*##  5 강자         5     0   0.00262    0.000552     4.75  
+*##  6 공평         5     0   0.00262    0.000552     4.75  
+*##  7 대통령의     5     0   0.00262    0.000552     4.75  
+*##  8 보통         5     0   0.00262    0.000552     4.75  
+*##  9 상생         5     0   0.00262    0.000552     4.75  
+*## 10 지방         5     0   0.00262    0.000552     4.75  
+## 11 과제         0     4   0.000436   0.00276      0.158 
+## 12 국정운영     0     4   0.000436   0.00276      0.158 
+## 13 시작         0     4   0.000436   0.00276      0.158 
+## 14 지식         0     4   0.000436   0.00276      0.158 
+## 15 행복         3    23   0.00175    0.0132       0.132 
+## 16 실천         0     5   0.000436   0.00331      0.132 
+## 17 정보         0     5   0.000436   0.00331      0.132 
+## 18 투명         0     5   0.000436   0.00331      0.132 
+## 19 여러분       2    20   0.00131    0.0116       0.113 
+## 20 박근혜       0     8   0.000436   0.00496      0.0879
+```
+
+---
+
+- 하위 10개: `"park"`에서 더 자주 사용되어 `odds_ratio`가 낮은 단어
+
+
+```
+## # A tibble: 20 x 6
+##    word      moon  park ratio_moon ratio_park odds_ratio
+##    &lt;chr&gt;    &lt;int&gt; &lt;int&gt;      &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;
+##  1 복지국가     8     0   0.00393    0.000552     7.12  
+##  2 세상         6     0   0.00306    0.000552     5.54  
+##  3 여성         6     0   0.00306    0.000552     5.54  
+##  4 정의         6     0   0.00306    0.000552     5.54  
+##  5 강자         5     0   0.00262    0.000552     4.75  
+##  6 공평         5     0   0.00262    0.000552     4.75  
+##  7 대통령의     5     0   0.00262    0.000552     4.75  
+##  8 보통         5     0   0.00262    0.000552     4.75  
+##  9 상생         5     0   0.00262    0.000552     4.75  
+## 10 지방         5     0   0.00262    0.000552     4.75  
+*## 11 과제         0     4   0.000436   0.00276      0.158 
+*## 12 국정운영     0     4   0.000436   0.00276      0.158 
+*## 13 시작         0     4   0.000436   0.00276      0.158 
+*## 14 지식         0     4   0.000436   0.00276      0.158 
+*## 15 행복         3    23   0.00175    0.0132       0.132 
+*## 16 실천         0     5   0.000436   0.00331      0.132 
+*## 17 정보         0     5   0.000436   0.00331      0.132 
+*## 18 투명         0     5   0.000436   0.00331      0.132 
+*## 19 여러분       2    20   0.00131    0.0116       0.113 
+*## 20 박근혜       0     8   0.000436   0.00496      0.0879
+```
+
+---
+
+#### 막대 그래프 만들기
+
+##### 1. 비중이 큰 연설문을 나타낸 변수 추가하기
+
+&lt;br-back-20&gt;
+
+.scroll-box-22[
+
+```r
+top10 &lt;- top10 %&gt;%
+  mutate(president = ifelse(odds_ratio &gt; 1, "moon", "park"),
+         n = ifelse(odds_ratio &gt; 1, moon, park))
+
+top10
+```
+
+```
+## # A tibble: 20 x 8
+##    word      moon  park ratio_moon ratio_park odds_ratio president     n
+##    &lt;chr&gt;    &lt;int&gt; &lt;int&gt;      &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt; &lt;chr&gt;     &lt;int&gt;
+##  1 강자         5     0   0.00262    0.000552     4.75   moon          5
+##  2 공평         5     0   0.00262    0.000552     4.75   moon          5
+##  3 대통령의     5     0   0.00262    0.000552     4.75   moon          5
+##  4 보통         5     0   0.00262    0.000552     4.75   moon          5
+##  5 복지국가     8     0   0.00393    0.000552     7.12   moon          8
+##  6 상생         5     0   0.00262    0.000552     4.75   moon          5
+##  7 세상         6     0   0.00306    0.000552     5.54   moon          6
+##  8 여러분       2    20   0.00131    0.0116       0.113  park         20
+##  9 여성         6     0   0.00306    0.000552     5.54   moon          6
+## 10 정의         6     0   0.00306    0.000552     5.54   moon          6
+## 11 지방         5     0   0.00262    0.000552     4.75   moon          5
+## 12 행복         3    23   0.00175    0.0132       0.132  park         23
+## 13 과제         0     4   0.000436   0.00276      0.158  park          4
+## 14 국정운영     0     4   0.000436   0.00276      0.158  park          4
+## 15 박근혜       0     8   0.000436   0.00496      0.0879 park          8
+## 16 시작         0     4   0.000436   0.00276      0.158  park          4
+## 17 실천         0     5   0.000436   0.00331      0.132  park          5
+## 18 정보         0     5   0.000436   0.00331      0.132  park          5
+## 19 지식         0     4   0.000436   0.00276      0.158  park          4
+## 20 투명         0     5   0.000436   0.00331      0.132  park          5
+```
+]
+
+---
+
+
+&lt;!-- 문자 길이 무제한 설정 --&gt;
+
+```
+## # A tibble: 20 x 8
+##    word      moon  park ratio_moon ratio_park odds_ratio president     n
+##    &lt;chr&gt;    &lt;int&gt; &lt;int&gt;      &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt; &lt;chr&gt;     &lt;int&gt;
+##  1 강자         5     0   0.00262    0.000552     4.75   moon          5
+##  2 공평         5     0   0.00262    0.000552     4.75   moon          5
+##  3 대통령의     5     0   0.00262    0.000552     4.75   moon          5
+##  4 보통         5     0   0.00262    0.000552     4.75   moon          5
+##  5 복지국가     8     0   0.00393    0.000552     7.12   moon          8
+##  6 상생         5     0   0.00262    0.000552     4.75   moon          5
+##  7 세상         6     0   0.00306    0.000552     5.54   moon          6
+##  8 여러분       2    20   0.00131    0.0116       0.113  park         20
+##  9 여성         6     0   0.00306    0.000552     5.54   moon          6
+## 10 정의         6     0   0.00306    0.000552     5.54   moon          6
+## 11 지방         5     0   0.00262    0.000552     4.75   moon          5
+## 12 행복         3    23   0.00175    0.0132       0.132  park         23
+## 13 과제         0     4   0.000436   0.00276      0.158  park          4
+## 14 국정운영     0     4   0.000436   0.00276      0.158  park          4
+## 15 박근혜       0     8   0.000436   0.00496      0.0879 park          8
+## 16 시작         0     4   0.000436   0.00276      0.158  park          4
+## 17 실천         0     5   0.000436   0.00331      0.132  park          5
+## 18 정보         0     5   0.000436   0.00331      0.132  park          5
+## 19 지식         0     4   0.000436   0.00276      0.158  park          4
+## 20 투명         0     5   0.000436   0.00331      0.132  park          5
+```
+---
+
+
+##### 2. 막대 그래프 만들기
+
+
+```r
+ggplot(top10, aes(x = reorder_within(word, n, president),
+                  y = n,
+                  fill = president)) +
+  geom_col() +
+  coord_flip() +
+  facet_wrap(~ president, scales = "free_y") +
+  scale_x_reordered()
+```
+
+&lt;img src="03-comparing_files/figure-html/unnamed-chunk-67-1.png" width="60%" /&gt;
+
+
+---
+
+- 전반적으로 "park"의 단어 빈도가 높아보임
+- `"park"`의 `"행복"` 빈도 기준으로 두 그래프의 x축 크기를 똑같이 고정했기 때문
+
+
+&lt;img src="03-comparing_files/figure-html/unnamed-chunk-68-1.png" width="80%" /&gt;
+
+---
+
+##### 3. 그래프별로 축 설정하기
+
+- 범주별로 단어 비중 알 수 있도록 x축 크기 각각 정하기
+
+
+```r
+ggplot(top10, aes(x = reorder_within(word, n, president),
+                  y = n,
+                  fill = president)) +
+  geom_col() +
+  coord_flip() +
+* facet_wrap(~ president, scales = "free") +
+  scale_x_reordered() +
+  labs(x = NULL) +                                    # x축 삭제
+  theme(text = element_text(family = "nanumgothic"))  # 폰트
+```
+
+&lt;img src="03-comparing_files/figure-html/unnamed-chunk-69-1.png" width="40%" /&gt;
+
+---
+&lt;svg viewBox="0 0 576 512" xmlns="http://www.w3.org/2000/svg" style="height:1em;position:relative;display:inline-block;top:.1em;fill:#FF7333;"&gt;  [ comment ]  &lt;path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"&gt;&lt;/path&gt;&lt;/svg&gt;  **x축 크기가 그래프마다 다르므로 해석 조심**
+&lt;br-back-10&gt;
+- 막대 길이 같아도 단어 빈도 다름
+- 두 텍스트 단어 빈도 비교 X
+- 각 텍스트에서 상대적으로 중요한 단어가 무엇인지 중심으로 해석
+
+&lt;img src="03-comparing_files/figure-html/unnamed-chunk-70-1.png" width="80%" /&gt;
+
+---
+
+#### 주요 단어가 사용된 문장 살펴보기
+
+##### 1. 원문을 문장 기준으로 토큰화하기
+
+&lt;br-back-20&gt;
+.scroll-box-22[
+
+
+```r
+speeches_sentence &lt;- bind_speeches %&gt;%
+  as_tibble() %&gt;%
+  unnest_tokens(input = value,
+                output = sentence,
+                token = "sentences")
+
+speeches_sentence
+```
+
+```
+## # A tibble: 329 x 2
+##    president sentence                                                 
+##    &lt;chr&gt;     &lt;chr&gt;                                                    
+##  1 moon      "정권교체 하겠습니다!"                                   
+##  2 moon      "정치교체 하겠습니다!"                                   
+##  3 moon      "시대교체 하겠습니다!"                                   
+##  4 moon      ""                                                       
+##  5 moon      "‘불비불명(不飛不鳴)’이라는 고사가 있습니다."            
+##  6 moon      "남쪽 언덕 나뭇가지에 앉아, 3년 동안 날지도 울지도 않는 새."~
+##  7 moon      "그러나 그 새는 한번 날면 하늘 끝까지 날고, 한번 울면 천지를 뒤흔듭니다."~
+##  8 moon      "그 동안 정치와 거리를 둬 왔습니다."                     
+##  9 moon      "그러나 암울한 시대가 저를 정치로 불러냈습니다."         
+## 10 moon      "더 이상 남쪽 나뭇가지에 머무를 수 없었습니다."          
+## # ... with 319 more rows
+```
+
+]
+---
+
+
+```r
+head(speeches_sentence)
+```
+
+```
+## # A tibble: 6 x 2
+##   president sentence                              
+##   &lt;chr&gt;     &lt;chr&gt;                                 
+## 1 moon      "정권교체 하겠습니다!"                
+## 2 moon      "정치교체 하겠습니다!"                
+## 3 moon      "시대교체 하겠습니다!"                
+## 4 moon      ""                                    
+## 5 moon      "‘불비불명(不飛不鳴)’이라는 고사가 있습니다."~
+## 6 moon      "남쪽 언덕 나뭇가지에 앉아, 3년 동안 날지도 울지도 않는 새."~
+```
+
+
+
+```r
+tail(speeches_sentence)
+```
+
+```
+## # A tibble: 6 x 2
+##   president sentence                              
+##   &lt;chr&gt;     &lt;chr&gt;                                 
+## 1 park      국민 여러분의 행복이 곧 저의 행복입니다.~
+## 2 park      사랑하는 조국 대한민국과 국민 여러분을 위해, 앞으로 머나 먼 길,~
+## 3 park      그 길을 함께 해주시길 부탁드립니다.   
+## 4 park      감사합니다.                           
+## 5 park      2012년 7월 10일                       
+## 6 park      새누리당 예비후보 박근혜
+```
+
+---
+
+
+#### 2. 주요 단어가 사용된 문장 추출하기 - `str_detect()`
+
+
+
+```r
+speeches_sentence %&gt;%
+  filter(president == "moon" &amp; str_detect(sentence, "복지국가"))
+```
+
+```
+## # A tibble: 8 x 2
+##   president sentence                              
+##   &lt;chr&gt;     &lt;chr&gt;                                 
+## 1 moon      ‘강한 복지국가’를 향해 담대하게 나아가겠습니다.~
+## 2 moon      2백 년 전 이와 같은 소득재분배, 복지국가의 사상을 가진 위정자가~
+## 3 moon      이제 우리는 복지국가를 향해 담대하게 나아갈 때입니다.~
+## 4 moon      부자감세, 4대강 사업 같은 시대착오적 과오를 청산하고, 하루빨리 ~
+## 5 moon      우리는 지금 복지국가로 가느냐, 양극화의 분열된 국가로 가느냐 하는~
+## 6 moon      강한 복지국가일수록 국가 경쟁력도 더 높습니다.~
+## 7 moon      결국 복지국가로 가는 길은 사람에 대한 투자, 일자리 창출, 자영업~
+## 8 moon      우리는 과감히 강한 보편적 복지국가로 가야 합니다.~
+```
+
+---
+
+#### 2. 주요 단어가 사용된 문장 추출하기 - `str_detect()`
+
+
+```r
+speeches_sentence %&gt;%
+  filter(president == "park" &amp; str_detect(sentence, "행복"))
+```
+
+&lt;br-back-20&gt;
+.scroll-box-20[
+
+
+```
+## # A tibble: 19 x 2
+##    president sentence                             
+##    &lt;chr&gt;     &lt;chr&gt;                                
+##  1 park      저는 오늘, 국민 한 분 한 분의 꿈이 이루어지는 행복한 대한민국~
+##  2 park      국가는 발전했고, 경제는 성장했다는데, 나의 삶은 나아지지 않았고~
+##  3 park      과거에는 국가의 발전이 국민의 행복으로 이어졌습니다.~
+##  4 park      개인의 창의력이 중요한 지식기반사회에서는 국민 한 사람, 한 사람~
+##  5 park      이제 국정운영의 패러다임을 국가에서 국민으로, 개인의 삶과 행복 ~
+##  6 park      국민 개개인의 꿈을 향한 노력이 국가를 발전시키고 국가 발전이 국~
+##  7 park      저는 ‘경제민주화 실현’, ‘일자리 창출’, 그리고 ‘한국형 복지~
+##  8 park      국민행복의 길을 열어갈 첫 번째 과제로, 저는 경제민주화를 통해 ~
+##  9 park      국민행복의 길을 열어갈 두 번째 과제로, 저는 좋은 일자리 창출을~
+## 10 park      국민행복의 길을 열어갈 세 번째 과제로, 우리의 실정에 맞으면서 ~
+## 11 park      저는 국민행복을 위해 ‘경제민주화-일자리-복지’를 아우르는 (가칭~
+## 12 park      모든 계층의 국민이 함께 참여해 만들고, 정부와 기업, 지역사회가~
+## 13 park      50년 전 경제개발 5개년 계획이 산업화의 기적을 이뤄냈듯,‘오천~
+## 14 park      저는 지속가능한 국민 행복을 만들 수 있도록,사람에 대한 투자를 ~
+## 15 park      저 박근혜, 경쟁과 입시에 매몰된 교육을‘함께하는 행복교육’으로 ~
+## 16 park      존경하는 국민여러분, 국민행복을 위한 노력이 안정적으로 이루어지기~
+## 17 park      국민 여러분, 국민행복의 꿈을 이뤄내기 위해서는, 먼저 정부부터 ~
+## 18 park      국민들이 꿈으로만 가졌던 행복한 삶을 실제로 이룰 수 있도록 도와~
+## 19 park      국민 여러분의 행복이 곧 저의 행복입니다.~
+```
+]
+
+---
+
+#### 중요도가 비슷한 단어 살펴보기
+
+- `odds_ratio`가 1에 가까운 단어 추출
+- 대부분 보편적인 의미를 지니는 단어
+
+
+```r
+frequency_wide %&gt;%
+  arrange(abs(1 - odds_ratio)) %&gt;%
+  head(10)
+```
+
+```
+## # A tibble: 10 x 6
+##    word    moon  park ratio_moon ratio_park odds_ratio
+##    &lt;chr&gt;  &lt;int&gt; &lt;int&gt;      &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;
+##  1 때문       4     3    0.00218    0.00221      0.989
+##  2 강화       3     2    0.00175    0.00165      1.06 
+##  3 부담       3     2    0.00175    0.00165      1.06 
+##  4 세계       3     2    0.00175    0.00165      1.06 
+##  5 책임       3     2    0.00175    0.00165      1.06 
+##  6 협력       3     2    0.00175    0.00165      1.06 
+##  7 거대       2     1    0.00131    0.00110      1.19 
+##  8 교체       2     1    0.00131    0.00110      1.19 
+##  9 근본적     2     1    0.00131    0.00110      1.19 
+## 10 기반       2     1    0.00131    0.00110      1.19
+```
+
+---
+
+#### 중요도가 비슷한 단어 살펴보기
+
+- 중요도가 비슷하면서 빈도가 높은 단어: 두 텍스트에서 모두 강조한 단어
+
+
+```r
+frequency_wide %&gt;%
+  filter(moon &gt;= 5 &amp; park &gt;= 5) %&gt;%
+  arrange(abs(1 - odds_ratio)) %&gt;%
+  head(10)
+```
+
+```
+## # A tibble: 10 x 6
+##    word      moon  park ratio_moon ratio_park odds_ratio
+##    &lt;chr&gt;    &lt;int&gt; &lt;int&gt;      &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;
+##  1 사회        14     9    0.00655    0.00552      1.19 
+##  2 사람         9     9    0.00436    0.00552      0.791
+##  3 경제        15    15    0.00698    0.00883      0.791
+##  4 지원         5     5    0.00262    0.00331      0.791
+##  5 우리        17    10    0.00786    0.00607      1.29 
+##  6 불안         7     8    0.00349    0.00496      0.703
+##  7 산업         9     5    0.00436    0.00331      1.32 
+##  8 대한민국    11     6    0.00524    0.00386      1.36 
+##  9 국가         7    10    0.00349    0.00607      0.576
+## 10 교육         6     9    0.00306    0.00552      0.554
+```
+
+---
 
 &lt;!-- name: 03-3 --&gt;
 &lt;!-- class: title1 --&gt;

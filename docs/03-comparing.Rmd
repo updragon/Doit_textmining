@@ -703,514 +703,514 @@ ggplot(top10, aes(x = reorder_within(word, n, president),
 ```
 
 ---
-<!-- name: 03-2 -->
-<!-- class: title1 -->
+name: 03-2
+class: title1
 
-<!-- 03-2 오즈비:  -->
-<!-- <br> -->
-<!-- 상대적으로  중요한 단어 비교하기 -->
+03-2 오즈비:
+<br>
+상대적으로  중요한 단어 비교하기
 
-<!-- --- -->
+---
 
-<!-- - 빈도 높은 단어를 비교하면 -->
-<!--   - 어떤 텍스트든 일반적인 단어 빈도 높아 텍스트 차이 잘 드러나지 않음 -->
-<!--      - ex) 연설문: `"우리"`, `"사회"`, `"경제"`, `"일자리"` -->
+- 빈도 높은 단어를 비교하면
+  - 어떤 텍스트든 일반적인 단어 빈도 높아 텍스트 차이 잘 드러나지 않음
+     - ex) 연설문: `"우리"`, `"사회"`, `"경제"`, `"일자리"`
 
 
-<!-- -- -->
+--
 
 
-<!-- - 텍스트의 차이를 알아보려면 -->
-<!--   - 특정 텍스트에는 많이 사용되었지만 다른 텍스트에는 적게 사용된 단어를 살펴봐야함 -->
+- 텍스트의 차이를 알아보려면
+  - 특정 텍스트에는 많이 사용되었지만 다른 텍스트에는 적게 사용된 단어를 살펴봐야함
 
-<!-- --- -->
+---
 
 
-<!-- #### Long form을 Wide form으로 변환하기 -->
+#### Long form을 Wide form으로 변환하기
 
-<!-- - 여러 텍스트 비교하기 편하게 데이터 구조 바꾸기 -->
+- 여러 텍스트 비교하기 편하게 데이터 구조 바꾸기
 
-<!-- - `frequency`: `president`가 `"moon"`인 행과 `"park"`인 행이 세로로 길게 나열된 **long form** -->
+- `frequency`: `president`가 `"moon"`인 행과 `"park"`인 행이 세로로 길게 나열된 **long form**
 
 
-<!-- ##### Long form 데이터 살펴보기 -->
+##### Long form 데이터 살펴보기
 
-<!-- <br-back-20>   -->
-<!-- .scroll-box-18[ -->
-<!-- ```{r} -->
-<!-- df_long <- frequency %>% -->
-<!--   group_by(president) %>% -->
-<!--   slice_max(n, n = 10) %>% -->
-<!--   filter(word %in% c("국민", "우리", "정치", "행복")) -->
+<br-back-20>
+.scroll-box-18[
+```{r}
+df_long <- frequency %>%
+  group_by(president) %>%
+  slice_max(n, n = 10) %>%
+  filter(word %in% c("국민", "우리", "정치", "행복"))
 
-<!-- df_long -->
-<!-- ``` -->
+df_long
+```
 
-<!-- ] -->
+]
 
-<!-- --- -->
+---
 
-<!-- ##### Long form 데이터  -->
+##### Long form 데이터
 
-<!-- - 같은 단어가 범주별로 다른 행을 구성 -->
-<!-- - 범주별 빈도 비교 어려움 -->
-<!-- - 빈도를 활용해 연산하기 불편 -->
+- 같은 단어가 범주별로 다른 행을 구성
+- 범주별 빈도 비교 어려움
+- 빈도를 활용해 연산하기 불편
 
-<!-- ```{r echo=F} -->
-<!-- df_long -->
-<!-- ``` -->
+```{r echo=F}
+df_long
+```
 
 
 
-<!-- --- -->
+---
 
 
-<!-- #### Long form을 Wide form으로 변형하기 -->
+#### Long form을 Wide form으로 변형하기
 
-<!-- - **wide form**: 가로로 넓은 형태의 데이터 -->
-<!--   - 범주별로 단어 빈도 비교하기 편함 -->
-<!--   - 변수간 연산하기 편함 -->
+- **wide form**: 가로로 넓은 형태의 데이터
+  - 범주별로 단어 빈도 비교하기 편함
+  - 변수간 연산하기 편함
 
 
-<!-- -- -->
+--
 
 
-<!-- - `tidyr::pivot_wider()`: long form을 wide form으로 변환 -->
-<!--   - `names_from`: 변수명으로 만들 값이 들어 있는 변수 -->
-<!--   - `values_from`: 변수에 채워넣을 값이 들어 있는 변수 -->
+- `tidyr::pivot_wider()`: long form을 wide form으로 변환
+  - `names_from`: 변수명으로 만들 값이 들어 있는 변수
+  - `values_from`: 변수에 채워넣을 값이 들어 있는 변수
 
-<!-- ```{r eval=F} -->
-<!-- install.packages("tidyr") -->
-<!-- library(tidyr) -->
+```{r eval=F}
+install.packages("tidyr")
+library(tidyr)
 
-<!-- df_wide <- df_long %>% -->
-<!--   pivot_wider(names_from = president, -->
-<!--               values_from = n) -->
+df_wide <- df_long %>%
+  pivot_wider(names_from = president,
+              values_from = n)
 
-<!-- df_wide -->
-<!-- ``` -->
+df_wide
+```
 
-<!-- ```{r echo=F} -->
-<!-- # install.packages("tidyr") -->
-<!-- library(tidyr) -->
+```{r echo=F}
+# install.packages("tidyr")
+library(tidyr)
 
-<!-- df_wide <- df_long %>% -->
-<!--   pivot_wider(names_from = president, -->
-<!--               values_from = n) -->
-<!-- ``` -->
+df_wide <- df_long %>%
+  pivot_wider(names_from = president,
+              values_from = n)
+```
 
-<!-- --- -->
+---
 
-<!-- ##### Wide form -->
-<!-- - 한 단어가 한 행으로 구성됨 -->
-<!-- - 범주별 단어 빈도 비교하기 쉬움   -->
+##### Wide form
+- 한 단어가 한 행으로 구성됨
+- 범주별 단어 빈도 비교하기 쉬움
 
-<!-- ```{r} -->
-<!-- df_wide -->
-<!-- ``` -->
+```{r}
+df_wide
+```
 
 
-<!-- --- -->
+---
 
-<!-- .pull-left[ -->
-<!-- ```{r} -->
-<!-- df_long -->
-<!-- ``` -->
-<!-- ] -->
+.pull-left[
+```{r}
+df_long
+```
+]
 
-<!-- .pull-right[ -->
-<!-- ```{r} -->
-<!-- df_wide -->
-<!-- ``` -->
-<!-- ] -->
+.pull-right[
+```{r}
+df_wide
+```
+]
 
 
-<!-- --- -->
+---
 
 
 
 
-<!-- ##### `NA`를 `0`으로 바꾸기 -->
+##### `NA`를 `0`으로 바꾸기
 
-<!-- - 어떤 단어가 둘 중 한 범주에만 있으면 `NA` -->
-<!-- - 오즈비 계산하기 위해 `0`으로 변환해야 함 -->
+- 어떤 단어가 둘 중 한 범주에만 있으면 `NA`
+- 오즈비 계산하기 위해 `0`으로 변환해야 함
 
-<!-- ```{r} -->
-<!-- df_wide <- df_long %>% -->
-<!--   pivot_wider(names_from = president, -->
-<!--               values_from = n, -->
-<!--               values_fill = list(n = 0)) #<< -->
+```{r}
+df_wide <- df_long %>%
+  pivot_wider(names_from = president,
+              values_from = n,
+              values_fill = list(n = 0)) #<<
 
-<!-- df_wide -->
-<!-- ``` -->
+df_wide
+```
 
 
-<!-- --- -->
+---
 
-<!-- .pull-left[ -->
+.pull-left[
 
-<!-- ```{r} -->
-<!-- df_long -->
-<!-- ``` -->
-<!-- ] -->
+```{r}
+df_long
+```
+]
 
-<!-- .pull-right[ -->
+.pull-right[
 
-<!-- ```{r} -->
-<!-- df_wide -->
-<!-- ``` -->
-<!-- ] -->
+```{r}
+df_wide
+```
+]
 
-<!-- --- -->
+---
 
-<!-- ##### 연설문 단어 빈도를 Wide form으로 변환하기 -->
+##### 연설문 단어 빈도를 Wide form으로 변환하기
 
 
-<!-- ```{r} -->
-<!-- frequency_wide <- frequency %>% -->
-<!--   pivot_wider(names_from = president, -->
-<!--               values_from = n, -->
-<!--               values_fill = list(n = 0)) -->
+```{r}
+frequency_wide <- frequency %>%
+  pivot_wider(names_from = president,
+              values_from = n,
+              values_fill = list(n = 0))
 
-<!-- frequency_wide -->
-<!-- ``` -->
+frequency_wide
+```
 
 
-<!-- --- -->
+---
 
 
-<!-- #### 오즈비 구하기 -->
+#### 오즈비 구하기
 
-<!-- - **오즈비(odds ratio)** -->
-<!--   - 어떤 사건이 A 조건에서 발생할 확률이 B 조건에서 발생할 확률에 비해 얼마나 더 큰지를 나타냄 -->
-<!--   - 단어가 두 텍스트 중 어디에 등장할 확률이 높은지, 상대적인 중요도를 알 수 있음 -->
+- **오즈비(odds ratio)**
+  - 어떤 사건이 A 조건에서 발생할 확률이 B 조건에서 발생할 확률에 비해 얼마나 더 큰지를 나타냄
+  - 단어가 두 텍스트 중 어디에 등장할 확률이 높은지, 상대적인 중요도를 알 수 있음
 
-<!-- -- -->
+--
 
-<!-- <br> -->
+<br>
 
-<!-- .pull-left[ -->
+.pull-left[
 
-<!-- $${\large\text{odds ratio} = \frac{\left(\frac{n+1}{\text{total}+1}\right)_\text{Text A}} -->
-<!--                            {\left(\frac{n+1}{\text{total}+1}\right)_\text{Text B}}}$$ -->
+$${\large\text{odds ratio} = \frac{\left(\frac{n+1}{\text{total}+1}\right)_\text{Text A}}
+                           {\left(\frac{n+1}{\text{total}+1}\right)_\text{Text B}}}$$
 
-<!-- - $n$: 각 단어의 빈도 -->
-<!-- - $\text{total}$: 전체 단어 빈도 -->
+- $n$: 각 단어의 빈도
+- $\text{total}$: 전체 단어 빈도
 
-<!-- ] -->
+]
 
-<!-- --- -->
+---
 
 
-<!-- ##### 1. 단어의 비중을 나타낸 변수 추가하기 -->
+##### 1. 단어의 비중을 나타낸 변수 추가하기
 
-<!-- - 각 단어가 두 연설문에서 차지하는 비중을 나타낸 변수 -->
-<!-- - 연설문별로 '각 단어의 빈도'를 '모든 단어 빈도의 합'으로 나눔 -->
+- 각 단어가 두 연설문에서 차지하는 비중을 나타낸 변수
+- 연설문별로 '각 단어의 빈도'를 '모든 단어 빈도의 합'으로 나눔
 
-<!-- ```{r} -->
-<!-- frequency_wide <- frequency_wide %>%  -->
-<!--   mutate(ratio_moon = ((moon)/(sum(moon))),  # moon 에서 단어의 비중 -->
-<!--          ratio_park = ((park)/(sum(park))))  # park 에서 단어의 비중 -->
+```{r}
+frequency_wide <- frequency_wide %>%
+  mutate(ratio_moon = ((moon)/(sum(moon))),  # moon 에서 단어의 비중
+         ratio_park = ((park)/(sum(park))))  # park 에서 단어의 비중
 
-<!-- frequency_wide -->
+frequency_wide
 
-<!-- ``` -->
+```
 
-<!-- --- -->
-<!-- ##### 1. 단어의 비중을 나타낸 변수 추가하기 -->
+---
+##### 1. 단어의 비중을 나타낸 변수 추가하기
 
-<!-- - 어떤 단어가 한 연설문에 전혀 사용되지 않으면 빈도 0, 오즈비 0, 단어 비중 비교 불가 -->
-<!--   - 빈도가 0보다 큰 값이 되도록 모든 값에 `+1` -->
+- 어떤 단어가 한 연설문에 전혀 사용되지 않으면 빈도 0, 오즈비 0, 단어 비중 비교 불가
+  - 빈도가 0보다 큰 값이 되도록 모든 값에 `+1`
 
-<!-- ```{r} -->
-<!-- frequency_wide <- frequency_wide %>% -->
-<!--   mutate(ratio_moon  = ((moon + 1)/(sum(moon + 1))),  # moon에서 단어의 비중 -->
-<!--          ratio_park  = ((park + 1)/(sum(park + 1))))  # park에서 단어의 비중 -->
+```{r}
+frequency_wide <- frequency_wide %>%
+  mutate(ratio_moon  = ((moon + 1)/(sum(moon + 1))),  # moon에서 단어의 비중
+         ratio_park  = ((park + 1)/(sum(park + 1))))  # park에서 단어의 비중
 
-<!-- frequency_wide -->
-<!-- ``` -->
+frequency_wide
+```
 
-<!-- --- -->
+---
 
-<!-- #### 2. 오즈비 변수 추가하기 -->
+#### 2. 오즈비 변수 추가하기
 
-<!-- - 한 텍스트의 단어 비중을 다른 텍스트의 단어 비중으로 나눔 -->
+- 한 텍스트의 단어 비중을 다른 텍스트의 단어 비중으로 나눔
 
-<!-- ```{r} -->
-<!-- frequency_wide <- frequency_wide %>% -->
-<!--   mutate(odds_ratio = ratio_moon/ratio_park) -->
+```{r}
+frequency_wide <- frequency_wide %>%
+  mutate(odds_ratio = ratio_moon/ratio_park)
 
-<!-- frequency_wide -->
-<!-- ``` -->
+frequency_wide
+```
 
-<!-- --- -->
+---
 
-<!-- - 오즈비를 보면 단어가 어떤 텍스트에서 상대적으로 더 많이 사용됐는지 알 수 있음 -->
-<!--   - **`"moon"`에서 상대적인 비중 클수록 1보다 큰 값** -->
-<!--   - `"park"`에서 상대적인 비중 클수록 1보다 작은 값 -->
-<!--   - 두 연설문에서 단어 비중 같으면 1 -->
+- 오즈비를 보면 단어가 어떤 텍스트에서 상대적으로 더 많이 사용됐는지 알 수 있음
+  - **`"moon"`에서 상대적인 비중 클수록 1보다 큰 값**
+  - `"park"`에서 상대적인 비중 클수록 1보다 작은 값
+  - 두 연설문에서 단어 비중 같으면 1
 
-<!-- ```{r} -->
-<!-- frequency_wide %>% -->
-<!--   arrange(-odds_ratio) #<< -->
-<!-- ``` -->
+```{r}
+frequency_wide %>%
+  arrange(-odds_ratio) #<<
+```
 
-<!-- --- -->
+---
 
-<!-- - 오즈비를 보면 단어가 어떤 텍스트에서 상대적으로 더 많이 사용됐는지 알 수 있음 -->
-<!--   - `"moon"`에서 상대적인 비중 클수록 1보다 큰 값 -->
-<!--   - **`"park"`에서 상대적인 비중 클수록 1보다 작은 값** -->
-<!--   - 두 연설문에서 단어 비중 같으면 1 -->
+- 오즈비를 보면 단어가 어떤 텍스트에서 상대적으로 더 많이 사용됐는지 알 수 있음
+  - `"moon"`에서 상대적인 비중 클수록 1보다 큰 값
+  - **`"park"`에서 상대적인 비중 클수록 1보다 작은 값**
+  - 두 연설문에서 단어 비중 같으면 1
 
-<!-- ```{r} -->
-<!-- frequency_wide %>% -->
-<!--   arrange(odds_ratio) #<< -->
-<!-- ``` -->
+```{r}
+frequency_wide %>%
+  arrange(odds_ratio) #<<
+```
 
-<!-- --- -->
+---
 
-<!-- - 오즈비를 보면 단어가 어떤 텍스트에서 상대적으로 더 많이 사용됐는지 알 수 있음 -->
-<!--   - `"moon"`에서 상대적인 비중 클수록 1보다 큰 값 -->
-<!--   - `"park"`에서 상대적인 비중 클수록 1보다 작은 값 -->
-<!--   - **두 연설문에서 단어 비중 같으면 1** -->
+- 오즈비를 보면 단어가 어떤 텍스트에서 상대적으로 더 많이 사용됐는지 알 수 있음
+  - `"moon"`에서 상대적인 비중 클수록 1보다 큰 값
+  - `"park"`에서 상대적인 비중 클수록 1보다 작은 값
+  - **두 연설문에서 단어 비중 같으면 1**
 
-<!-- ```{r} -->
-<!-- frequency_wide %>% -->
-<!--   arrange(abs(1 - odds_ratio)) #<< -->
-<!-- ``` -->
+```{r}
+frequency_wide %>%
+  arrange(abs(1 - odds_ratio)) #<<
+```
 
-<!-- --- -->
+---
 
-<!-- .box[ -->
+.box[
 
-<!--   .info[`r icon_style(fontawesome("rocket"), fill = "#FF7333")` 오즈비 간단히 구하기] -->
+  .info[`r icon_style(fontawesome("rocket"), fill = "#FF7333")` 오즈비 간단히 구하기]
 
-<!-- ```{r} -->
-<!-- frequency_wide <- frequency_wide %>% -->
-<!--   mutate(odds_ratio = ((moon + 1)/(sum(moon + 1)))/ -->
-<!--                       ((park + 1)/(sum(park + 1)))) -->
-<!-- ``` -->
-<!-- ] -->
+```{r}
+frequency_wide <- frequency_wide %>%
+  mutate(odds_ratio = ((moon + 1)/(sum(moon + 1)))/
+                      ((park + 1)/(sum(park + 1))))
+```
+]
 
-<!-- --- -->
+---
 
-<!-- #### 상대적으로 중요한 단어 추출하기 -->
+#### 상대적으로 중요한 단어 추출하기
 
-<!-- ##### 오즈비가 가장 높거나 가장 낮은 단어 추출하기 -->
+##### 오즈비가 가장 높거나 가장 낮은 단어 추출하기
 
-<!-- ```{r} -->
-<!-- top10 <- frequency_wide %>% -->
-<!--   filter(rank(odds_ratio) <= 10 | rank(-odds_ratio) <= 10) -->
-<!-- ``` -->
+```{r}
+top10 <- frequency_wide %>%
+  filter(rank(odds_ratio) <= 10 | rank(-odds_ratio) <= 10)
+```
 
-<!-- <br-back-20>   -->
-<!-- .scroll-box-18[ -->
+<br-back-20>
+.scroll-box-18[
 
-<!-- ```{r} -->
-<!-- top10 %>% -->
-<!--   arrange(-odds_ratio) -->
-<!-- ``` -->
-<!-- ] -->
+```{r}
+top10 %>%
+  arrange(-odds_ratio)
+```
+]
 
-<!-- --- -->
+---
 
-<!-- - 상위 10개: `"moon"`에서 더 자주 사용되어 `odds_ratio`가 높은 단어 -->
+- 상위 10개: `"moon"`에서 더 자주 사용되어 `odds_ratio`가 높은 단어
 
-<!-- ```{r echo=F, highlight.output=c(4:13)} -->
-<!-- top10 %>% -->
-<!--   arrange(-odds_ratio) -->
-<!-- ``` -->
+```{r echo=F, highlight.output=c(4:13)}
+top10 %>%
+  arrange(-odds_ratio)
+```
 
-<!-- --- -->
+---
 
-<!-- - 하위 10개: `"park"`에서 더 자주 사용되어 `odds_ratio`가 낮은 단어 -->
+- 하위 10개: `"park"`에서 더 자주 사용되어 `odds_ratio`가 낮은 단어
 
-<!-- ```{r echo=F, highlight.output=c(14:23)} -->
-<!-- top10 %>% -->
-<!--   arrange(-odds_ratio) -->
-<!-- ``` -->
+```{r echo=F, highlight.output=c(14:23)}
+top10 %>%
+  arrange(-odds_ratio)
+```
 
-<!-- --- -->
+---
 
-<!-- #### 막대 그래프 만들기 -->
+#### 막대 그래프 만들기
 
-<!-- ##### 1. 비중이 큰 연설문을 나타낸 변수 추가하기 -->
+##### 1. 비중이 큰 연설문을 나타낸 변수 추가하기
 
-<!-- <br-back-20>   -->
+<br-back-20>
 
-<!-- .scroll-box-22[ -->
-<!-- ```{r R.options=list(tibble.width = Inf, width = 80, pillar.min_chars = Inf)} -->
-<!-- top10 <- top10 %>% -->
-<!--   mutate(president = ifelse(odds_ratio > 1, "moon", "park"), -->
-<!--          n = ifelse(odds_ratio > 1, moon, park)) -->
+.scroll-box-22[
+```{r R.options=list(tibble.width = Inf, width = 80, pillar.min_chars = Inf)}
+top10 <- top10 %>%
+  mutate(president = ifelse(odds_ratio > 1, "moon", "park"),
+         n = ifelse(odds_ratio > 1, moon, park))
 
-<!-- top10 -->
-<!-- ``` -->
-<!-- ] -->
+top10
+```
+]
 
-<!-- --- -->
+---
 
 
-<!-- <!-- 문자 길이 무제한 설정 --> -->
-<!-- ```{r echo=F, R.options=list(tibble.width = Inf, width = 80, pillar.min_chars = Inf)} -->
-<!-- top10 -->
-<!-- ``` -->
-<!-- --- -->
+<!-- 문자 길이 무제한 설정 -->
+```{r echo=F, R.options=list(tibble.width = Inf, width = 80, pillar.min_chars = Inf)}
+top10
+```
+---
 
 
-<!-- ##### 2. 막대 그래프 만들기 -->
+##### 2. 막대 그래프 만들기
 
-<!-- ```{r out.width="60%"} -->
-<!-- ggplot(top10, aes(x = reorder_within(word, n, president), -->
-<!--                   y = n, -->
-<!--                   fill = president)) + -->
-<!--   geom_col() + -->
-<!--   coord_flip() + -->
-<!--   facet_wrap(~ president, scales = "free_y") + -->
-<!--   scale_x_reordered() -->
-<!-- ``` -->
+```{r out.width="60%"}
+ggplot(top10, aes(x = reorder_within(word, n, president),
+                  y = n,
+                  fill = president)) +
+  geom_col() +
+  coord_flip() +
+  facet_wrap(~ president, scales = "free_y") +
+  scale_x_reordered()
+```
 
 
-<!-- --- -->
+---
 
-<!-- - 전반적으로 "park"의 단어 빈도가 높아보임 -->
-<!-- - `"park"`의 `"행복"` 빈도 기준으로 두 그래프의 x축 크기를 똑같이 고정했기 때문 -->
+- 전반적으로 "park"의 단어 빈도가 높아보임
+- `"park"`의 `"행복"` 빈도 기준으로 두 그래프의 x축 크기를 똑같이 고정했기 때문
 
 
-<!-- ```{r echo=F, out.width="80%"} -->
-<!-- ggplot(top10, aes(x = reorder_within(word, n, president), -->
-<!--                   y = n, -->
-<!--                   fill = president)) + -->
-<!--   geom_col() + -->
-<!--   coord_flip() + -->
-<!--   facet_wrap(~ president, scales = "free_y") + -->
-<!--   scale_x_reordered() -->
-<!-- ``` -->
+```{r echo=F, out.width="80%"}
+ggplot(top10, aes(x = reorder_within(word, n, president),
+                  y = n,
+                  fill = president)) +
+  geom_col() +
+  coord_flip() +
+  facet_wrap(~ president, scales = "free_y") +
+  scale_x_reordered()
+```
 
-<!-- --- -->
+---
 
-<!-- ##### 3. 그래프별로 축 설정하기 -->
+##### 3. 그래프별로 축 설정하기
 
-<!-- - 범주별로 단어 비중 알 수 있도록 x축 크기 각각 정하기 -->
+- 범주별로 단어 비중 알 수 있도록 x축 크기 각각 정하기
 
-<!-- ```{r out.width="40%"} -->
-<!-- ggplot(top10, aes(x = reorder_within(word, n, president), -->
-<!--                   y = n, -->
-<!--                   fill = president)) + -->
-<!--   geom_col() + -->
-<!--   coord_flip() + -->
-<!--   facet_wrap(~ president, scales = "free") + #<< -->
-<!--   scale_x_reordered() + -->
-<!--   labs(x = NULL) +                                    # x축 삭제 -->
-<!--   theme(text = element_text(family = "nanumgothic"))  # 폰트 -->
-<!-- ``` -->
+```{r out.width="40%"}
+ggplot(top10, aes(x = reorder_within(word, n, president),
+                  y = n,
+                  fill = president)) +
+  geom_col() +
+  coord_flip() +
+  facet_wrap(~ president, scales = "free") + #<<
+  scale_x_reordered() +
+  labs(x = NULL) +                                    # x축 삭제
+  theme(text = element_text(family = "nanumgothic"))  # 폰트
+```
 
-<!-- --- -->
-<!-- `r icon_style(fontawesome("exclamation-triangle"), fill = "#FF7333")`  **x축 크기가 그래프마다 다르므로 해석 조심** -->
-<!-- <br-back-10> -->
-<!-- - 막대 길이 같아도 단어 빈도 다름 -->
-<!-- - 두 텍스트 단어 빈도 비교 X -->
-<!-- - 각 텍스트에서 상대적으로 중요한 단어가 무엇인지 중심으로 해석 -->
+---
+`r icon_style(fontawesome("exclamation-triangle"), fill = "#FF7333")`  **x축 크기가 그래프마다 다르므로 해석 조심**
+<br-back-10>
+- 막대 길이 같아도 단어 빈도 다름
+- 두 텍스트 단어 빈도 비교 X
+- 각 텍스트에서 상대적으로 중요한 단어가 무엇인지 중심으로 해석
 
-<!-- ```{r echo=FALSE, out.width="80%"} -->
-<!-- ggplot(top10, aes(x = reorder_within(word, n, president), -->
-<!--                   y = n, -->
-<!--                   fill = president)) + -->
-<!--   geom_col() + -->
-<!--   coord_flip() + -->
-<!--   facet_wrap(~ president, scales = "free") + #<< -->
-<!--   scale_x_reordered() + -->
-<!--   labs(x = NULL) +                                    # x축 삭제 -->
-<!--   theme(text = element_text(family = "nanumgothic"))  # 폰트 -->
-<!-- ``` -->
+```{r echo=FALSE, out.width="80%"}
+ggplot(top10, aes(x = reorder_within(word, n, president),
+                  y = n,
+                  fill = president)) +
+  geom_col() +
+  coord_flip() +
+  facet_wrap(~ president, scales = "free") + #<<
+  scale_x_reordered() +
+  labs(x = NULL) +                                    # x축 삭제
+  theme(text = element_text(family = "nanumgothic"))  # 폰트
+```
 
-<!-- --- -->
+---
 
-<!-- #### 주요 단어가 사용된 문장 살펴보기 -->
+#### 주요 단어가 사용된 문장 살펴보기
 
-<!-- ##### 1. 원문을 문장 기준으로 토큰화하기 -->
+##### 1. 원문을 문장 기준으로 토큰화하기
 
-<!-- <br-back-20>   -->
-<!-- .scroll-box-22[ -->
+<br-back-20>
+.scroll-box-22[
 
-<!-- ```{r} -->
-<!-- speeches_sentence <- bind_speeches %>% -->
-<!--   as_tibble() %>% -->
-<!--   unnest_tokens(input = value, -->
-<!--                 output = sentence, -->
-<!--                 token = "sentences") -->
+```{r}
+speeches_sentence <- bind_speeches %>%
+  as_tibble() %>%
+  unnest_tokens(input = value,
+                output = sentence,
+                token = "sentences")
 
-<!-- speeches_sentence -->
-<!-- ``` -->
+speeches_sentence
+```
 
-<!-- ] -->
-<!-- --- -->
+]
+---
 
-<!-- ```{r, R.options = list(tibble.width = 50)} -->
-<!-- head(speeches_sentence) -->
-<!-- ``` -->
+```{r, R.options = list(tibble.width = 50)}
+head(speeches_sentence)
+```
 
 
-<!-- ```{r, R.options = list(tibble.width = 50)} -->
-<!-- tail(speeches_sentence) -->
-<!-- ``` -->
+```{r, R.options = list(tibble.width = 50)}
+tail(speeches_sentence)
+```
 
-<!-- --- -->
+---
 
 
-<!-- #### 2. 주요 단어가 사용된 문장 추출하기 - `str_detect()` -->
+#### 2. 주요 단어가 사용된 문장 추출하기 - `str_detect()`
 
 
-<!-- ```{r, R.options = list(tibble.width = 50)} -->
-<!-- speeches_sentence %>% -->
-<!--   filter(president == "moon" & str_detect(sentence, "복지국가")) -->
-<!-- ``` -->
+```{r, R.options = list(tibble.width = 50)}
+speeches_sentence %>%
+  filter(president == "moon" & str_detect(sentence, "복지국가"))
+```
 
-<!-- --- -->
+---
 
-<!-- #### 2. 주요 단어가 사용된 문장 추출하기 - `str_detect()` -->
+#### 2. 주요 단어가 사용된 문장 추출하기 - `str_detect()`
 
-<!-- ```{r eval=FALSE} -->
-<!-- speeches_sentence %>% -->
-<!--   filter(president == "park" & str_detect(sentence, "행복")) -->
-<!-- ``` -->
+```{r eval=FALSE}
+speeches_sentence %>%
+  filter(president == "park" & str_detect(sentence, "행복"))
+```
 
-<!-- <br-back-20> -->
-<!-- .scroll-box-20[ -->
+<br-back-20>
+.scroll-box-20[
 
-<!-- ```{r, echo=FALSE, R.options = list(tibble.width = 50)} -->
-<!-- speeches_sentence %>% -->
-<!--   filter(president == "park" & str_detect(sentence, "행복")) -->
-<!-- ``` -->
-<!-- ] -->
+```{r, echo=FALSE, R.options = list(tibble.width = 50)}
+speeches_sentence %>%
+  filter(president == "park" & str_detect(sentence, "행복"))
+```
+]
 
-<!-- --- -->
+---
 
-<!-- #### 중요도가 비슷한 단어 살펴보기 -->
+#### 중요도가 비슷한 단어 살펴보기
 
-<!-- - `odds_ratio`가 1에 가까운 단어 추출 -->
-<!-- - 대부분 보편적인 의미를 지니는 단어 -->
+- `odds_ratio`가 1에 가까운 단어 추출
+- 대부분 보편적인 의미를 지니는 단어
 
-<!-- ```{r} -->
-<!-- frequency_wide %>% -->
-<!--   arrange(abs(1 - odds_ratio)) %>% -->
-<!--   head(10) -->
-<!-- ``` -->
+```{r}
+frequency_wide %>%
+  arrange(abs(1 - odds_ratio)) %>%
+  head(10)
+```
 
-<!-- --- -->
+---
 
-<!-- #### 중요도가 비슷한 단어 살펴보기 -->
+#### 중요도가 비슷한 단어 살펴보기
 
-<!-- - 중요도가 비슷하면서 빈도가 높은 단어: 두 텍스트에서 모두 강조한 단어 -->
+- 중요도가 비슷하면서 빈도가 높은 단어: 두 텍스트에서 모두 강조한 단어
 
-<!-- ```{r} -->
-<!-- frequency_wide %>% -->
-<!--   filter(moon >= 5 & park >= 5) %>% -->
-<!--   arrange(abs(1 - odds_ratio)) %>% -->
-<!--   head(10) -->
-<!-- ``` -->
+```{r}
+frequency_wide %>%
+  filter(moon >= 5 & park >= 5) %>%
+  arrange(abs(1 - odds_ratio)) %>%
+  head(10)
+```
 
-<!-- --- -->
+---
 
 <!-- name: 03-3 -->
 <!-- class: title1 -->
