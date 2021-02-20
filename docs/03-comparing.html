@@ -2020,237 +2020,135 @@ frequency_wide &lt;- frequency_wide %&gt;%
                               ((park + 1) / (sum(park + 1)))))
 ```
 
-]
-
----
-
-
-
-#### 로그 오즈비를 이용해 중요한 단어 비교하기
-
-- 두 연설문 각각 `log_odds_ratio` Top 10 추출
-
-
-```r
-top10 &lt;- frequency_wide %&gt;%
-  group_by(president = ifelse(log_odds_ratio &gt; 0, "moon", "park")) %&gt;%
-  slice_max(abs(log_odds_ratio), n = 10, with_ties = F)
-
-top10
-```
-
-
-&lt;br-back-22&gt;
-
-.scroll-box-14[
-
-
-```
-## # A tibble: 20 x 8
-## # Groups:   president [2]
-##    word      moon  park ratio_moon ratio_park odds_ratio log_odds_ratio president
-##    &lt;chr&gt;    &lt;int&gt; &lt;int&gt;      &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;          &lt;dbl&gt; &lt;chr&gt;    
-##  1 복지국가     8     0   0.00393    0.000552     7.12             1.96 moon     
-##  2 세상         6     0   0.00306    0.000552     5.54             1.71 moon     
-##  3 여성         6     0   0.00306    0.000552     5.54             1.71 moon     
-##  4 정의         6     0   0.00306    0.000552     5.54             1.71 moon     
-##  5 강자         5     0   0.00262    0.000552     4.75             1.56 moon     
-##  6 공평         5     0   0.00262    0.000552     4.75             1.56 moon     
-##  7 대통령의     5     0   0.00262    0.000552     4.75             1.56 moon     
-##  8 보통         5     0   0.00262    0.000552     4.75             1.56 moon     
-##  9 상생         5     0   0.00262    0.000552     4.75             1.56 moon     
-## 10 지방         5     0   0.00262    0.000552     4.75             1.56 moon     
-## 11 박근혜       0     8   0.000436   0.00496      0.0879          -2.43 park     
-## 12 여러분       2    20   0.00131    0.0116       0.113           -2.18 park     
-## 13 행복         3    23   0.00175    0.0132       0.132           -2.03 park     
-## 14 실천         0     5   0.000436   0.00331      0.132           -2.03 park     
-## 15 정보         0     5   0.000436   0.00331      0.132           -2.03 park     
-## 16 투명         0     5   0.000436   0.00331      0.132           -2.03 park     
-## 17 과제         0     4   0.000436   0.00276      0.158           -1.84 park     
-## 18 국정운영     0     4   0.000436   0.00276      0.158           -1.84 park     
-## 19 시작         0     4   0.000436   0.00276      0.158           -1.84 park     
-## 20 지식         0     4   0.000436   0.00276      0.158           -1.84 park
-```
 
 ]
 
 ---
 
-##### 주요 변수 추출
+
+
+&lt;!-- #### 로그 오즈비를 이용해 중요한 단어 비교하기 --&gt;
+
+&lt;!-- - 두 연설문 각각 `log_odds_ratio` Top 10 추출 --&gt;
+
+&lt;!-- ```{r eval=F} --&gt;
+&lt;!-- top10 &lt;- frequency_wide %&gt;% --&gt;
+&lt;!--   group_by(president = ifelse(log_odds_ratio &gt; 0, "moon", "park")) %&gt;% --&gt;
+&lt;!--   slice_max(abs(log_odds_ratio), n = 10, with_ties = F) --&gt;
+
+&lt;!-- top10 --&gt;
+
+&lt;!-- ``` --&gt;
+
+
+&lt;!-- &lt;br-back-22&gt; --&gt;
+
+&lt;!-- .scroll-box-14[ --&gt;
+
+&lt;!-- ```{r echo=FALSE, R.options=list(tibble.width = Inf, width = 90, pillar.min_chars = Inf)} --&gt;
+&lt;!-- top10 &lt;- frequency_wide %&gt;% --&gt;
+&lt;!--   group_by(president = ifelse(log_odds_ratio &gt; 0, "moon", "park")) %&gt;% --&gt;
+&lt;!--   slice_max(abs(log_odds_ratio), n = 10, with_ties = F) --&gt;
+
+&lt;!-- top10 --&gt;
+
+&lt;!-- ``` --&gt;
+
+&lt;!-- ] --&gt;
+
+&lt;!-- --- --&gt;
+
+&lt;!-- ##### 주요 변수 추출 --&gt;
+
+
+
+&lt;!-- ```{r eval=FALSE} --&gt;
+&lt;!-- top10 %&gt;% --&gt;
+&lt;!--   arrange(-log_odds_ratio) %&gt;% --&gt;
+&lt;!--   select(word, log_odds_ratio, president) --&gt;
+&lt;!-- ``` --&gt;
+
+
+&lt;!-- &lt;br-back-20&gt; --&gt;
+&lt;!-- .scroll-box-20[ --&gt;
+&lt;!-- ```{r echo=FALSE, R.options=list(tibble.width = Inf, width = 80, pillar.min_chars = Inf)} --&gt;
+&lt;!-- top10 %&gt;% --&gt;
+&lt;!--   arrange(-log_odds_ratio) %&gt;% --&gt;
+&lt;!--   select(word, log_odds_ratio, president) --&gt;
+&lt;!-- ``` --&gt;
+
+&lt;!-- ] --&gt;
+&lt;!-- --- --&gt;
+
+&lt;!-- ```{r echo=F, R.options=list(tibble.width = Inf, width = 100, pillar.min_chars = Inf), highlight.output=c(5:14)} --&gt;
+&lt;!-- top10 %&gt;% --&gt;
+&lt;!--   arrange(-log_odds_ratio) %&gt;% --&gt;
+&lt;!--   select(word, log_odds_ratio, president) --&gt;
+&lt;!-- ``` --&gt;
+
+
+&lt;!-- --- --&gt;
+
+&lt;!-- ```{r echo=F, R.options=list(tibble.width = Inf, width = 100, pillar.min_chars = Inf), highlight.output=c(15:24)} --&gt;
+&lt;!-- top10 %&gt;% --&gt;
+&lt;!--   arrange(-log_odds_ratio) %&gt;% --&gt;
+&lt;!--   select(word, log_odds_ratio, president) --&gt;
+&lt;!-- ``` --&gt;
 
 
 
 
-```r
-top10 %&gt;%
-  arrange(-log_odds_ratio) %&gt;%
-  select(word, log_odds_ratio, president)
-```
+&lt;!-- --- --&gt;
+
+&lt;!-- **오즈비 기준 상·하위 10개 추출했을 때와 단어 동일** --&gt;
+
+&lt;!-- ```{r eval=F} --&gt;
+&lt;!-- frequency_wide %&gt;% --&gt;
+&lt;!--   filter(rank(odds_ratio) &lt;= 10 | rank(-odds_ratio) &lt;= 10) %&gt;% --&gt;
+&lt;!--   arrange(-odds_ratio) --&gt;
+&lt;!-- ``` --&gt;
 
 
-&lt;br-back-20&gt;
-.scroll-box-20[
+&lt;!-- &lt;br-back-20&gt; --&gt;
+&lt;!-- .scroll-box-20[ --&gt;
 
-```
-## # A tibble: 20 x 3
-## # Groups:   president [2]
-##    word     log_odds_ratio president
-##    &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt;    
-##  1 복지국가           1.96 moon     
-##  2 세상               1.71 moon     
-##  3 여성               1.71 moon     
-##  4 정의               1.71 moon     
-##  5 강자               1.56 moon     
-##  6 공평               1.56 moon     
-##  7 대통령의           1.56 moon     
-##  8 보통               1.56 moon     
-##  9 상생               1.56 moon     
-## 10 지방               1.56 moon     
-## 11 과제              -1.84 park     
-## 12 국정운영          -1.84 park     
-## 13 시작              -1.84 park     
-## 14 지식              -1.84 park     
-## 15 행복              -2.03 park     
-## 16 실천              -2.03 park     
-## 17 정보              -2.03 park     
-## 18 투명              -2.03 park     
-## 19 여러분            -2.18 park     
-## 20 박근혜            -2.43 park
-```
+&lt;!-- ```{r echo=FALSE, R.options=list(tibble.width = Inf, width = 100, pillar.min_chars = Inf)} --&gt;
+&lt;!-- frequency_wide %&gt;% --&gt;
+&lt;!--   filter(rank(odds_ratio) &lt;= 10 | rank(-odds_ratio) &lt;= 10) %&gt;% --&gt;
+&lt;!--   arrange(-odds_ratio) --&gt;
+&lt;!-- ``` --&gt;
 
-]
----
+&lt;!-- ] --&gt;
 
 
-```
-## # A tibble: 20 x 3
-## # Groups:   president [2]
-##    word     log_odds_ratio president
-##    &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt;    
-*##  1 복지국가           1.96 moon     
-*##  2 세상               1.71 moon     
-*##  3 여성               1.71 moon     
-*##  4 정의               1.71 moon     
-*##  5 강자               1.56 moon     
-*##  6 공평               1.56 moon     
-*##  7 대통령의           1.56 moon     
-*##  8 보통               1.56 moon     
-*##  9 상생               1.56 moon     
-*## 10 지방               1.56 moon     
-## 11 과제              -1.84 park     
-## 12 국정운영          -1.84 park     
-## 13 시작              -1.84 park     
-## 14 지식              -1.84 park     
-## 15 행복              -2.03 park     
-## 16 실천              -2.03 park     
-## 17 정보              -2.03 park     
-## 18 투명              -2.03 park     
-## 19 여러분            -2.18 park     
-## 20 박근혜            -2.43 park
-```
+&lt;!-- --- --&gt;
 
+&lt;!-- #### 막대 그래프 만들기 --&gt;
 
----
+&lt;!-- - 단어가 어느 연설문에서 중요한지에 따라 서로 다른 축 방향으로 표현됨 --&gt;
 
+&lt;!-- ```{r fig.width=6, fig.height=4, out.width="45%"} --&gt;
+&lt;!-- ggplot(top10, aes(x = reorder(word, log_odds_ratio), --&gt;
+&lt;!--                   y = log_odds_ratio, --&gt;
+&lt;!--                   fill = president)) + --&gt;
+&lt;!--   geom_col() + --&gt;
+&lt;!--   coord_flip() + --&gt;
+&lt;!--   labs(x = NULL) + --&gt;
+&lt;!--   theme(text = element_text(family = "nanumgothic")) --&gt;
+&lt;!-- ``` --&gt;
 
-```
-## # A tibble: 20 x 3
-## # Groups:   president [2]
-##    word     log_odds_ratio president
-##    &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt;    
-##  1 복지국가           1.96 moon     
-##  2 세상               1.71 moon     
-##  3 여성               1.71 moon     
-##  4 정의               1.71 moon     
-##  5 강자               1.56 moon     
-##  6 공평               1.56 moon     
-##  7 대통령의           1.56 moon     
-##  8 보통               1.56 moon     
-##  9 상생               1.56 moon     
-## 10 지방               1.56 moon     
-*## 11 과제              -1.84 park     
-*## 12 국정운영          -1.84 park     
-*## 13 시작              -1.84 park     
-*## 14 지식              -1.84 park     
-*## 15 행복              -2.03 park     
-*## 16 실천              -2.03 park     
-*## 17 정보              -2.03 park     
-*## 18 투명              -2.03 park     
-*## 19 여러분            -2.18 park     
-*## 20 박근혜            -2.43 park
-```
+&lt;!-- --- --&gt;
 
-
-
-
----
-
-**오즈비 기준 상·하위 10개 추출했을 때와 단어 동일**
-
-
-```r
-frequency_wide %&gt;%
-  filter(rank(odds_ratio) &lt;= 10 | rank(-odds_ratio) &lt;= 10) %&gt;%
-  arrange(-odds_ratio)
-```
-
-
-&lt;br-back-20&gt;
-.scroll-box-20[
-
-
-```
-## # A tibble: 20 x 7
-##    word      moon  park ratio_moon ratio_park odds_ratio log_odds_ratio
-##    &lt;chr&gt;    &lt;int&gt; &lt;int&gt;      &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;          &lt;dbl&gt;
-##  1 복지국가     8     0   0.00393    0.000552     7.12             1.96
-##  2 세상         6     0   0.00306    0.000552     5.54             1.71
-##  3 여성         6     0   0.00306    0.000552     5.54             1.71
-##  4 정의         6     0   0.00306    0.000552     5.54             1.71
-##  5 강자         5     0   0.00262    0.000552     4.75             1.56
-##  6 공평         5     0   0.00262    0.000552     4.75             1.56
-##  7 대통령의     5     0   0.00262    0.000552     4.75             1.56
-##  8 보통         5     0   0.00262    0.000552     4.75             1.56
-##  9 상생         5     0   0.00262    0.000552     4.75             1.56
-## 10 지방         5     0   0.00262    0.000552     4.75             1.56
-## 11 과제         0     4   0.000436   0.00276      0.158           -1.84
-## 12 국정운영     0     4   0.000436   0.00276      0.158           -1.84
-## 13 시작         0     4   0.000436   0.00276      0.158           -1.84
-## 14 지식         0     4   0.000436   0.00276      0.158           -1.84
-## 15 행복         3    23   0.00175    0.0132       0.132           -2.03
-## 16 실천         0     5   0.000436   0.00331      0.132           -2.03
-## 17 정보         0     5   0.000436   0.00331      0.132           -2.03
-## 18 투명         0     5   0.000436   0.00331      0.132           -2.03
-## 19 여러분       2    20   0.00131    0.0116       0.113           -2.18
-## 20 박근혜       0     8   0.000436   0.00496      0.0879          -2.43
-```
-
-]
-
-
----
-
-#### 막대 그래프 만들기
-
-- 단어가 어느 연설문에서 중요한지에 따라 서로 다른 축 방향으로 표현됨
-
-
-```r
-ggplot(top10, aes(x = reorder(word, log_odds_ratio),
-                  y = log_odds_ratio,
-                  fill = president)) +
-  geom_col() +
-  coord_flip() +
-  labs(x = NULL) +
-  theme(text = element_text(family = "nanumgothic"))
-```
-
-&lt;img src="03-comparing_files/figure-html/unnamed-chunk-94-1.png" width="45%" /&gt;
-
----
-
-&lt;br&gt;
-&lt;img src="03-comparing_files/figure-html/unnamed-chunk-95-1.png" width="80%" /&gt;
+&lt;!-- &lt;br&gt; --&gt;
+&lt;!-- ```{r echo=FALSE, fig.width=6, fig.height=4, out.width="80%"} --&gt;
+&lt;!-- ggplot(top10, aes(x = reorder(word, log_odds_ratio), --&gt;
+&lt;!--                   y = log_odds_ratio, --&gt;
+&lt;!--                   fill = president)) + --&gt;
+&lt;!--   geom_col() + --&gt;
+&lt;!--   coord_flip() + --&gt;
+&lt;!--   labs(x = NULL) + --&gt;
+&lt;!--   theme(text = element_text(family = "nanumgothic")) --&gt;
+&lt;!-- ``` --&gt;
 
 ---
 

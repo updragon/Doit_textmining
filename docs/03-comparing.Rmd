@@ -1346,134 +1346,135 @@ frequency_wide <- frequency_wide %>%
                               ((park + 1) / (sum(park + 1)))))
 ```
 
-]
-
----
-
-
-
-#### 로그 오즈비를 이용해 중요한 단어 비교하기
-
-- 두 연설문 각각 `log_odds_ratio` Top 10 추출
-
-```{r eval=F}
-top10 <- frequency_wide %>%
-  group_by(president = ifelse(log_odds_ratio > 0, "moon", "park")) %>%
-  slice_max(abs(log_odds_ratio), n = 10, with_ties = F)
-
-top10
-
-```
-
-
-<br-back-22>
-
-.scroll-box-14[
-
-```{r echo=FALSE, R.options=list(tibble.width = Inf, width = 90, pillar.min_chars = Inf)}
-top10 <- frequency_wide %>%
-  group_by(president = ifelse(log_odds_ratio > 0, "moon", "park")) %>%
-  slice_max(abs(log_odds_ratio), n = 10, with_ties = F)
-
-top10
-
-```
 
 ]
 
 ---
 
-##### 주요 변수 추출
+
+
+<!-- #### 로그 오즈비를 이용해 중요한 단어 비교하기 -->
+
+<!-- - 두 연설문 각각 `log_odds_ratio` Top 10 추출 -->
+
+<!-- ```{r eval=F} -->
+<!-- top10 <- frequency_wide %>% -->
+<!--   group_by(president = ifelse(log_odds_ratio > 0, "moon", "park")) %>% -->
+<!--   slice_max(abs(log_odds_ratio), n = 10, with_ties = F) -->
+
+<!-- top10 -->
+
+<!-- ``` -->
+
+
+<!-- <br-back-22> -->
+
+<!-- .scroll-box-14[ -->
+
+<!-- ```{r echo=FALSE, R.options=list(tibble.width = Inf, width = 90, pillar.min_chars = Inf)} -->
+<!-- top10 <- frequency_wide %>% -->
+<!--   group_by(president = ifelse(log_odds_ratio > 0, "moon", "park")) %>% -->
+<!--   slice_max(abs(log_odds_ratio), n = 10, with_ties = F) -->
+
+<!-- top10 -->
+
+<!-- ``` -->
+
+<!-- ] -->
+
+<!-- --- -->
+
+<!-- ##### 주요 변수 추출 -->
 
 
 
-```{r eval=FALSE}
-top10 %>%
-  arrange(-log_odds_ratio) %>%
-  select(word, log_odds_ratio, president)
-```
+<!-- ```{r eval=FALSE} -->
+<!-- top10 %>% -->
+<!--   arrange(-log_odds_ratio) %>% -->
+<!--   select(word, log_odds_ratio, president) -->
+<!-- ``` -->
 
 
-<br-back-20>
-.scroll-box-20[
-```{r echo=FALSE, R.options=list(tibble.width = Inf, width = 80, pillar.min_chars = Inf)}
-top10 %>%
-  arrange(-log_odds_ratio) %>%
-  select(word, log_odds_ratio, president)
-```
+<!-- <br-back-20> -->
+<!-- .scroll-box-20[ -->
+<!-- ```{r echo=FALSE, R.options=list(tibble.width = Inf, width = 80, pillar.min_chars = Inf)} -->
+<!-- top10 %>% -->
+<!--   arrange(-log_odds_ratio) %>% -->
+<!--   select(word, log_odds_ratio, president) -->
+<!-- ``` -->
 
-]
----
+<!-- ] -->
+<!-- --- -->
 
-```{r echo=F, R.options=list(tibble.width = Inf, width = 100, pillar.min_chars = Inf), highlight.output=c(5:14)}
-top10 %>%
-  arrange(-log_odds_ratio) %>%
-  select(word, log_odds_ratio, president)
-```
-
-
----
-
-```{r echo=F, R.options=list(tibble.width = Inf, width = 100, pillar.min_chars = Inf), highlight.output=c(15:24)}
-top10 %>%
-  arrange(-log_odds_ratio) %>%
-  select(word, log_odds_ratio, president)
-```
+<!-- ```{r echo=F, R.options=list(tibble.width = Inf, width = 100, pillar.min_chars = Inf), highlight.output=c(5:14)} -->
+<!-- top10 %>% -->
+<!--   arrange(-log_odds_ratio) %>% -->
+<!--   select(word, log_odds_ratio, president) -->
+<!-- ``` -->
 
 
+<!-- --- -->
+
+<!-- ```{r echo=F, R.options=list(tibble.width = Inf, width = 100, pillar.min_chars = Inf), highlight.output=c(15:24)} -->
+<!-- top10 %>% -->
+<!--   arrange(-log_odds_ratio) %>% -->
+<!--   select(word, log_odds_ratio, president) -->
+<!-- ``` -->
 
 
----
-
-**오즈비 기준 상·하위 10개 추출했을 때와 단어 동일**
-
-```{r eval=F}
-frequency_wide %>%
-  filter(rank(odds_ratio) <= 10 | rank(-odds_ratio) <= 10) %>%
-  arrange(-odds_ratio)
-```
 
 
-<br-back-20>
-.scroll-box-20[
+<!-- --- -->
 
-```{r echo=FALSE, R.options=list(tibble.width = Inf, width = 100, pillar.min_chars = Inf)}
-frequency_wide %>%
-  filter(rank(odds_ratio) <= 10 | rank(-odds_ratio) <= 10) %>%
-  arrange(-odds_ratio)
-```
+<!-- **오즈비 기준 상·하위 10개 추출했을 때와 단어 동일** -->
 
-]
+<!-- ```{r eval=F} -->
+<!-- frequency_wide %>% -->
+<!--   filter(rank(odds_ratio) <= 10 | rank(-odds_ratio) <= 10) %>% -->
+<!--   arrange(-odds_ratio) -->
+<!-- ``` -->
 
 
----
+<!-- <br-back-20> -->
+<!-- .scroll-box-20[ -->
 
-#### 막대 그래프 만들기
+<!-- ```{r echo=FALSE, R.options=list(tibble.width = Inf, width = 100, pillar.min_chars = Inf)} -->
+<!-- frequency_wide %>% -->
+<!--   filter(rank(odds_ratio) <= 10 | rank(-odds_ratio) <= 10) %>% -->
+<!--   arrange(-odds_ratio) -->
+<!-- ``` -->
 
-- 단어가 어느 연설문에서 중요한지에 따라 서로 다른 축 방향으로 표현됨
+<!-- ] -->
 
-```{r fig.width=6, fig.height=4, out.width="45%"}
-ggplot(top10, aes(x = reorder(word, log_odds_ratio),
-                  y = log_odds_ratio,
-                  fill = president)) +
-  geom_col() +
-  coord_flip() +
-  labs(x = NULL) +
-  theme(text = element_text(family = "nanumgothic"))
-```
 
----
+<!-- --- -->
 
-<br>
-```{r echo=FALSE, fig.width=6, fig.height=4, out.width="80%"}
-ggplot(top10, aes(x = reorder(word, log_odds_ratio),
-                  y = log_odds_ratio,
-                  fill = president)) +
-  geom_col() +
-  coord_flip() +
-  labs(x = NULL) +
-  theme(text = element_text(family = "nanumgothic"))
-```
+<!-- #### 막대 그래프 만들기 -->
+
+<!-- - 단어가 어느 연설문에서 중요한지에 따라 서로 다른 축 방향으로 표현됨 -->
+
+<!-- ```{r fig.width=6, fig.height=4, out.width="45%"} -->
+<!-- ggplot(top10, aes(x = reorder(word, log_odds_ratio), -->
+<!--                   y = log_odds_ratio, -->
+<!--                   fill = president)) + -->
+<!--   geom_col() + -->
+<!--   coord_flip() + -->
+<!--   labs(x = NULL) + -->
+<!--   theme(text = element_text(family = "nanumgothic")) -->
+<!-- ``` -->
+
+<!-- --- -->
+
+<!-- <br> -->
+<!-- ```{r echo=FALSE, fig.width=6, fig.height=4, out.width="80%"} -->
+<!-- ggplot(top10, aes(x = reorder(word, log_odds_ratio), -->
+<!--                   y = log_odds_ratio, -->
+<!--                   fill = president)) + -->
+<!--   geom_col() + -->
+<!--   coord_flip() + -->
+<!--   labs(x = NULL) + -->
+<!--   theme(text = element_text(family = "nanumgothic")) -->
+<!-- ``` -->
 
 ---
 
