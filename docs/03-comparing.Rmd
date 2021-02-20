@@ -1277,17 +1277,17 @@ include_graphics("Image/03/03_3_1.png")
 ```
 ---
 
-#### 로그 오즈비 구하기
+<!-- #### 로그 오즈비 구하기 -->
 
 
-```{r}
-frequency_wide <- frequency_wide %>%
-  mutate(log_odds_ratio = log(odds_ratio))
+<!-- ```{r} -->
+<!-- frequency_wide <- frequency_wide %>% -->
+<!--   mutate(log_odds_ratio = log(odds_ratio)) -->
 
-frequency_wide
-```
+<!-- frequency_wide -->
+<!-- ``` -->
 
----
+<!-- --- -->
 
 <!-- ```{r R.options=list(tibble.width = 80, width = 80, pillar.min_chars = Inf)} -->
 <!-- frequency_wide <- frequency_wide %>% -->

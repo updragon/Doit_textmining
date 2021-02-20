@@ -1878,35 +1878,17 @@ class: title1
 &lt;img src="Image/03/03_3_1.png" width="60%" height="60%" /&gt;
 ---
 
-#### 로그 오즈비 구하기
+&lt;!-- #### 로그 오즈비 구하기 --&gt;
 
 
+&lt;!-- ```{r} --&gt;
+&lt;!-- frequency_wide &lt;- frequency_wide %&gt;% --&gt;
+&lt;!--   mutate(log_odds_ratio = log(odds_ratio)) --&gt;
 
-```r
-frequency_wide &lt;- frequency_wide %&gt;%
-  mutate(log_odds_ratio = log(odds_ratio))
+&lt;!-- frequency_wide --&gt;
+&lt;!-- ``` --&gt;
 
-frequency_wide
-```
-
-```
-## # A tibble: 955 x 7
-##    word     moon  park ratio_moon ratio_park odds_ratio log_odds_ratio
-##    &lt;chr&gt;   &lt;int&gt; &lt;int&gt;      &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;          &lt;dbl&gt;
-##  1 가동        1     0   0.000873   0.000552      1.58           0.459
-##  2 가사        1     0   0.000873   0.000552      1.58           0.459
-##  3 가슴        2     0   0.00131    0.000552      2.37           0.865
-##  4 가족        1     1   0.000873   0.00110       0.791         -0.234
-##  5 가족구조~     1     0   0.000873   0.000552      1.58           0.459
-##  6 가지        4     0   0.00218    0.000552      3.96           1.38 
-##  7 가치        3     1   0.00175    0.00110       1.58           0.459
-##  8 각종        1     0   0.000873   0.000552      1.58           0.459
-##  9 감당        1     0   0.000873   0.000552      1.58           0.459
-## 10 강력        3     0   0.00175    0.000552      3.17           1.15 
-## # ... with 945 more rows
-```
-
----
+&lt;!-- --- --&gt;
 
 &lt;!-- ```{r R.options=list(tibble.width = 80, width = 80, pillar.min_chars = Inf)} --&gt;
 &lt;!-- frequency_wide &lt;- frequency_wide %&gt;% --&gt;
