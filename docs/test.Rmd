@@ -1,0 +1,466 @@
+---
+title: "Do it! 쉽게 배우는 R 텍스트 마이닝 - 03 비교 분석: 무엇이 다를까?"
+author: "김영우"
+output:
+  xaringan::moon_reader:
+    seal: false
+    css: ["default", "css/custom.css"]
+    lib_dir: libs
+    chakra: libs/remark-latest.min.js
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: '16:10'
+      navigation:
+        scroll: true
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE, 
+        width = 70,
+        max.print = 80,
+        tibble.print_max = 40,
+        tibble.width = 70,
+        servr.interval = 0.01) # Viewer 수정 반영 속도
+
+knitr::opts_chunk$set(cache = T, warning = F, message = F, 
+                      dpi = 300, fig.height = 4, out.width = "100%")
+
+xaringanExtra::use_tile_view()
+
+library(knitr)
+library(icon)
+library(here)
+```
+
+
+```{r echo=FALSE}
+rm(list = ls())
+
+library(showtext)
+font_add_google(name = "Nanum Gothic", family = "nanumgothic")
+showtext_auto()
+showtext_opts(dpi = 300) # opts_chunk$set(dpi=300)
+
+# code highlighting
+hook_source <- knitr::knit_hooks$get('source')
+knitr::knit_hooks$set(source = function(x, options) {
+  x <- stringr::str_replace(x, "^[[:blank:]]?([^*].+?)[[:blank:]]*#<<[[:blank:]]*$", "*\\1")
+  hook_source(x, options)
+})
+
+
+```
+
+class: title0
+
+Do it! 쉽게 배우는 R 텍스트 마이닝
+
+---
+
+class: title1
+
+분석 도전
+
+---
+
+### 분석 도전(2/2)
+
+**Q2. 역대 대통령의 취임사를 담은 `inaugural_address.csv`를 이용해 문제를 해결해 보세요.**
+
+Q2.1 `inaugural_address.csv`를 불러와 분석에 적합하게 전처리하고 연설문에서 명사를 추출하세요.
+
+Q2.2 TF-IDF를 이용해 각 연설문에서 상대적으로 중요한 단어를 10개씩 추출하세요.
+
+Q2.3 각 연설문에서 상대적으로 중요한 단어를 나타낸 막대 그래프를 만드세요.
+
+---
+
+Q2.1 `inaugural_address.csv`를 불러와 분석에 적합하게 전처리하고 연설문에서 명사를 추출하세요.
+
+```{r eval=FALSE, R.options=list(tibble.width = 40)}
+# 데이터 불러오기
+raw_speeches <- read_csv("inaugural_address.csv")
+
+# 전처리
+library(dplyr)
+library(stringr)
+speeches <- raw_speeches %>%
+  mutate(value = str_replace_all(value, "[^가-힣]", " "),
+         value = str_squish(value))
+
+speeches
+```
+
+```{r echo=FALSE, R.options=list(tibble.width = 50)}
+# 데이터 불러오기
+raw_speeches <- read_csv("../Data/inaugural_address.csv")
+
+# 전처리
+library(dplyr)
+library(stringr)
+speeches <- raw_speeches %>%
+  mutate(value = str_replace_all(value, "[^가-힣]", " "),
+         value = str_squish(value))
+
+speeches
+```
+
+---
+
+Q2.1 `inaugural_address.csv`를 불러온 다음 분석에 적합하게 전처리하고 연설문에서 명사를 추출하세요.
+
+.scroll-box-26[
+
+```{r}
+speeches <- raw_speeches %>%
+  mutate(value = str_replace_all(value, "[^가-힣]", " "),
+         value = str_squish(value))
+
+speeches <- speeches %>%
+  unnest_tokens(input = value,
+                output = word,
+                token = extractNoun)
+
+speeches
+```
+
+]
+
+---
+
+Q2.1 `inaugural_address.csv`를 불러온 다음 분석에 적합하게 전처리하고 연설문에서 명사를 추출하세요.
+
+.scroll-box-26[
+
+```{r}
+speeches <- raw_speeches %>%
+  mutate(value = str_replace_all(value, "[^가-힣]", " "),
+         value = str_squish(value))
+
+speeches <- speeches %>%
+  unnest_tokens(input = value,
+                output = word,
+                token = extractNoun)
+
+speeches
+```
+
+]
+
+---
+
+Q2.1 `inaugural_address.csv`를 불러온 다음 분석에 적합하게 전처리하고 연설문에서 명사를 추출하세요.
+
+.scroll-box-26[
+
+```{r}
+speeches <- raw_speeches %>%
+  mutate(value = str_replace_all(value, "[^가-힣]", " "),
+         value = str_squish(value))
+
+speeches <- speeches %>%
+  unnest_tokens(input = value,
+                output = word,
+                token = extractNoun)
+
+speeches
+```
+
+]
+
+---
+
+Q2.1 `inaugural_address.csv`를 불러온 다음 분석에 적합하게 전처리하고 연설문에서 명사를 추출하세요.
+
+.scroll-box-26[
+
+```{r}
+speeches <- raw_speeches %>%
+  mutate(value = str_replace_all(value, "[^가-힣]", " "),
+         value = str_squish(value))
+
+speeches <- speeches %>%
+  unnest_tokens(input = value,
+                output = word,
+                token = extractNoun)
+
+speeches
+```
+
+]
+
+---
+
+Q2.1 `inaugural_address.csv`를 불러온 다음 분석에 적합하게 전처리하고 연설문에서 명사를 추출하세요.
+
+.scroll-box-26[
+
+```{r}
+speeches <- raw_speeches %>%
+  mutate(value = str_replace_all(value, "[^가-힣]", " "),
+         value = str_squish(value))
+
+speeches <- speeches %>%
+  unnest_tokens(input = value,
+                output = word,
+                token = extractNoun)
+
+speeches
+```
+
+]
+
+---
+
+Q2.1 `inaugural_address.csv`를 불러온 다음 분석에 적합하게 전처리하고 연설문에서 명사를 추출하세요.
+
+.scroll-box-26[
+
+```{r}
+speeches <- raw_speeches %>%
+  mutate(value = str_replace_all(value, "[^가-힣]", " "),
+         value = str_squish(value))
+
+speeches <- speeches %>%
+  unnest_tokens(input = value,
+                output = word,
+                token = extractNoun)
+
+speeches
+```
+
+]
+
+---
+
+Q2.1 `inaugural_address.csv`를 불러온 다음 분석에 적합하게 전처리하고 연설문에서 명사를 추출하세요.
+
+.scroll-box-26[
+
+```{r}
+speeches <- raw_speeches %>%
+  mutate(value = str_replace_all(value, "[^가-힣]", " "),
+         value = str_squish(value))
+
+speeches <- speeches %>%
+  unnest_tokens(input = value,
+                output = word,
+                token = extractNoun)
+
+speeches
+```
+
+]
+
+---
+
+Q2.1 `inaugural_address.csv`를 불러온 다음 분석에 적합하게 전처리하고 연설문에서 명사를 추출하세요.
+
+.scroll-box-26[
+
+```{r}
+speeches <- raw_speeches %>%
+  mutate(value = str_replace_all(value, "[^가-힣]", " "),
+         value = str_squish(value))
+
+speeches <- speeches %>%
+  unnest_tokens(input = value,
+                output = word,
+                token = extractNoun)
+
+speeches
+```
+
+]
+
+---
+
+Q2.1 `inaugural_address.csv`를 불러온 다음 분석에 적합하게 전처리하고 연설문에서 명사를 추출하세요.
+
+.scroll-box-26[
+
+```{r}
+speeches <- raw_speeches %>%
+  mutate(value = str_replace_all(value, "[^가-힣]", " "),
+         value = str_squish(value))
+
+speeches <- speeches %>%
+  unnest_tokens(input = value,
+                output = word,
+                token = extractNoun)
+
+speeches
+```
+
+]
+
+---
+
+Q2.1 `inaugural_address.csv`를 불러온 다음 분석에 적합하게 전처리하고 연설문에서 명사를 추출하세요.
+
+.scroll-box-26[
+
+```{r}
+speeches <- raw_speeches %>%
+  mutate(value = str_replace_all(value, "[^가-힣]", " "),
+         value = str_squish(value))
+
+speeches <- speeches %>%
+  unnest_tokens(input = value,
+                output = word,
+                token = extractNoun)
+
+speeches
+```
+
+]
+
+---
+
+Q2.1 `inaugural_address.csv`를 불러온 다음 분석에 적합하게 전처리하고 연설문에서 명사를 추출하세요.
+
+.scroll-box-26[
+
+```{r}
+speeches <- raw_speeches %>%
+  mutate(value = str_replace_all(value, "[^가-힣]", " "),
+         value = str_squish(value))
+
+speeches <- speeches %>%
+  unnest_tokens(input = value,
+                output = word,
+                token = extractNoun)
+
+speeches
+```
+
+]
+
+---
+
+Q2.1 `inaugural_address.csv`를 불러온 다음 분석에 적합하게 전처리하고 연설문에서 명사를 추출하세요.
+
+.scroll-box-26[
+
+```{r}
+speeches <- raw_speeches %>%
+  mutate(value = str_replace_all(value, "[^가-힣]", " "),
+         value = str_squish(value))
+
+speeches <- speeches %>%
+  unnest_tokens(input = value,
+                output = word,
+                token = extractNoun)
+
+speeches
+```
+
+]
+
+---
+
+Q2.1 `inaugural_address.csv`를 불러온 다음 분석에 적합하게 전처리하고 연설문에서 명사를 추출하세요.
+
+.scroll-box-26[
+
+```{r}
+speeches <- raw_speeches %>%
+  mutate(value = str_replace_all(value, "[^가-힣]", " "),
+         value = str_squish(value))
+
+speeches <- speeches %>%
+  unnest_tokens(input = value,
+                output = word,
+                token = extractNoun)
+
+speeches
+```
+
+]
+
+---
+
+Q2.1 `inaugural_address.csv`를 불러온 다음 분석에 적합하게 전처리하고 연설문에서 명사를 추출하세요.
+
+.scroll-box-26[
+
+```{r}
+speeches <- raw_speeches %>%
+  mutate(value = str_replace_all(value, "[^가-힣]", " "),
+         value = str_squish(value))
+
+speeches <- speeches %>%
+  unnest_tokens(input = value,
+                output = word,
+                token = extractNoun)
+
+speeches
+```
+
+]
+
+---
+
+Q2.1 `inaugural_address.csv`를 불러온 다음 분석에 적합하게 전처리하고 연설문에서 명사를 추출하세요.
+
+.scroll-box-26[
+
+```{r}
+speeches <- raw_speeches %>%
+  mutate(value = str_replace_all(value, "[^가-힣]", " "),
+         value = str_squish(value))
+
+speeches <- speeches %>%
+  unnest_tokens(input = value,
+                output = word,
+                token = extractNoun)
+
+speeches
+```
+
+]
+
+---
+
+Q2.1 `inaugural_address.csv`를 불러온 다음 분석에 적합하게 전처리하고 연설문에서 명사를 추출하세요.
+
+.scroll-box-26[
+
+```{r}
+speeches <- raw_speeches %>%
+  mutate(value = str_replace_all(value, "[^가-힣]", " "),
+         value = str_squish(value))
+
+speeches <- speeches %>%
+  unnest_tokens(input = value,
+                output = word,
+                token = extractNoun)
+
+speeches
+```
+
+]
+
+
+---
+
+Q2.1 `inaugural_address.csv`를 불러온 다음 분석에 적합하게 전처리하고 연설문에서 명사를 추출하세요.
+
+.scroll-box-26[
+
+```{r}
+speeches <- raw_speeches %>%
+  mutate(value = str_replace_all(value, "[^가-힣]", " "),
+         value = str_squish(value))
+
+speeches <- speeches %>%
+  unnest_tokens(input = value,
+                output = word,
+                token = extractNoun)
+
+speeches
+```
+
+]

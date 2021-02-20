@@ -41,6 +41,7 @@ rm(list = ls())
 library(showtext)
 font_add_google(name = "Nanum Gothic", family = "nanumgothic")
 showtext_auto()
+showtext_opts(dpi = 300) # opts_chunk$set(dpi=300)
 
 # code highlighting
 hook_source <- knitr::knit_hooks$get('source')
@@ -251,9 +252,25 @@ speeches
 
 - 형태소 분석기를 이용해 명사 기준 토큰화
 
-.scroll-box-26[
 
-```{r}
+```{r eval=F}
+# 토큰화
+library(tidytext)
+library(KoNLP)
+
+speeches <- speeches %>%
+  unnest_tokens(input = value,
+                output = word,
+                token = extractNoun)
+
+speeches
+```
+
+<br-back-20>  
+
+.scroll-box-14[
+
+```{r echo=F}
 # 토큰화
 library(tidytext)
 library(KoNLP)
@@ -436,10 +453,18 @@ df %>%
 
 #### 연설문에 적용하기
 
+```{r eval=F}
+top10 <- frequency %>%
+  group_by(president) %>%
+  slice_max(n, n = 10, with_ties = F)
 
-.scroll-box-26[
+top10
 
-```{r, highlight.output=1}
+```
+
+<br-back-20>
+.scroll-box-18[
+```{r, echo=FALSE, highlight.output=1}
 top10 <- frequency %>%
   group_by(president) %>%
   slice_max(n, n = 10, with_ties = F)
@@ -1145,14 +1170,18 @@ speeches_sentence %>%
 
 #### 2. 주요 단어가 사용된 문장 추출하기 - `str_detect()`
 
-<br-back-20>  
-.scroll-box-26[
-
-```{r, R.options = list(tibble.width = 50)}
+```{r eval=FALSE}
 speeches_sentence %>%
   filter(president == "park" & str_detect(sentence, "행복"))
 ```
 
+<br-back-20>
+.scroll-box-20[
+
+```{r, echo=FALSE, R.options = list(tibble.width = 50)}
+speeches_sentence %>%
+  filter(president == "park" & str_detect(sentence, "행복"))
+```
 ]
 
 ---
@@ -1327,11 +1356,21 @@ frequency_wide <- frequency_wide %>%
  
 - 두 연설문 각각 `log_odds_ratio` Top 10 추출
 
-  
-<br-back-20>  
-.scroll-box-24[
+```{r eval=F}
+top10 <- frequency_wide %>%
+  group_by(president = ifelse(log_odds_ratio > 0, "moon", "park")) %>%
+  slice_max(abs(log_odds_ratio), n = 10, with_ties = F)
 
-```{r R.options=list(tibble.width = Inf, width = 80, pillar.min_chars = Inf)}
+top10
+
+```
+
+
+<br-back-22>
+
+.scroll-box-14[
+
+```{r echo=FALSE, R.options=list(tibble.width = Inf, width = 90, pillar.min_chars = Inf)}
 top10 <- frequency_wide %>%
   group_by(president = ifelse(log_odds_ratio > 0, "moon", "park")) %>%
   slice_max(abs(log_odds_ratio), n = 10, with_ties = F)
@@ -1343,18 +1382,27 @@ top10
 ]
 
 ---
+
 ##### 주요 변수 추출
 
-<br10>
 
-.scroll-box-26[
-```{r}
+
+```{r eval=FALSE}
 top10 %>%
   arrange(-log_odds_ratio) %>%
   select(word, log_odds_ratio, president)
 ```
-]
 
+
+<br-back-20>
+.scroll-box-20[
+```{r echo=FALSE, R.options=list(tibble.width = Inf, width = 80, pillar.min_chars = Inf)}
+top10 %>%
+  arrange(-log_odds_ratio) %>%
+  select(word, log_odds_ratio, president)
+```
+
+]
 ---
 
 ```{r echo=F, R.options=list(tibble.width = Inf, width = 100, pillar.min_chars = Inf), highlight.output=c(5:14)}
@@ -1379,12 +1427,22 @@ top10 %>%
 
 **오즈비 기준 상·하위 10개 추출했을 때와 단어 동일**
 
-.scroll-box-26[
-```{r R.options=list(tibble.width = Inf, width = 100, pillar.min_chars = Inf)}
+```{r eval=F}
 frequency_wide %>%
   filter(rank(odds_ratio) <= 10 | rank(-odds_ratio) <= 10) %>% 
   arrange(-odds_ratio)
 ```
+
+
+<br-back-20>
+.scroll-box-20[
+
+```{r echo=FALSE, R.options=list(tibble.width = Inf, width = 100, pillar.min_chars = Inf)}
+frequency_wide %>%
+  filter(rank(odds_ratio) <= 10 | rank(-odds_ratio) <= 10) %>% 
+  arrange(-odds_ratio)
+```
+
 ]
 
  
@@ -1751,7 +1809,7 @@ ggplot(top10, aes(x = reorder_within(word, tf_idf, president),
 
 ---
 
-```{r echo=F, fig.width=5, fig.height=4, out.width="70%"}
+```{r echo=F, fig.width=6, fig.height=5, out.width="75%"}
 # 주요 단어 추출
 top10 <- frequecy %>%
   group_by(president) %>%
@@ -1905,17 +1963,11 @@ speeches <- raw_speeches %>%
 speeches
 ```
 
-
-
-
 ---
 
 Q1.2 연설문에서 명사를 추출한 다음 연설문별 단어 빈도를 구하세요.
 
-<br-back-20>
-
-.scroll-box-26[
-```{r}
+```{r eval=FALSE}
 # 명사 추출
 library(tidytext)
 library(KoNLP)
@@ -1926,6 +1978,22 @@ speeches <- speeches %>%
 
 speeches
 ```
+
+<br-back-20>
+.scroll-box-14[
+
+```{r echo=FALSE}
+# 명사 추출
+library(tidytext)
+library(KoNLP)
+speeches <- speeches %>%
+  unnest_tokens(input = value,
+                output = word,
+                token = extractNoun)
+
+speeches
+```
+
 ]
 
 ---
@@ -1973,9 +2041,7 @@ frequency_wide
 
 Q1.3 로그 오즈비를 이용해 두 연설문에서 상대적으로 중요한 단어를 10개씩 추출하세요.
 
-<br-back-20>  
-.scroll-box-26[
-```{r}
+```{r eval=F}
 # 상대적으로 중요한 단어 추출
 top10 <- frequency_wide %>%
   group_by(president = ifelse(log_odds_ratio > 0, "lee", "roh")) %>%
@@ -1983,6 +2049,18 @@ top10 <- frequency_wide %>%
 
 top10
 ```
+
+<br-back-20>
+.scroll-box-18[
+```{r echo=FALSE}
+# 상대적으로 중요한 단어 추출
+top10 <- frequency_wide %>%
+  group_by(president = ifelse(log_odds_ratio > 0, "lee", "roh")) %>%
+  slice_max(abs(log_odds_ratio), n = 10, with_ties = F)
+
+top10
+```
+
 ]
 
 ---
@@ -2008,15 +2086,14 @@ ggplot(top10, aes(x = reorder(word, log_odds_ratio),
   labs(x = NULL)
 ```
 
-
-
 ---
+
 
 ### 분석 도전(2/2)
 
 **Q2. 역대 대통령의 취임사를 담은 `inaugural_address.csv`를 이용해 문제를 해결해 보세요.**
 
-Q2.1 `inaugural_address.csv`를 불러온 다음 분석에 적합하게 전처리하고 연설문에서 명사를 추출하세요.
+Q2.1 `inaugural_address.csv`를 불러와 분석에 적합하게 전처리하고 연설문에서 명사를 추출하세요.
 
 Q2.2 TF-IDF를 이용해 각 연설문에서 상대적으로 중요한 단어를 10개씩 추출하세요.
 
@@ -2024,10 +2101,11 @@ Q2.3 각 연설문에서 상대적으로 중요한 단어를 나타낸 막대 �
 
 ---
 
-Q2.1 `inaugural_address.csv`를 불러온 다음 분석에 적합하게 전처리하고 연설문에서 명사를 추출하세요.
+Q2.1 `inaugural_address.csv`를 불러와 분석에 적합하게 전처리하고 연설문에서 명사를 추출하세요.
 
-```{r eval=FALSE, R.options=list(tibble.width = 50)}
+```{r eval=FALSE}
 # 데이터 불러오기
+library(readr)
 raw_speeches <- read_csv("inaugural_address.csv")
 
 # 전처리
@@ -2040,9 +2118,9 @@ speeches <- raw_speeches %>%
 speeches
 ```
 
-
 ```{r echo=FALSE, R.options=list(tibble.width = 50)}
 # 데이터 불러오기
+library(readr)
 raw_speeches <- read_csv("../Data/inaugural_address.csv")
 
 # 전처리
@@ -2057,12 +2135,10 @@ speeches
 
 ---
 
-Q2.1 `inaugural_address.csv`를 불러온 다음 분석에 적합하게 전처리하고 연설문에서 명사를 추출하세요.
+Q2.1 `inaugural_address.csv`를 불러와 분석에 적합하게 전처리하고 연설문에서 명사를 추출하세요.
 
-<br-back-20>  
-.scroll-box-26[
 
-```{r}
+```{r eval=F}
 # 명사 기준 토큰화
 library(tidytext)
 library(KoNLP)
@@ -2073,8 +2149,19 @@ speeches <- speeches %>%
 
 speeches
 ```
-]
 
+---
+```{r echo=F}
+# 명사 기준 토큰화
+library(tidytext)
+library(KoNLP)
+speeches <- speeches %>%
+  unnest_tokens(input = value,
+                output = word,
+                token = extractNoun)
+
+speeches
+```
 
 ---
 
@@ -2108,24 +2195,23 @@ frequecy
 
 Q2.2 TF-IDF를 이용해 각 연설문에서 상대적으로 중요한 단어를 10개씩 추출하세요.
 
-<br-back-20>  
-.scroll-box-26[
-  
 ```{r}
 # 상대적으로 중요한 단어 추출
 top10 <- frequecy %>%
   group_by(president) %>%
   slice_max(tf_idf, n = 10, with_ties = F)
 
-top10
+head(top10)
 ```
-]
+
 
 ---
 
+
+
 Q2.3 각 연설문에서 상대적으로 중요한 단어를 나타낸 막대 그래프를 만드세요.
 
-```{r fig.width=6, fig.height=4, out.width="45%"}
+```{r fig.width=6, fig.height=5, out.width="35%"}
 library(ggplot2)
 ggplot(top10, aes(x = reorder_within(word, tf_idf, president),
                   y = tf_idf,
@@ -2140,7 +2226,7 @@ ggplot(top10, aes(x = reorder_within(word, tf_idf, president),
 ---
 
 
-```{r echo=F, fig.width=6, fig.height=4, out.width="90%"}
+```{r echo=F, fig.width=6, fig.height=5, out.width="75%"}
 ggplot(top10, aes(x = reorder_within(word, tf_idf, president),
                   y = tf_idf,
                   fill = president)) +
