@@ -1560,323 +1560,224 @@ top10
 ---
 
 
-##### 2. 막대 그래프 만들기
+&lt;!-- ##### 2. 막대 그래프 만들기 --&gt;
+
+&lt;!-- ```{r out.width="60%"} --&gt;
+&lt;!-- ggplot(top10, aes(x = reorder_within(word, n, president), --&gt;
+&lt;!--                   y = n, --&gt;
+&lt;!--                   fill = president)) + --&gt;
+&lt;!--   geom_col() + --&gt;
+&lt;!--   coord_flip() + --&gt;
+&lt;!--   facet_wrap(~ president, scales = "free_y") + --&gt;
+&lt;!--   scale_x_reordered() --&gt;
+&lt;!-- ``` --&gt;
 
 
-```r
-ggplot(top10, aes(x = reorder_within(word, n, president),
-                  y = n,
-                  fill = president)) +
-  geom_col() +
-  coord_flip() +
-  facet_wrap(~ president, scales = "free_y") +
-  scale_x_reordered()
-```
+&lt;!-- --- --&gt;
 
-&lt;img src="03-comparing_files/figure-html/unnamed-chunk-67-1.png" width="60%" /&gt;
+&lt;!-- - 전반적으로 "park"의 단어 빈도가 높아보임 --&gt;
+&lt;!-- - `"park"`의 `"행복"` 빈도 기준으로 두 그래프의 x축 크기를 똑같이 고정했기 때문 --&gt;
 
 
----
+&lt;!-- ```{r echo=F, out.width="80%"} --&gt;
+&lt;!-- ggplot(top10, aes(x = reorder_within(word, n, president), --&gt;
+&lt;!--                   y = n, --&gt;
+&lt;!--                   fill = president)) + --&gt;
+&lt;!--   geom_col() + --&gt;
+&lt;!--   coord_flip() + --&gt;
+&lt;!--   facet_wrap(~ president, scales = "free_y") + --&gt;
+&lt;!--   scale_x_reordered() --&gt;
+&lt;!-- ``` --&gt;
 
-- 전반적으로 "park"의 단어 빈도가 높아보임
-- `"park"`의 `"행복"` 빈도 기준으로 두 그래프의 x축 크기를 똑같이 고정했기 때문
+&lt;!-- --- --&gt;
 
+&lt;!-- ##### 3. 그래프별로 축 설정하기 --&gt;
 
-&lt;img src="03-comparing_files/figure-html/unnamed-chunk-68-1.png" width="80%" /&gt;
+&lt;!-- - 범주별로 단어 비중 알 수 있도록 x축 크기 각각 정하기 --&gt;
 
----
+&lt;!-- ```{r out.width="40%"} --&gt;
+&lt;!-- ggplot(top10, aes(x = reorder_within(word, n, president), --&gt;
+&lt;!--                   y = n, --&gt;
+&lt;!--                   fill = president)) + --&gt;
+&lt;!--   geom_col() + --&gt;
+&lt;!--   coord_flip() + --&gt;
+&lt;!--   facet_wrap(~ president, scales = "free") + #&lt;&lt; --&gt;
+&lt;!--   scale_x_reordered() + --&gt;
+&lt;!--   labs(x = NULL) +                                    # x축 삭제 --&gt;
+&lt;!--   theme(text = element_text(family = "nanumgothic"))  # 폰트 --&gt;
+&lt;!-- ``` --&gt;
 
-##### 3. 그래프별로 축 설정하기
+&lt;!-- --- --&gt;
+&lt;!-- &lt;svg viewBox="0 0 576 512" xmlns="http://www.w3.org/2000/svg" style="height:1em;position:relative;display:inline-block;top:.1em;fill:#FF7333;"&gt;  [ comment ]  &lt;path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"&gt;&lt;/path&gt;&lt;/svg&gt;  **x축 크기가 그래프마다 다르므로 해석 조심** --&gt;
+&lt;!-- &lt;br-back-10&gt; --&gt;
+&lt;!-- - 막대 길이 같아도 단어 빈도 다름 --&gt;
+&lt;!-- - 두 텍스트 단어 빈도 비교 X --&gt;
+&lt;!-- - 각 텍스트에서 상대적으로 중요한 단어가 무엇인지 중심으로 해석 --&gt;
 
-- 범주별로 단어 비중 알 수 있도록 x축 크기 각각 정하기
+&lt;!-- ```{r echo=FALSE, out.width="80%"} --&gt;
+&lt;!-- ggplot(top10, aes(x = reorder_within(word, n, president), --&gt;
+&lt;!--                   y = n, --&gt;
+&lt;!--                   fill = president)) + --&gt;
+&lt;!--   geom_col() + --&gt;
+&lt;!--   coord_flip() + --&gt;
+&lt;!--   facet_wrap(~ president, scales = "free") + #&lt;&lt; --&gt;
+&lt;!--   scale_x_reordered() + --&gt;
+&lt;!--   labs(x = NULL) +                                    # x축 삭제 --&gt;
+&lt;!--   theme(text = element_text(family = "nanumgothic"))  # 폰트 --&gt;
+&lt;!-- ``` --&gt;
 
+&lt;!-- --- --&gt;
 
-```r
-ggplot(top10, aes(x = reorder_within(word, n, president),
-                  y = n,
-                  fill = president)) +
-  geom_col() +
-  coord_flip() +
-* facet_wrap(~ president, scales = "free") +
-  scale_x_reordered() +
-  labs(x = NULL) +                                    # x축 삭제
-  theme(text = element_text(family = "nanumgothic"))  # 폰트
-```
+&lt;!-- #### 주요 단어가 사용된 문장 살펴보기 --&gt;
 
-&lt;img src="03-comparing_files/figure-html/unnamed-chunk-69-1.png" width="40%" /&gt;
+&lt;!-- ##### 1. 원문을 문장 기준으로 토큰화하기 --&gt;
 
----
-&lt;svg viewBox="0 0 576 512" xmlns="http://www.w3.org/2000/svg" style="height:1em;position:relative;display:inline-block;top:.1em;fill:#FF7333;"&gt;  [ comment ]  &lt;path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"&gt;&lt;/path&gt;&lt;/svg&gt;  **x축 크기가 그래프마다 다르므로 해석 조심**
-&lt;br-back-10&gt;
-- 막대 길이 같아도 단어 빈도 다름
-- 두 텍스트 단어 빈도 비교 X
-- 각 텍스트에서 상대적으로 중요한 단어가 무엇인지 중심으로 해석
+&lt;!-- &lt;br-back-20&gt; --&gt;
+&lt;!-- .scroll-box-22[ --&gt;
 
-&lt;img src="03-comparing_files/figure-html/unnamed-chunk-70-1.png" width="80%" /&gt;
+&lt;!-- ```{r} --&gt;
+&lt;!-- speeches_sentence &lt;- bind_speeches %&gt;% --&gt;
+&lt;!--   as_tibble() %&gt;% --&gt;
+&lt;!--   unnest_tokens(input = value, --&gt;
+&lt;!--                 output = sentence, --&gt;
+&lt;!--                 token = "sentences") --&gt;
 
----
+&lt;!-- speeches_sentence --&gt;
+&lt;!-- ``` --&gt;
 
-#### 주요 단어가 사용된 문장 살펴보기
+&lt;!-- ] --&gt;
+&lt;!-- --- --&gt;
 
-##### 1. 원문을 문장 기준으로 토큰화하기
+&lt;!-- ```{r, R.options = list(tibble.width = 50)} --&gt;
+&lt;!-- head(speeches_sentence) --&gt;
+&lt;!-- ``` --&gt;
 
-&lt;br-back-20&gt;
-.scroll-box-22[
 
+&lt;!-- ```{r, R.options = list(tibble.width = 50)} --&gt;
+&lt;!-- tail(speeches_sentence) --&gt;
+&lt;!-- ``` --&gt;
 
-```r
-speeches_sentence &lt;- bind_speeches %&gt;%
-  as_tibble() %&gt;%
-  unnest_tokens(input = value,
-                output = sentence,
-                token = "sentences")
+&lt;!-- --- --&gt;
 
-speeches_sentence
-```
 
-```
-## # A tibble: 329 x 2
-##    president sentence                                                 
-##    &lt;chr&gt;     &lt;chr&gt;                                                    
-##  1 moon      "정권교체 하겠습니다!"                                   
-##  2 moon      "정치교체 하겠습니다!"                                   
-##  3 moon      "시대교체 하겠습니다!"                                   
-##  4 moon      ""                                                       
-##  5 moon      "‘불비불명(不飛不鳴)’이라는 고사가 있습니다."            
-##  6 moon      "남쪽 언덕 나뭇가지에 앉아, 3년 동안 날지도 울지도 않는 새."~
-##  7 moon      "그러나 그 새는 한번 날면 하늘 끝까지 날고, 한번 울면 천지를 뒤흔듭니다."~
-##  8 moon      "그 동안 정치와 거리를 둬 왔습니다."                     
-##  9 moon      "그러나 암울한 시대가 저를 정치로 불러냈습니다."         
-## 10 moon      "더 이상 남쪽 나뭇가지에 머무를 수 없었습니다."          
-## # ... with 319 more rows
-```
-
-]
----
-
-
-```r
-head(speeches_sentence)
-```
-
-```
-## # A tibble: 6 x 2
-##   president sentence                              
-##   &lt;chr&gt;     &lt;chr&gt;                                 
-## 1 moon      "정권교체 하겠습니다!"                
-## 2 moon      "정치교체 하겠습니다!"                
-## 3 moon      "시대교체 하겠습니다!"                
-## 4 moon      ""                                    
-## 5 moon      "‘불비불명(不飛不鳴)’이라는 고사가 있습니다."~
-## 6 moon      "남쪽 언덕 나뭇가지에 앉아, 3년 동안 날지도 울지도 않는 새."~
-```
-
-
-
-```r
-tail(speeches_sentence)
-```
-
-```
-## # A tibble: 6 x 2
-##   president sentence                              
-##   &lt;chr&gt;     &lt;chr&gt;                                 
-## 1 park      국민 여러분의 행복이 곧 저의 행복입니다.~
-## 2 park      사랑하는 조국 대한민국과 국민 여러분을 위해, 앞으로 머나 먼 길,~
-## 3 park      그 길을 함께 해주시길 부탁드립니다.   
-## 4 park      감사합니다.                           
-## 5 park      2012년 7월 10일                       
-## 6 park      새누리당 예비후보 박근혜
-```
-
----
-
-
-#### 2. 주요 단어가 사용된 문장 추출하기 - `str_detect()`
-
-
-
-```r
-speeches_sentence %&gt;%
-  filter(president == "moon" &amp; str_detect(sentence, "복지국가"))
-```
-
-```
-## # A tibble: 8 x 2
-##   president sentence                              
-##   &lt;chr&gt;     &lt;chr&gt;                                 
-## 1 moon      ‘강한 복지국가’를 향해 담대하게 나아가겠습니다.~
-## 2 moon      2백 년 전 이와 같은 소득재분배, 복지국가의 사상을 가진 위정자가~
-## 3 moon      이제 우리는 복지국가를 향해 담대하게 나아갈 때입니다.~
-## 4 moon      부자감세, 4대강 사업 같은 시대착오적 과오를 청산하고, 하루빨리 ~
-## 5 moon      우리는 지금 복지국가로 가느냐, 양극화의 분열된 국가로 가느냐 하는~
-## 6 moon      강한 복지국가일수록 국가 경쟁력도 더 높습니다.~
-## 7 moon      결국 복지국가로 가는 길은 사람에 대한 투자, 일자리 창출, 자영업~
-## 8 moon      우리는 과감히 강한 보편적 복지국가로 가야 합니다.~
-```
-
----
-
-#### 2. 주요 단어가 사용된 문장 추출하기 - `str_detect()`
-
-
-```r
-speeches_sentence %&gt;%
-  filter(president == "park" &amp; str_detect(sentence, "행복"))
-```
-
-&lt;br-back-20&gt;
-.scroll-box-20[
-
-
-```
-## # A tibble: 19 x 2
-##    president sentence                             
-##    &lt;chr&gt;     &lt;chr&gt;                                
-##  1 park      저는 오늘, 국민 한 분 한 분의 꿈이 이루어지는 행복한 대한민국~
-##  2 park      국가는 발전했고, 경제는 성장했다는데, 나의 삶은 나아지지 않았고~
-##  3 park      과거에는 국가의 발전이 국민의 행복으로 이어졌습니다.~
-##  4 park      개인의 창의력이 중요한 지식기반사회에서는 국민 한 사람, 한 사람~
-##  5 park      이제 국정운영의 패러다임을 국가에서 국민으로, 개인의 삶과 행복 ~
-##  6 park      국민 개개인의 꿈을 향한 노력이 국가를 발전시키고 국가 발전이 국~
-##  7 park      저는 ‘경제민주화 실현’, ‘일자리 창출’, 그리고 ‘한국형 복지~
-##  8 park      국민행복의 길을 열어갈 첫 번째 과제로, 저는 경제민주화를 통해 ~
-##  9 park      국민행복의 길을 열어갈 두 번째 과제로, 저는 좋은 일자리 창출을~
-## 10 park      국민행복의 길을 열어갈 세 번째 과제로, 우리의 실정에 맞으면서 ~
-## 11 park      저는 국민행복을 위해 ‘경제민주화-일자리-복지’를 아우르는 (가칭~
-## 12 park      모든 계층의 국민이 함께 참여해 만들고, 정부와 기업, 지역사회가~
-## 13 park      50년 전 경제개발 5개년 계획이 산업화의 기적을 이뤄냈듯,‘오천~
-## 14 park      저는 지속가능한 국민 행복을 만들 수 있도록,사람에 대한 투자를 ~
-## 15 park      저 박근혜, 경쟁과 입시에 매몰된 교육을‘함께하는 행복교육’으로 ~
-## 16 park      존경하는 국민여러분, 국민행복을 위한 노력이 안정적으로 이루어지기~
-## 17 park      국민 여러분, 국민행복의 꿈을 이뤄내기 위해서는, 먼저 정부부터 ~
-## 18 park      국민들이 꿈으로만 가졌던 행복한 삶을 실제로 이룰 수 있도록 도와~
-## 19 park      국민 여러분의 행복이 곧 저의 행복입니다.~
-```
-]
-
----
-
-#### 중요도가 비슷한 단어 살펴보기
-
-- `odds_ratio`가 1에 가까운 단어 추출
-- 대부분 보편적인 의미를 지니는 단어
-
-
-```r
-frequency_wide %&gt;%
-  arrange(abs(1 - odds_ratio)) %&gt;%
-  head(10)
-```
-
-```
-## # A tibble: 10 x 6
-##    word    moon  park ratio_moon ratio_park odds_ratio
-##    &lt;chr&gt;  &lt;int&gt; &lt;int&gt;      &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;
-##  1 때문       4     3    0.00218    0.00221      0.989
-##  2 강화       3     2    0.00175    0.00165      1.06 
-##  3 부담       3     2    0.00175    0.00165      1.06 
-##  4 세계       3     2    0.00175    0.00165      1.06 
-##  5 책임       3     2    0.00175    0.00165      1.06 
-##  6 협력       3     2    0.00175    0.00165      1.06 
-##  7 거대       2     1    0.00131    0.00110      1.19 
-##  8 교체       2     1    0.00131    0.00110      1.19 
-##  9 근본적     2     1    0.00131    0.00110      1.19 
-## 10 기반       2     1    0.00131    0.00110      1.19
-```
-
----
-
-#### 중요도가 비슷한 단어 살펴보기
-
-- 중요도가 비슷하면서 빈도가 높은 단어: 두 텍스트에서 모두 강조한 단어
-
-
-```r
-frequency_wide %&gt;%
-  filter(moon &gt;= 5 &amp; park &gt;= 5) %&gt;%
-  arrange(abs(1 - odds_ratio)) %&gt;%
-  head(10)
-```
-
-```
-## # A tibble: 10 x 6
-##    word      moon  park ratio_moon ratio_park odds_ratio
-##    &lt;chr&gt;    &lt;int&gt; &lt;int&gt;      &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;
-##  1 사회        14     9    0.00655    0.00552      1.19 
-##  2 사람         9     9    0.00436    0.00552      0.791
-##  3 경제        15    15    0.00698    0.00883      0.791
-##  4 지원         5     5    0.00262    0.00331      0.791
-##  5 우리        17    10    0.00786    0.00607      1.29 
-##  6 불안         7     8    0.00349    0.00496      0.703
-##  7 산업         9     5    0.00436    0.00331      1.32 
-##  8 대한민국    11     6    0.00524    0.00386      1.36 
-##  9 국가         7    10    0.00349    0.00607      0.576
-## 10 교육         6     9    0.00306    0.00552      0.554
-```
-
----
-
-name: 03-3
-class: title1
-
-03-3 로그 오즈비로 단어 비교하기
----
-##### 로그 오즈비(log odds ratio)
-- 오즈비에 로그를 취한 값
-- 단어의 오즈비가 1보다 크면 `+`, 1보다 작으면 `-`가 됨
-- 단어가 두 텍스트 중 어디에서 비중이 큰지에 따라 서로 다른 부호
-  - `"moon"`에서 비중이 커서 `odds_ratio`가 1보다 큰 단어 `+`
-  - `"park"`에서 비중이 커서 `odds_ratio`가 1보다 작은 단어 `-`
-
-&lt;br&gt;
-
-&lt;img src="Image/etc/03_3_table1.png" width="60%" height="60%" /&gt;
-
----
-
-##### 로그 오즈비(log odds ratio)
-- 오즈비에 로그를 취한 값
-- 단어의 오즈비가 1보다 크면 `+`, 1보다 작으면 `-`가 됨
-- 단어가 두 텍스트 중 어디에서 비중이 큰지에 따라 서로 다른 부호
-  - `"moon"`에서 비중이 커서 `odds_ratio`가 1보다 큰 단어 `+`
-  - `"park"`에서 비중이 커서 `odds_ratio`가 1보다 작은 단어 `-`
-
-&lt;br&gt;
-
-
-.center[
-
-`$${\large\text{odds ratio} = \frac{\left(\frac{n+1}{\text{total}+1}\right)_\text{Text A}}
-                           {\left(\frac{n+1}{\text{total}+1}\right)_\text{Text B}}}$$`
-]
-
----
-
-##### 로그 오즈비(log odds ratio)
-- 오즈비에 로그를 취한 값
-- 단어의 오즈비가 1보다 크면 `+`, 1보다 작으면 `-`가 됨
-- 단어가 두 텍스트 중 어디에서 비중이 큰지에 따라 서로 다른 부호
-  - `"moon"`에서 비중이 커서 `odds_ratio`가 1보다 큰 단어 `+`
-  - `"park"`에서 비중이 커서 `odds_ratio`가 1보다 작은 단어 `-`
-
-&lt;br&gt;
-
-
-
-
-.center[
-`$${\large\text{log odds ratio} = \log{\left(\frac{\left(\frac{n+1}{\text{total}+1}\right)_\text{Text A}}
-                              {\left(\frac{n+1}{\text{total}+1}\right)_\text{Text B}}\right)}}$$`
-]
-
----
-
-- 텍스트 차이 분명하게 드러나도록 시각화하는데 활용
-- 단어가 어느 텍스트에서 중요한지에 따라 막대를 반대 방향으로 표현
-
-&lt;img src="Image/03/03_3_1.png" width="60%" height="60%" /&gt;
----
+&lt;!-- #### 2. 주요 단어가 사용된 문장 추출하기 - `str_detect()` --&gt;
+
+
+&lt;!-- ```{r, R.options = list(tibble.width = 50)} --&gt;
+&lt;!-- speeches_sentence %&gt;% --&gt;
+&lt;!--   filter(president == "moon" &amp; str_detect(sentence, "복지국가")) --&gt;
+&lt;!-- ``` --&gt;
+
+&lt;!-- --- --&gt;
+
+&lt;!-- #### 2. 주요 단어가 사용된 문장 추출하기 - `str_detect()` --&gt;
+
+&lt;!-- ```{r eval=FALSE} --&gt;
+&lt;!-- speeches_sentence %&gt;% --&gt;
+&lt;!--   filter(president == "park" &amp; str_detect(sentence, "행복")) --&gt;
+&lt;!-- ``` --&gt;
+
+&lt;!-- &lt;br-back-20&gt; --&gt;
+&lt;!-- .scroll-box-20[ --&gt;
+
+&lt;!-- ```{r, echo=FALSE, R.options = list(tibble.width = 50)} --&gt;
+&lt;!-- speeches_sentence %&gt;% --&gt;
+&lt;!--   filter(president == "park" &amp; str_detect(sentence, "행복")) --&gt;
+&lt;!-- ``` --&gt;
+&lt;!-- ] --&gt;
+
+&lt;!-- --- --&gt;
+
+&lt;!-- #### 중요도가 비슷한 단어 살펴보기 --&gt;
+
+&lt;!-- - `odds_ratio`가 1에 가까운 단어 추출 --&gt;
+&lt;!-- - 대부분 보편적인 의미를 지니는 단어 --&gt;
+
+&lt;!-- ```{r} --&gt;
+&lt;!-- frequency_wide %&gt;% --&gt;
+&lt;!--   arrange(abs(1 - odds_ratio)) %&gt;% --&gt;
+&lt;!--   head(10) --&gt;
+&lt;!-- ``` --&gt;
+
+&lt;!-- --- --&gt;
+
+&lt;!-- #### 중요도가 비슷한 단어 살펴보기 --&gt;
+
+&lt;!-- - 중요도가 비슷하면서 빈도가 높은 단어: 두 텍스트에서 모두 강조한 단어 --&gt;
+
+&lt;!-- ```{r} --&gt;
+&lt;!-- frequency_wide %&gt;% --&gt;
+&lt;!--   filter(moon &gt;= 5 &amp; park &gt;= 5) %&gt;% --&gt;
+&lt;!--   arrange(abs(1 - odds_ratio)) %&gt;% --&gt;
+&lt;!--   head(10) --&gt;
+&lt;!-- ``` --&gt;
+
+&lt;!-- --- --&gt;
+
+&lt;!-- name: 03-3 --&gt;
+&lt;!-- class: title1 --&gt;
+
+&lt;!-- 03-3 로그 오즈비로 단어 비교하기 --&gt;
+&lt;!-- --- --&gt;
+&lt;!-- ##### 로그 오즈비(log odds ratio) --&gt;
+&lt;!-- - 오즈비에 로그를 취한 값 --&gt;
+&lt;!-- - 단어의 오즈비가 1보다 크면 `+`, 1보다 작으면 `-`가 됨 --&gt;
+&lt;!-- - 단어가 두 텍스트 중 어디에서 비중이 큰지에 따라 서로 다른 부호 --&gt;
+&lt;!--   - `"moon"`에서 비중이 커서 `odds_ratio`가 1보다 큰 단어 `+` --&gt;
+&lt;!--   - `"park"`에서 비중이 커서 `odds_ratio`가 1보다 작은 단어 `-` --&gt;
+
+&lt;!-- &lt;br&gt; --&gt;
+
+&lt;!-- ```{r, echo=F, out.width="60%", out.height="60%"} --&gt;
+&lt;!-- include_graphics("Image/etc/03_3_table1.png") --&gt;
+&lt;!-- ``` --&gt;
+
+&lt;!-- --- --&gt;
+
+&lt;!-- ##### 로그 오즈비(log odds ratio) --&gt;
+&lt;!-- - 오즈비에 로그를 취한 값 --&gt;
+&lt;!-- - 단어의 오즈비가 1보다 크면 `+`, 1보다 작으면 `-`가 됨 --&gt;
+&lt;!-- - 단어가 두 텍스트 중 어디에서 비중이 큰지에 따라 서로 다른 부호 --&gt;
+&lt;!--   - `"moon"`에서 비중이 커서 `odds_ratio`가 1보다 큰 단어 `+` --&gt;
+&lt;!--   - `"park"`에서 비중이 커서 `odds_ratio`가 1보다 작은 단어 `-` --&gt;
+
+&lt;!-- &lt;br&gt; --&gt;
+
+
+&lt;!-- .center[ --&gt;
+
+&lt;!-- $${\large\text{odds ratio} = \frac{\left(\frac{n+1}{\text{total}+1}\right)_\text{Text A}} --&gt;
+&lt;!--                            {\left(\frac{n+1}{\text{total}+1}\right)_\text{Text B}}}$$ --&gt;
+&lt;!-- ] --&gt;
+
+&lt;!-- --- --&gt;
+
+&lt;!-- ##### 로그 오즈비(log odds ratio) --&gt;
+&lt;!-- - 오즈비에 로그를 취한 값 --&gt;
+&lt;!-- - 단어의 오즈비가 1보다 크면 `+`, 1보다 작으면 `-`가 됨 --&gt;
+&lt;!-- - 단어가 두 텍스트 중 어디에서 비중이 큰지에 따라 서로 다른 부호 --&gt;
+&lt;!--   - `"moon"`에서 비중이 커서 `odds_ratio`가 1보다 큰 단어 `+` --&gt;
+&lt;!--   - `"park"`에서 비중이 커서 `odds_ratio`가 1보다 작은 단어 `-` --&gt;
+
+&lt;!-- &lt;br&gt; --&gt;
+
+
+
+
+&lt;!-- .center[ --&gt;
+&lt;!-- $${\large\text{log odds ratio} = \log{\left(\frac{\left(\frac{n+1}{\text{total}+1}\right)_\text{Text A}} --&gt;
+&lt;!--                               {\left(\frac{n+1}{\text{total}+1}\right)_\text{Text B}}\right)}}$$ --&gt;
+&lt;!-- ] --&gt;
+
+&lt;!-- --- --&gt;
+
+&lt;!-- - 텍스트 차이 분명하게 드러나도록 시각화하는데 활용 --&gt;
+&lt;!-- - 단어가 어느 텍스트에서 중요한지에 따라 막대를 반대 방향으로 표현 --&gt;
+
+&lt;!-- ```{r, echo=F, out.width="60%", out.height="60%"} --&gt;
+&lt;!-- include_graphics("Image/03/03_3_1.png") --&gt;
+&lt;!-- ``` --&gt;
+&lt;!-- --- --&gt;
 
 &lt;!-- #### 로그 오즈비 구하기 --&gt;
 
