@@ -11,3 +11,5 @@ tidytext
 stringr
 textclean
 ggplot2
+tidyr
+readr
