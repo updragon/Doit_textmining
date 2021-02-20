@@ -1052,7 +1052,7 @@ top10
 
 
 <!-- 문자 길이 무제한 설정 -->
-```{r echo=F, R.options=list(tibble.width = Inf, width = 80, pillar.min_chars = Inf)}
+```{r echo=F, R.options=list(tibble.width = 80, width = 80, pillar.min_chars = Inf)}
 top10
 ```
 ---
