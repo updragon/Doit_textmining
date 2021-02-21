@@ -1,0 +1,26 @@
+---
+title: "Presentation Ninja"
+subtitle: "⚔<br/>with xaringan"
+author: "Yihui Xie"
+institute: "RStudio, PBC"
+date: "2016/12/12 (updated: `r Sys.Date()`)"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+editor_options: 
+  chunk_output_type: console
+---
+```{r echo=FALSE}
+library(dplyr)
+tmp <- readRDS("tmp.rds")
+```
+
+```{r, R.options=list(tibble.width = Inf, width = 100, pillar.min_chars = Inf)}
+tmp %>%
+  select(president, sentence)
+```
+
