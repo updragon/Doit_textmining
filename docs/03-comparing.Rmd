@@ -64,7 +64,7 @@ knitr::knit_hooks$set(source = function(x, options) {
 
 class: title0
 
-Do it! 쉽게 배우는 R 텍스트 마이닝 to 10
+Do it! 쉽게 배우는 R 텍스트 마이닝 to 10 all
 
 ---
 
@@ -277,7 +277,7 @@ speeches
 
 <br-back-20>
 
-.scroll-box-14[
+.scroll-box-10[
 
 ```{r echo=F}
 # 토큰화
@@ -472,7 +472,7 @@ top10
 ```
 
 <br-back-20>
-.scroll-box-18[
+.scroll-box-10[
 ```{r, echo=FALSE, highlight.output=1}
 top10 <- frequency %>%
   group_by(president) %>%
@@ -745,7 +745,7 @@ class: title1
 ##### Long form 데이터 살펴보기
 
 <br-back-20>
-.scroll-box-18[
+.scroll-box-10[
 ```{r}
 df_long <- frequency %>%
   group_by(president) %>%
@@ -1013,7 +1013,7 @@ top10 <- frequency_wide %>%
 ```
 
 <br-back-20>
-.scroll-box-18[
+.scroll-box-10[
 
 ```{r}
 top10 %>%
@@ -1388,7 +1388,7 @@ top10
 
 <br-back-22>
 
-.scroll-box-14[
+.scroll-box-10[
 
 ```{r echo=FALSE}
 top10 <- frequency_wide %>%
@@ -2000,7 +2000,7 @@ speeches
 ```
 
 <br-back-20>
-.scroll-box-14[
+.scroll-box-10[
 
 ```{r echo=FALSE}
 # 명사 추출
@@ -2071,7 +2071,7 @@ top10
 ```
 
 <br-back-20>
-.scroll-box-18[
+.scroll-box-10[
 ```{r echo=FALSE}
 # 상대적으로 중요한 단어 추출
 top10 <- frequency_wide %>%
