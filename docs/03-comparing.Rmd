@@ -243,7 +243,7 @@ tail(bind_speeches)
 - 한글 이외의 문자, 연속된 공백 제거
 - `bind_speeches`는 tibble 구조이므로 `mutate()` 활용
 
-.scroll-box-20[
+
 
 ```{r R.options=list(tibble.width = 50)}
 # 기본적인 전처리
@@ -276,7 +276,7 @@ speeches
 
 
 
-.scroll-box-14[
+
 
 ```{r echo=F}
 # 토큰화
@@ -389,7 +389,7 @@ df %>% slice_min(x, n = 3)
 
 - `president`별 고빈도 단어 상위 10개 추출
 
-.scroll-box-24[
+
 
 ```{r}
 top10 <- frequency %>%
@@ -407,7 +407,7 @@ top10
 - 두 연설문에서 단어 10개씩 추출했는데 20행이 아니라 22행
 - 단어 빈도 동점인 행이 전부 추출되었기 때문
 
-.scroll-box-22[
+
 
 ```{r highlight.output = 1}
 top10
@@ -467,7 +467,7 @@ top10
 
 ```
 
-.scroll-box-18[
+
 ```{r, echo=FALSE, highlight.output=1}
 top10 <- frequency %>%
   group_by(president) %>%
@@ -1185,7 +1185,7 @@ speeches_sentence %>%
   filter(president == "park" & str_detect(sentence, "행복"))
 ```
 
-.scroll-box-20[
+
 
 ```{r echo=FALSE, R.options=list(tibble.width = 50)}
 speeches_sentence %>%

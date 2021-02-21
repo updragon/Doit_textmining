@@ -159,17 +159,14 @@ head(bind_speeches)
 
 ```
 ## # A tibble: 6 x 2
-##   president
-##   &lt;chr&gt;    
-## 1 moon     
-## 2 moon     
-## 3 moon     
-## 4 moon     
-## 5 moon     
-## 6 moon     
-## # ... with 1 more
-## #   variable:
-## #   value &lt;chr&gt;
+##   president value        
+##   &lt;chr&gt;     &lt;chr&gt;        
+## 1 moon      "정권교체 하겠습니다!~
+## 2 moon      "  정치교체 하겠습니~
+## 3 moon      "  시대교체 하겠습니~
+## 4 moon      "  "         
+## 5 moon      "  ‘불비불명(不飛不~
+## 6 moon      ""
 ```
 ]
 
@@ -182,17 +179,14 @@ tail(bind_speeches)
 
 ```
 ## # A tibble: 6 x 2
-##   president
-##   &lt;chr&gt;    
-## 1 park     
-## 2 park     
-## 3 park     
-## 4 park     
-## 5 park     
-## 6 park     
-## # ... with 1 more
-## #   variable:
-## #   value &lt;chr&gt;
+##   president value        
+##   &lt;chr&gt;     &lt;chr&gt;        
+## 1 park      "국민들이 꿈으로만 가~
+## 2 park      ""           
+## 3 park      "감사합니다."
+## 4 park      ""           
+## 5 park      "2012년 7월 10~
+## 6 park      "새누리당 예비후보 박~
 ```
 ]
 
@@ -212,7 +206,7 @@ tail(bind_speeches)
 - 한글 이외의 문자, 연속된 공백 제거
 - `bind_speeches`는 tibble 구조이므로 `mutate()` 활용
 
-.scroll-box-20[
+
 
 
 ```r
@@ -264,7 +258,7 @@ speeches
 
 
 
-.scroll-box-14[
+
 
 
 ```
@@ -459,7 +453,7 @@ df %&gt;% slice_min(x, n = 3)
 
 - `president`별 고빈도 단어 상위 10개 추출
 
-.scroll-box-24[
+
 
 
 ```r
@@ -507,7 +501,7 @@ top10
 - 두 연설문에서 단어 10개씩 추출했는데 20행이 아니라 22행
 - 단어 빈도 동점인 행이 전부 추출되었기 때문
 
-.scroll-box-22[
+
 
 
 ```r
@@ -639,7 +633,7 @@ top10 &lt;- frequency %&gt;%
 top10
 ```
 
-.scroll-box-18[
+
 
 ```
 *## # A tibble: 20 x 3
@@ -1663,7 +1657,7 @@ speeches_sentence %&gt;%
   filter(president == "park" &amp; str_detect(sentence, "행복"))
 ```
 
-.scroll-box-20[
+
 
 
 ```
