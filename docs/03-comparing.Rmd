@@ -750,7 +750,18 @@ class: title1
 ##### Long form 데이터 살펴보기
 - `frequency`: `president`가 `"moon"`인 행과 `"park"`인 행이 세로로 길게 나열
 
-```{r}
+```{r eval=FALSE}
+df_long <- frequency %>%
+  group_by(president) %>%
+  slice_max(n, n = 10) %>%
+  filter(word %in% c("국민", "우리", "정치", "행복"))
+
+df_long
+```
+
+<br-back-10>
+
+```{r echo=FALSE}
 df_long <- frequency %>%
   group_by(president) %>%
   slice_max(n, n = 10) %>%
@@ -1373,15 +1384,7 @@ top10
 
 ##### 주요 변수 추출
 
-```{r eval=FALSE}
-top10 %>%
-  arrange(-log_odds_ratio) %>%
-  select(word, log_odds_ratio, president)
-```
-
----
-
-```{r, echo=FALSE}
+```{r R.options=list(tibble.print_max = 15)}
 top10 %>%
   arrange(-log_odds_ratio) %>%
   select(word, log_odds_ratio, president)
@@ -1408,7 +1411,7 @@ top10 %>%
 
 
 ---
-
+.box[
 **오즈비 기준 상·하위 10개 추출했을 때와 단어 동일**
 
 ```{r eval=F}
@@ -1416,16 +1419,20 @@ frequency_wide %>%
   filter(rank(odds_ratio) <= 10 | rank(-odds_ratio) <= 10) %>%
   arrange(-odds_ratio)
 ```
-
+]
 
 ---
+
+.box[
+
+<br-back-20>
 
 ```{r echo=FALSE}
 frequency_wide %>%
   filter(rank(odds_ratio) <= 10 | rank(-odds_ratio) <= 10) %>%
   arrange(-odds_ratio)
 ```
-
+]
 
 
 

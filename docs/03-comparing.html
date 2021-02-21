@@ -861,6 +861,9 @@ df_long &lt;- frequency %&gt;%
 df_long
 ```
 
+&lt;br-back-10&gt;
+
+
 ```
 ## # A tibble: 6 x 3
 ## # Groups:   president [2]
@@ -1482,7 +1485,7 @@ ggplot(top10, aes(x = reorder_within(word, n, president),
   scale_x_reordered()
 ```
 
-&lt;img src="03-comparing_files/figure-html/unnamed-chunk-69-1.png" width="60%" /&gt;
+&lt;img src="03-comparing_files/figure-html/unnamed-chunk-70-1.png" width="60%" /&gt;
 
 
 ---
@@ -1491,7 +1494,7 @@ ggplot(top10, aes(x = reorder_within(word, n, president),
 - `"park"`의 `"행복"` 빈도 기준으로 두 그래프의 x축 크기를 똑같이 고정했기 때문
 
 
-&lt;img src="03-comparing_files/figure-html/unnamed-chunk-70-1.png" width="80%" /&gt;
+&lt;img src="03-comparing_files/figure-html/unnamed-chunk-71-1.png" width="80%" /&gt;
 
 ---
 
@@ -1512,7 +1515,7 @@ ggplot(top10, aes(x = reorder_within(word, n, president),
   theme(text = element_text(family = "nanumgothic"))  # 폰트
 ```
 
-&lt;img src="03-comparing_files/figure-html/unnamed-chunk-71-1.png" width="40%" /&gt;
+&lt;img src="03-comparing_files/figure-html/unnamed-chunk-72-1.png" width="40%" /&gt;
 
 ---
 &lt;svg viewBox="0 0 576 512" xmlns="http://www.w3.org/2000/svg" style="height:1em;position:relative;display:inline-block;top:.1em;fill:#FF7333;"&gt;  [ comment ]  &lt;path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"&gt;&lt;/path&gt;&lt;/svg&gt;  **x축 크기가 그래프마다 다르므로 해석 조심**
@@ -1521,7 +1524,7 @@ ggplot(top10, aes(x = reorder_within(word, n, president),
 - 두 텍스트 단어 빈도 비교 X
 - 각 텍스트에서 상대적으로 중요한 단어가 무엇인지 중심으로 해석
 
-&lt;img src="03-comparing_files/figure-html/unnamed-chunk-72-1.png" width="80%" /&gt;
+&lt;img src="03-comparing_files/figure-html/unnamed-chunk-73-1.png" width="80%" /&gt;
 
 ---
 
@@ -1964,9 +1967,6 @@ top10 %&gt;%
   select(word, log_odds_ratio, president)
 ```
 
----
-
-
 ```
 ## # A tibble: 20 x 3
 ## # Groups:   president [2]
@@ -1982,16 +1982,7 @@ top10 %&gt;%
 ##  8 보통               1.56 moon     
 ##  9 상생               1.56 moon     
 ## 10 지방               1.56 moon     
-## 11 과제              -1.84 park     
-## 12 국정운영          -1.84 park     
-## 13 시작              -1.84 park     
-## 14 지식              -1.84 park     
-## 15 행복              -2.03 park     
-## 16 실천              -2.03 park     
-## 17 정보              -2.03 park     
-## 18 투명              -2.03 park     
-## 19 여러분            -2.18 park     
-## 20 박근혜            -2.43 park
+## # ... with 10 more rows
 ```
 
 ---
@@ -2059,7 +2050,7 @@ top10 %&gt;%
 
 
 ---
-
+.box[
 **오즈비 기준 상·하위 10개 추출했을 때와 단어 동일**
 
 
@@ -2068,9 +2059,13 @@ frequency_wide %&gt;%
   filter(rank(odds_ratio) &lt;= 10 | rank(-odds_ratio) &lt;= 10) %&gt;%
   arrange(-odds_ratio)
 ```
-
+]
 
 ---
+
+.box[
+
+&lt;br-back-20&gt;
 
 
 ```
@@ -2098,7 +2093,7 @@ frequency_wide %&gt;%
 ## 19 여러분       2    20   0.00131    0.0116       0.113           -2.18
 ## 20 박근혜       0     8   0.000436   0.00496      0.0879          -2.43
 ```
-
+]
 
 
 
