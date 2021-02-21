@@ -21,7 +21,7 @@
 
 class: title0
 
-Do it! 쉽게 배우는 R 텍스트 마이닝 nobox
+Do it! 쉽게 배우는 R 텍스트 마이닝 to 10
 
 ---
 
@@ -213,7 +213,7 @@ tail(bind_speeches)
 - `bind_speeches`는 tibble 구조이므로 `mutate()` 활용
 
 &lt;br-back-20&gt;
-
+.scroll-box-10[
 
 
 ```r
@@ -243,7 +243,7 @@ speeches
 ## # ... with 203 more rows, and 1 more variable:
 ## #   value &lt;chr&gt;
 ```
-
+]
 
 ---
 
@@ -266,7 +266,7 @@ speeches
 
 &lt;br-back-20&gt;
 
-
+.scroll-box-14[
 
 
 ```
@@ -286,7 +286,7 @@ speeches
 ## # ... with 2,987 more rows
 ```
 
-
+]
 
 ---
 
@@ -463,7 +463,7 @@ df %&gt;% slice_min(x, n = 3)
 
 &lt;br-back-20&gt;
 
-
+.scroll-box-10[
 
 
 ```r
@@ -503,7 +503,7 @@ top10
 ## 22 park      일자리     9
 ```
 
-
+]
 ---
 
 #### 단어 빈도 동점 처리
@@ -512,7 +512,7 @@ top10
 - 단어 빈도 동점인 행이 전부 추출되었기 때문
 
 &lt;br-back-20&gt;
-
+.scroll-box-10[
 
 
 ```r
@@ -547,7 +547,7 @@ top10
 ## 21 park      사회       9
 ## 22 park      일자리     9
 ```
-
+]
 
 ---
 
@@ -645,7 +645,7 @@ top10
 ```
 
 &lt;br-back-20&gt;
-
+.scroll-box-18[
 
 ```
 *## # A tibble: 20 x 3
@@ -673,7 +673,7 @@ top10
 ## 19 park      교육       9
 ## 20 park      사람       9
 ```
-
+]
 
 ---
 
@@ -755,7 +755,7 @@ ggplot(top10, aes(x = reorder(word, n),
 - 박근혜 전 대통령 `"국민"` 빈도 너무 높아 다른 단어들 차이 드러나지 않음
 - 전반적인 단어 빈도가 잘 드러나도록 제거
 
-
+.scroll-box-10[
 
 
 ```r
@@ -793,7 +793,7 @@ top10
 ## 19 park      사람         9
 ## 20 park      사회         9
 ```
-
+]
 
 ---
 
@@ -907,7 +907,7 @@ class: title1
 ##### Long form 데이터 살펴보기
 
 &lt;br-back-20&gt;
-
+.scroll-box-18[
 
 ```r
 df_long &lt;- frequency %&gt;%
@@ -931,7 +931,7 @@ df_long
 ## 6 park      우리     10
 ```
 
-
+]
 
 ---
 
@@ -1392,7 +1392,7 @@ top10 &lt;- frequency_wide %&gt;%
 ```
 
 &lt;br-back-20&gt;
-
+.scroll-box-18[
 
 
 ```r
@@ -1425,7 +1425,7 @@ top10 %&gt;%
 ## 19 여러분       2    20   0.00131    0.0116       0.113 
 ## 20 박근혜       0     8   0.000436   0.00496      0.0879
 ```
-
+]
 
 ---
 
@@ -1497,7 +1497,7 @@ top10 %&gt;%
 
 &lt;br-back-20&gt;
 
-
+.scroll-box-10[
 
 ```r
 top10 &lt;- top10 %&gt;%
@@ -1532,7 +1532,7 @@ top10
 ## 19 지식         0     4   0.000436   0.00276      0.158  park          4
 ## 20 투명         0     5   0.000436   0.00331      0.132  park          5
 ```
-
+]
 
 ---
 
@@ -1629,7 +1629,7 @@ ggplot(top10, aes(x = reorder_within(word, n, president),
 ##### 1. 원문을 문장 기준으로 토큰화하기
 
 &lt;br-back-20&gt;
-
+.scroll-box-10[
 
 
 ```r
@@ -1659,7 +1659,7 @@ speeches_sentence
 ## # ... with 319 more rows, and 1 more variable: sentence &lt;chr&gt;
 ```
 
-
+]
 ---
 
 
@@ -1737,7 +1737,7 @@ speeches_sentence %&gt;%
 ```
 
 &lt;br-back-20&gt;
-
+.scroll-box-10[
 
 
 ```
@@ -1765,7 +1765,7 @@ speeches_sentence %&gt;%
 ## 19 park     
 ## # ... with 1 more variable: sentence &lt;chr&gt;
 ```
-
+]
 
 ---
 
@@ -2082,7 +2082,7 @@ top10
 
 &lt;br-back-22&gt;
 
-
+.scroll-box-14[
 
 
 ```
@@ -2113,7 +2113,7 @@ top10
 ## # ... with 1 more variable: president &lt;chr&gt;
 ```
 
-
+]
 
 ---
 
@@ -2130,7 +2130,7 @@ top10 %&gt;%
 
 
 &lt;br-back-20&gt;
-
+.scroll-box-10[
 
 ```
 ## # A tibble: 20 x 3
@@ -2159,7 +2159,7 @@ top10 %&gt;%
 ## 20 박근혜            -2.43 park
 ```
 
-
+]
 ---
 
 
@@ -2237,7 +2237,7 @@ frequency_wide %&gt;%
 
 
 &lt;br-back-20&gt;
-
+.scroll-box-10[
 
 
 ```
@@ -2266,7 +2266,7 @@ frequency_wide %&gt;%
 ## 20 박근혜       0     8   0.000436   0.00496      0.0879          -2.43
 ```
 
-
+]
 
 
 ---
@@ -2895,7 +2895,7 @@ speeches
 ```
 
 &lt;br-back-20&gt;
-
+.scroll-box-14[
 
 
 ```
@@ -2915,7 +2915,7 @@ speeches
 ## # ... with 992 more rows
 ```
 
-
+]
 
 ---
 
@@ -3027,7 +3027,7 @@ top10
 ```
 
 &lt;br-back-20&gt;
-
+.scroll-box-18[
 
 ```
 ## # A tibble: 20 x 5
@@ -3056,7 +3056,7 @@ top10
 ## 20 지역          4      0          -1.63 roh
 ```
 
-
+]
 
 ---
 

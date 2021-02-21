@@ -64,7 +64,7 @@ knitr::knit_hooks$set(source = function(x, options) {
 
 class: title0
 
-Do it! 쉽게 배우는 R 텍스트 마이닝 nobox
+Do it! 쉽게 배우는 R 텍스트 마이닝 to 10
 
 ---
 
@@ -244,7 +244,7 @@ tail(bind_speeches)
 - `bind_speeches`는 tibble 구조이므로 `mutate()` 활용
 
 <br-back-20>
-
+.scroll-box-10[
 
 ```{r R.options=list(tibble.width = 50)}
 # 기본적인 전처리
@@ -255,7 +255,7 @@ speeches <- bind_speeches %>%
 
 speeches
 ```
-
+]
 
 ---
 
@@ -277,7 +277,7 @@ speeches
 
 <br-back-20>
 
-
+.scroll-box-14[
 
 ```{r echo=F}
 # 토큰화
@@ -292,7 +292,7 @@ speeches <- speeches %>%
 speeches
 ```
 
-
+]
 
 ---
 
@@ -392,7 +392,7 @@ df %>% slice_min(x, n = 3)
 
 <br-back-20>
 
-
+.scroll-box-10[
 
 ```{r}
 top10 <- frequency %>%
@@ -402,7 +402,7 @@ top10 <- frequency %>%
 top10
 ```
 
-
+]
 ---
 
 #### 단어 빈도 동점 처리
@@ -411,12 +411,12 @@ top10
 - 단어 빈도 동점인 행이 전부 추출되었기 때문
 
 <br-back-20>
-
+.scroll-box-10[
 
 ```{r highlight.output = 1}
 top10
 ```
-
+]
 
 ---
 
@@ -472,7 +472,7 @@ top10
 ```
 
 <br-back-20>
-
+.scroll-box-18[
 ```{r, echo=FALSE, highlight.output=1}
 top10 <- frequency %>%
   group_by(president) %>%
@@ -481,7 +481,7 @@ top10 <- frequency %>%
 top10
 
 ```
-
+]
 
 ---
 
@@ -593,7 +593,7 @@ ggplot(top10, aes(x = reorder(word, n),
 - 박근혜 전 대통령 `"국민"` 빈도 너무 높아 다른 단어들 차이 드러나지 않음
 - 전반적인 단어 빈도가 잘 드러나도록 제거
 
-
+.scroll-box-10[
 
 ```{r}
 top10 <- frequency %>%
@@ -603,7 +603,7 @@ top10 <- frequency %>%
 
 top10
 ```
-
+]
 
 ---
 
@@ -745,7 +745,7 @@ class: title1
 ##### Long form 데이터 살펴보기
 
 <br-back-20>
-
+.scroll-box-18[
 ```{r}
 df_long <- frequency %>%
   group_by(president) %>%
@@ -755,7 +755,7 @@ df_long <- frequency %>%
 df_long
 ```
 
-
+]
 
 ---
 
@@ -1013,13 +1013,13 @@ top10 <- frequency_wide %>%
 ```
 
 <br-back-20>
-
+.scroll-box-18[
 
 ```{r}
 top10 %>%
   arrange(-odds_ratio)
 ```
-
+]
 
 ---
 
@@ -1047,7 +1047,7 @@ top10 %>%
 
 <br-back-20>
 
-
+.scroll-box-10[
 ```{r }
 top10 <- top10 %>%
   mutate(president = ifelse(odds_ratio > 1, "moon", "park"),
@@ -1055,7 +1055,7 @@ top10 <- top10 %>%
 
 top10
 ```
-
+]
 
 ---
 
@@ -1141,7 +1141,7 @@ ggplot(top10, aes(x = reorder_within(word, n, president),
 ##### 1. 원문을 문장 기준으로 토큰화하기
 
 <br-back-20>
-
+.scroll-box-10[
 
 ```{r}
 speeches_sentence <- bind_speeches %>%
@@ -1153,7 +1153,7 @@ speeches_sentence <- bind_speeches %>%
 speeches_sentence
 ```
 
-
+]
 ---
 
 ```{r, R.options = list(tibble.width = 50)}
@@ -1186,13 +1186,13 @@ speeches_sentence %>%
 ```
 
 <br-back-20>
-
+.scroll-box-10[
 
 ```{r, echo=FALSE, R.options = list(tibble.width = 50)}
 speeches_sentence %>%
   filter(president == "park" & str_detect(sentence, "행복"))
 ```
-
+]
 
 ---
 
@@ -1388,7 +1388,7 @@ top10
 
 <br-back-22>
 
-
+.scroll-box-14[
 
 ```{r echo=FALSE}
 top10 <- frequency_wide %>%
@@ -1399,7 +1399,7 @@ top10
 
 ```
 
-
+]
 
 ---
 
@@ -1415,14 +1415,14 @@ top10 %>%
 
 
 <br-back-20>
-
+.scroll-box-10[
 ```{r echo=FALSE, }
 top10 %>%
   arrange(-log_odds_ratio) %>%
   select(word, log_odds_ratio, president)
 ```
 
-
+]
 ---
 
 ```{r echo=F, highlight.output=c(5:14)}
@@ -1455,7 +1455,7 @@ frequency_wide %>%
 
 
 <br-back-20>
-
+.scroll-box-10[
 
 ```{r echo=FALSE}
 frequency_wide %>%
@@ -1463,7 +1463,7 @@ frequency_wide %>%
   arrange(-odds_ratio)
 ```
 
-
+]
 
 
 ---
@@ -2000,7 +2000,7 @@ speeches
 ```
 
 <br-back-20>
-
+.scroll-box-14[
 
 ```{r echo=FALSE}
 # 명사 추출
@@ -2014,7 +2014,7 @@ speeches <- speeches %>%
 speeches
 ```
 
-
+]
 
 ---
 
@@ -2071,7 +2071,7 @@ top10
 ```
 
 <br-back-20>
-
+.scroll-box-18[
 ```{r echo=FALSE}
 # 상대적으로 중요한 단어 추출
 top10 <- frequency_wide %>%
@@ -2081,7 +2081,7 @@ top10 <- frequency_wide %>%
 top10
 ```
 
-
+]
 
 ---
 
