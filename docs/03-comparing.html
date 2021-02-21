@@ -464,35 +464,6 @@ top10 &lt;- frequency %&gt;%
 top10
 ```
 
-```
-## # A tibble: 22 x 3
-## # Groups:   president [2]
-##    president word       n
-##    &lt;chr&gt;     &lt;chr&gt;  &lt;int&gt;
-##  1 moon      국민      21
-##  2 moon      일자리    21
-##  3 moon      나라      19
-##  4 moon      우리      17
-##  5 moon      경제      15
-##  6 moon      사회      14
-##  7 moon      성장      13
-##  8 moon      대통령    12
-##  9 moon      정치      12
-## 10 moon      하게      12
-## 11 park      국민      72
-## 12 park      행복      23
-## 13 park      여러분    20
-## 14 park      정부      17
-## 15 park      경제      15
-## 16 park      신뢰      11
-## 17 park      국가      10
-## 18 park      우리      10
-## 19 park      교육       9
-## 20 park      사람       9
-## 21 park      사회       9
-## 22 park      일자리     9
-```
-
 ---
 
 
@@ -907,7 +878,7 @@ df_long
 
 ---
 
-##### Long form 데이터 살펴보기
+##### Long form 데이터
 
 - 같은 단어가 범주별로 다른 행을 구성
 - 범주별 빈도 비교 어려움
@@ -1404,7 +1375,6 @@ top10 %&gt;%
 
 ---
 
-
 - 상위 10개: `"moon"`에서 더 자주 사용되어 `odds_ratio`가 높은 단어
 
 
@@ -1480,34 +1450,21 @@ top10 &lt;- top10 %&gt;%
 top10
 ```
 
----
-
-
-
 ```
 ## # A tibble: 20 x 8
 ##    word      moon  park ratio_moon ratio_park odds_ratio president     n
 ##    &lt;chr&gt;    &lt;int&gt; &lt;int&gt;      &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt; &lt;chr&gt;     &lt;int&gt;
-##  1 강자         5     0   0.00262    0.000552     4.75   moon          5
-##  2 공평         5     0   0.00262    0.000552     4.75   moon          5
-##  3 대통령의     5     0   0.00262    0.000552     4.75   moon          5
-##  4 보통         5     0   0.00262    0.000552     4.75   moon          5
-##  5 복지국가     8     0   0.00393    0.000552     7.12   moon          8
-##  6 상생         5     0   0.00262    0.000552     4.75   moon          5
-##  7 세상         6     0   0.00306    0.000552     5.54   moon          6
-##  8 여러분       2    20   0.00131    0.0116       0.113  park         20
-##  9 여성         6     0   0.00306    0.000552     5.54   moon          6
-## 10 정의         6     0   0.00306    0.000552     5.54   moon          6
-## 11 지방         5     0   0.00262    0.000552     4.75   moon          5
-## 12 행복         3    23   0.00175    0.0132       0.132  park         23
-## 13 과제         0     4   0.000436   0.00276      0.158  park          4
-## 14 국정운영     0     4   0.000436   0.00276      0.158  park          4
-## 15 박근혜       0     8   0.000436   0.00496      0.0879 park          8
-## 16 시작         0     4   0.000436   0.00276      0.158  park          4
-## 17 실천         0     5   0.000436   0.00331      0.132  park          5
-## 18 정보         0     5   0.000436   0.00331      0.132  park          5
-## 19 지식         0     4   0.000436   0.00276      0.158  park          4
-## 20 투명         0     5   0.000436   0.00331      0.132  park          5
+##  1 강자         5     0    0.00262   0.000552      4.75  moon          5
+##  2 공평         5     0    0.00262   0.000552      4.75  moon          5
+##  3 대통령의     5     0    0.00262   0.000552      4.75  moon          5
+##  4 보통         5     0    0.00262   0.000552      4.75  moon          5
+##  5 복지국가     8     0    0.00393   0.000552      7.12  moon          8
+##  6 상생         5     0    0.00262   0.000552      4.75  moon          5
+##  7 세상         6     0    0.00306   0.000552      5.54  moon          6
+##  8 여러분       2    20    0.00131   0.0116        0.113 park         20
+##  9 여성         6     0    0.00306   0.000552      5.54  moon          6
+## 10 정의         6     0    0.00306   0.000552      5.54  moon          6
+## # ... with 10 more rows
 ```
 
 ---
@@ -1525,7 +1482,7 @@ ggplot(top10, aes(x = reorder_within(word, n, president),
   scale_x_reordered()
 ```
 
-&lt;img src="03-comparing_files/figure-html/unnamed-chunk-70-1.png" width="60%" /&gt;
+&lt;img src="03-comparing_files/figure-html/unnamed-chunk-69-1.png" width="60%" /&gt;
 
 
 ---
@@ -1534,7 +1491,7 @@ ggplot(top10, aes(x = reorder_within(word, n, president),
 - `"park"`의 `"행복"` 빈도 기준으로 두 그래프의 x축 크기를 똑같이 고정했기 때문
 
 
-&lt;img src="03-comparing_files/figure-html/unnamed-chunk-71-1.png" width="80%" /&gt;
+&lt;img src="03-comparing_files/figure-html/unnamed-chunk-70-1.png" width="80%" /&gt;
 
 ---
 
@@ -1555,7 +1512,7 @@ ggplot(top10, aes(x = reorder_within(word, n, president),
   theme(text = element_text(family = "nanumgothic"))  # 폰트
 ```
 
-&lt;img src="03-comparing_files/figure-html/unnamed-chunk-72-1.png" width="40%" /&gt;
+&lt;img src="03-comparing_files/figure-html/unnamed-chunk-71-1.png" width="40%" /&gt;
 
 ---
 &lt;svg viewBox="0 0 576 512" xmlns="http://www.w3.org/2000/svg" style="height:1em;position:relative;display:inline-block;top:.1em;fill:#FF7333;"&gt;  [ comment ]  &lt;path d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"&gt;&lt;/path&gt;&lt;/svg&gt;  **x축 크기가 그래프마다 다르므로 해석 조심**
@@ -1564,7 +1521,7 @@ ggplot(top10, aes(x = reorder_within(word, n, president),
 - 두 텍스트 단어 빈도 비교 X
 - 각 텍스트에서 상대적으로 중요한 단어가 무엇인지 중심으로 해석
 
-&lt;img src="03-comparing_files/figure-html/unnamed-chunk-73-1.png" width="80%" /&gt;
+&lt;img src="03-comparing_files/figure-html/unnamed-chunk-72-1.png" width="80%" /&gt;
 
 ---
 
@@ -1583,26 +1540,20 @@ speeches_sentence &lt;- bind_speeches %&gt;%
 speeches_sentence
 ```
 
----
-
-
 ```
 ## # A tibble: 329 x 2
-##    president sentence                   
-##    &lt;chr&gt;     &lt;chr&gt;                      
-##  1 moon      "정권교체 하겠습니다!"     
-##  2 moon      "정치교체 하겠습니다!"     
-##  3 moon      "시대교체 하겠습니다!"     
-##  4 moon      ""                         
-##  5 moon      "‘불비불명(不飛不鳴)’이라는 고사가 있습니다.~
-##  6 moon      "남쪽 언덕 나뭇가지에 앉아, 3년 동안 날지도~
-##  7 moon      "그러나 그 새는 한번 날면 하늘 끝까지 날고,~
-##  8 moon      "그 동안 정치와 거리를 둬 왔습니다."~
-##  9 moon      "그러나 암울한 시대가 저를 정치로 불러냈습니다~
-## 10 moon      "더 이상 남쪽 나뭇가지에 머무를 수 없었습니다~
-## # ... with 319 more rows
+##   president sentence                    
+##   &lt;chr&gt;     &lt;chr&gt;                       
+## 1 moon      "정권교체 하겠습니다!"      
+## 2 moon      "정치교체 하겠습니다!"      
+## 3 moon      "시대교체 하겠습니다!"      
+## 4 moon      ""                          
+## 5 moon      "‘불비불명(不飛不鳴)’이라는 고사가 있습니다."~
+## 6 moon      "남쪽 언덕 나뭇가지에 앉아, 3년 동안 날지도 ~
+## 7 moon      "그러나 그 새는 한번 날면 하늘 끝까지 날고, ~
+## 8 moon      "그 동안 정치와 거리를 둬 왔습니다."~
+## # ... with 321 more rows
 ```
-
 
 ---
 
@@ -1841,34 +1792,6 @@ frequency_wide
 
 ---
 
-
-```r
-frequency_wide &lt;- frequency_wide %&gt;%
-  mutate(log_odds_ratio = log(odds_ratio))
-
-frequency_wide
-```
-
-```
-## # A tibble: 955 x 7
-##    word      moon  park ratio_moon ratio_park odds_ratio log_odds_ratio
-##    &lt;chr&gt;    &lt;int&gt; &lt;int&gt;      &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;          &lt;dbl&gt;
-##  1 가동         1     0   0.000873   0.000552      1.58           0.459
-##  2 가사         1     0   0.000873   0.000552      1.58           0.459
-##  3 가슴         2     0   0.00131    0.000552      2.37           0.865
-##  4 가족         1     1   0.000873   0.00110       0.791         -0.234
-##  5 가족구조     1     0   0.000873   0.000552      1.58           0.459
-##  6 가지         4     0   0.00218    0.000552      3.96           1.38 
-##  7 가치         3     1   0.00175    0.00110       1.58           0.459
-##  8 각종         1     0   0.000873   0.000552      1.58           0.459
-##  9 감당         1     0   0.000873   0.000552      1.58           0.459
-## 10 강력         3     0   0.00175    0.000552      3.17           1.15 
-## # ... with 945 more rows
-```
-
-
----
-
 - **부호**와 **크기**를 보면 단어가 어느 연설문에서 더 중요한지 알 수 있음
   - 0보다 큰 양수일수록 `"moon`"에서 비중이 큼
   - 0보다 작은 음수일수록 `"park"`에서 비중이 큼
@@ -2006,28 +1929,28 @@ top10
 ```
 ## # A tibble: 20 x 8
 ## # Groups:   president [2]
-##    word     moon  park ratio_moon ratio_park odds_ratio log_odds_ratio president
-##    &lt;chr&gt;   &lt;int&gt; &lt;int&gt;      &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;          &lt;dbl&gt; &lt;chr&gt;    
-##  1 복지국가~     8     0   0.00393    0.000552     7.12             1.96 moon     
-##  2 세상        6     0   0.00306    0.000552     5.54             1.71 moon     
-##  3 여성        6     0   0.00306    0.000552     5.54             1.71 moon     
-##  4 정의        6     0   0.00306    0.000552     5.54             1.71 moon     
-##  5 강자        5     0   0.00262    0.000552     4.75             1.56 moon     
-##  6 공평        5     0   0.00262    0.000552     4.75             1.56 moon     
-##  7 대통령의~     5     0   0.00262    0.000552     4.75             1.56 moon     
-##  8 보통        5     0   0.00262    0.000552     4.75             1.56 moon     
-##  9 상생        5     0   0.00262    0.000552     4.75             1.56 moon     
-## 10 지방        5     0   0.00262    0.000552     4.75             1.56 moon     
-## 11 박근혜      0     8   0.000436   0.00496      0.0879          -2.43 park     
-## 12 여러분      2    20   0.00131    0.0116       0.113           -2.18 park     
-## 13 행복        3    23   0.00175    0.0132       0.132           -2.03 park     
-## 14 실천        0     5   0.000436   0.00331      0.132           -2.03 park     
-## 15 정보        0     5   0.000436   0.00331      0.132           -2.03 park     
-## 16 투명        0     5   0.000436   0.00331      0.132           -2.03 park     
-## 17 과제        0     4   0.000436   0.00276      0.158           -1.84 park     
-## 18 국정운영~     0     4   0.000436   0.00276      0.158           -1.84 park     
-## 19 시작        0     4   0.000436   0.00276      0.158           -1.84 park     
-## 20 지식        0     4   0.000436   0.00276      0.158           -1.84 park
+##    word      moon  park ratio_moon ratio_park odds_ratio log_odds_ratio president
+##    &lt;chr&gt;    &lt;int&gt; &lt;int&gt;      &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;          &lt;dbl&gt; &lt;chr&gt;    
+##  1 복지국가     8     0   0.00393    0.000552     7.12             1.96 moon     
+##  2 세상         6     0   0.00306    0.000552     5.54             1.71 moon     
+##  3 여성         6     0   0.00306    0.000552     5.54             1.71 moon     
+##  4 정의         6     0   0.00306    0.000552     5.54             1.71 moon     
+##  5 강자         5     0   0.00262    0.000552     4.75             1.56 moon     
+##  6 공평         5     0   0.00262    0.000552     4.75             1.56 moon     
+##  7 대통령의     5     0   0.00262    0.000552     4.75             1.56 moon     
+##  8 보통         5     0   0.00262    0.000552     4.75             1.56 moon     
+##  9 상생         5     0   0.00262    0.000552     4.75             1.56 moon     
+## 10 지방         5     0   0.00262    0.000552     4.75             1.56 moon     
+## 11 박근혜       0     8   0.000436   0.00496      0.0879          -2.43 park     
+## 12 여러분       2    20   0.00131    0.0116       0.113           -2.18 park     
+## 13 행복         3    23   0.00175    0.0132       0.132           -2.03 park     
+## 14 실천         0     5   0.000436   0.00331      0.132           -2.03 park     
+## 15 정보         0     5   0.000436   0.00331      0.132           -2.03 park     
+## 16 투명         0     5   0.000436   0.00331      0.132           -2.03 park     
+## 17 과제         0     4   0.000436   0.00276      0.158           -1.84 park     
+## 18 국정운영     0     4   0.000436   0.00276      0.158           -1.84 park     
+## 19 시작         0     4   0.000436   0.00276      0.158           -1.84 park     
+## 20 지식         0     4   0.000436   0.00276      0.158           -1.84 park
 ```
 
 ---
@@ -2196,12 +2119,12 @@ ggplot(top10, aes(x = reorder(word, log_odds_ratio),
   theme(text = element_text(family = "nanumgothic"))
 ```
 
-&lt;img src="03-comparing_files/figure-html/unnamed-chunk-97-1.png" width="45%" /&gt;
+&lt;img src="03-comparing_files/figure-html/unnamed-chunk-94-1.png" width="45%" /&gt;
 
 ---
 
 &lt;br&gt;
-&lt;img src="03-comparing_files/figure-html/unnamed-chunk-98-1.png" width="80%" /&gt;
+&lt;img src="03-comparing_files/figure-html/unnamed-chunk-95-1.png" width="80%" /&gt;
 
 ---
 
@@ -2653,7 +2576,7 @@ ggplot(top10, aes(x = reorder_within(word, tf_idf, president),
 
 ---
 
-&lt;img src="03-comparing_files/figure-html/unnamed-chunk-116-1.png" width="75%" /&gt;
+&lt;img src="03-comparing_files/figure-html/unnamed-chunk-113-1.png" width="75%" /&gt;
 
 ---
 
@@ -2979,10 +2902,10 @@ ggplot(top10, aes(x = reorder(word, log_odds_ratio),
   labs(x = NULL)
 ```
 
-&lt;img src="03-comparing_files/figure-html/unnamed-chunk-129-1.png" width="50%" /&gt;
+&lt;img src="03-comparing_files/figure-html/unnamed-chunk-126-1.png" width="50%" /&gt;
 
 ---
-&lt;img src="03-comparing_files/figure-html/unnamed-chunk-130-1.png" width="90%" /&gt;
+&lt;img src="03-comparing_files/figure-html/unnamed-chunk-127-1.png" width="90%" /&gt;
 
 ---
 
@@ -3176,12 +3099,12 @@ ggplot(top10, aes(x = reorder_within(word, tf_idf, president),
   labs(x = NULL)
 ```
 
-&lt;img src="03-comparing_files/figure-html/unnamed-chunk-138-1.png" width="35%" /&gt;
+&lt;img src="03-comparing_files/figure-html/unnamed-chunk-135-1.png" width="35%" /&gt;
 
 ---
 
 
-&lt;img src="03-comparing_files/figure-html/unnamed-chunk-139-1.png" width="75%" /&gt;
+&lt;img src="03-comparing_files/figure-html/unnamed-chunk-136-1.png" width="75%" /&gt;
 
 ---
 
