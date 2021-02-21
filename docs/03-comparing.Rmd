@@ -244,8 +244,7 @@ tail(bind_speeches)
 - `bind_speeches`는 tibble 구조이므로 `mutate()` 활용
 
 
-
-```{r R.options=list(tibble.width = 50)}
+```{r eval=FALSE}
 # 기본적인 전처리
 library(stringr)
 speeches <- bind_speeches %>%
@@ -254,7 +253,18 @@ speeches <- bind_speeches %>%
 
 speeches
 ```
-]
+---
+
+```{r echo=FALSE, R.options=list(tibble.width = 50)}
+# 기본적인 전처리
+library(stringr)
+speeches <- bind_speeches %>%
+  mutate(value = str_replace_all(value, "[^가-힣]", " "),
+         value = str_squish(value))
+
+speeches
+```
+
 
 ---
 
@@ -276,7 +286,7 @@ speeches
 
 
 
-
+---
 
 ```{r echo=F}
 # 토큰화
@@ -291,7 +301,7 @@ speeches <- speeches %>%
 speeches
 ```
 
-]
+
 
 ---
 
@@ -390,7 +400,6 @@ df %>% slice_min(x, n = 3)
 - `president`별 고빈도 단어 상위 10개 추출
 
 
-
 ```{r}
 top10 <- frequency %>%
   group_by(president) %>%  # president별로 분리
@@ -399,7 +408,17 @@ top10 <- frequency %>%
 top10
 ```
 
-]
+---
+
+```{r echo=F}
+top10 <- frequency %>%
+  group_by(president) %>%  # president별로 분리
+  slice_max(n, n = 10)     # 상위 10개 추출
+
+top10
+```
+
+
 ---
 
 #### 단어 빈도 동점 처리
@@ -407,7 +426,7 @@ top10
 - 두 연설문에서 단어 10개씩 추출했는데 20행이 아니라 22행
 - 단어 빈도 동점인 행이 전부 추출되었기 때문
 
-
+.scroll-box-22[
 
 ```{r highlight.output = 1}
 top10
@@ -467,6 +486,7 @@ top10
 
 ```
 
+---
 
 ```{r, echo=FALSE, highlight.output=1}
 top10 <- frequency %>%
@@ -476,7 +496,6 @@ top10 <- frequency %>%
 top10
 
 ```
-]
 
 ---
 
@@ -1185,7 +1204,7 @@ speeches_sentence %>%
   filter(president == "park" & str_detect(sentence, "행복"))
 ```
 
-
+.scroll-box-20[
 
 ```{r echo=FALSE, R.options=list(tibble.width = 50)}
 speeches_sentence %>%
