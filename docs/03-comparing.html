@@ -533,7 +533,6 @@ top10
 - 두 연설문에서 단어 10개씩 추출했는데 20행이 아니라 22행
 - 단어 빈도 동점인 행이 전부 추출되었기 때문
 
-.scroll-box-22[
 
 
 ```r
@@ -555,20 +554,8 @@ top10
 ##  8 moon      대통령    12
 ##  9 moon      정치      12
 ## 10 moon      하게      12
-## 11 park      국민      72
-## 12 park      행복      23
-## 13 park      여러분    20
-## 14 park      정부      17
-## 15 park      경제      15
-## 16 park      신뢰      11
-## 17 park      국가      10
-## 18 park      우리      10
-## 19 park      교육       9
-## 20 park      사람       9
-## 21 park      사회       9
-## 22 park      일자리     9
+## # ... with 12 more rows
 ```
-]
 
 ---
 
@@ -1684,14 +1671,6 @@ speeches_sentence %&gt;%
 
 
 
-```r
-speeches_sentence %&gt;%
-  filter(president == "park" &amp; str_detect(sentence, "행복"))
-```
-
-.scroll-box-20[
-
-
 ```
 ## # A tibble: 19 x 2
 ##    president sentence                             
@@ -1706,18 +1685,8 @@ speeches_sentence %&gt;%
 ##  8 park      국민행복의 길을 열어갈 첫 번째 과제로, 저는 경제민주화를 통해 ~
 ##  9 park      국민행복의 길을 열어갈 두 번째 과제로, 저는 좋은 일자리 창출을~
 ## 10 park      국민행복의 길을 열어갈 세 번째 과제로, 우리의 실정에 맞으면서 ~
-## 11 park      저는 국민행복을 위해 ‘경제민주화-일자리-복지’를 아우르는 (가칭~
-## 12 park      모든 계층의 국민이 함께 참여해 만들고, 정부와 기업, 지역사회가~
-## 13 park      50년 전 경제개발 5개년 계획이 산업화의 기적을 이뤄냈듯,‘오천~
-## 14 park      저는 지속가능한 국민 행복을 만들 수 있도록,사람에 대한 투자를 ~
-## 15 park      저 박근혜, 경쟁과 입시에 매몰된 교육을‘함께하는 행복교육’으로 ~
-## 16 park      존경하는 국민여러분, 국민행복을 위한 노력이 안정적으로 이루어지기~
-## 17 park      국민 여러분, 국민행복의 꿈을 이뤄내기 위해서는, 먼저 정부부터 ~
-## 18 park      국민들이 꿈으로만 가졌던 행복한 삶을 실제로 이룰 수 있도록 도와~
-## 19 park      국민 여러분의 행복이 곧 저의 행복입니다.~
+## # ... with 9 more rows
 ```
-
-]
 
 ---
 
@@ -2227,12 +2196,12 @@ ggplot(top10, aes(x = reorder(word, log_odds_ratio),
   theme(text = element_text(family = "nanumgothic"))
 ```
 
-&lt;img src="03-comparing_files/figure-html/unnamed-chunk-98-1.png" width="45%" /&gt;
+&lt;img src="03-comparing_files/figure-html/unnamed-chunk-97-1.png" width="45%" /&gt;
 
 ---
 
 &lt;br&gt;
-&lt;img src="03-comparing_files/figure-html/unnamed-chunk-99-1.png" width="80%" /&gt;
+&lt;img src="03-comparing_files/figure-html/unnamed-chunk-98-1.png" width="80%" /&gt;
 
 ---
 
@@ -2684,7 +2653,7 @@ ggplot(top10, aes(x = reorder_within(word, tf_idf, president),
 
 ---
 
-&lt;img src="03-comparing_files/figure-html/unnamed-chunk-117-1.png" width="75%" /&gt;
+&lt;img src="03-comparing_files/figure-html/unnamed-chunk-116-1.png" width="75%" /&gt;
 
 ---
 
@@ -3010,10 +2979,10 @@ ggplot(top10, aes(x = reorder(word, log_odds_ratio),
   labs(x = NULL)
 ```
 
-&lt;img src="03-comparing_files/figure-html/unnamed-chunk-130-1.png" width="50%" /&gt;
+&lt;img src="03-comparing_files/figure-html/unnamed-chunk-129-1.png" width="50%" /&gt;
 
 ---
-&lt;img src="03-comparing_files/figure-html/unnamed-chunk-131-1.png" width="90%" /&gt;
+&lt;img src="03-comparing_files/figure-html/unnamed-chunk-130-1.png" width="90%" /&gt;
 
 ---
 
@@ -3207,12 +3176,12 @@ ggplot(top10, aes(x = reorder_within(word, tf_idf, president),
   labs(x = NULL)
 ```
 
-&lt;img src="03-comparing_files/figure-html/unnamed-chunk-139-1.png" width="35%" /&gt;
+&lt;img src="03-comparing_files/figure-html/unnamed-chunk-138-1.png" width="35%" /&gt;
 
 ---
 
 
-&lt;img src="03-comparing_files/figure-html/unnamed-chunk-140-1.png" width="75%" /&gt;
+&lt;img src="03-comparing_files/figure-html/unnamed-chunk-139-1.png" width="75%" /&gt;
 
 ---
 

@@ -426,12 +426,10 @@ top10
 - 두 연설문에서 단어 10개씩 추출했는데 20행이 아니라 22행
 - 단어 빈도 동점인 행이 전부 추출되었기 때문
 
-.scroll-box-22[
 
-```{r highlight.output = 1}
+```{r highlight.output = 1, R.options=list(tibble.print_max = 10)}
 top10
 ```
-]
 
 ---
 
@@ -1199,19 +1197,10 @@ speeches_sentence %>%
 #### 2. 주요 단어가 사용된 문장 추출하기 - `str_detect()`
 
 
-```{r eval=F}
+```{r echo=FALSE, R.options=list(tibble.width = 50, tibble.print_max = 10)}
 speeches_sentence %>%
   filter(president == "park" & str_detect(sentence, "행복"))
 ```
-
-.scroll-box-20[
-
-```{r echo=FALSE, R.options=list(tibble.width = 50)}
-speeches_sentence %>%
-  filter(president == "park" & str_detect(sentence, "행복"))
-```
-
-]
 
 ---
 
